@@ -6,7 +6,7 @@ By Isaac Blanco Peco
 
 ```
 npm i
-cd ./batuta-culinaria
+cd ./todo-focus
 ionic-serve
 ```
 
