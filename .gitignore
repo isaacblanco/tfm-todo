@@ -1,0 +1,66 @@
+# Build and deployment artifacts
+
+node_modules/
+dist/
+build/
+coverage/
+tmp/
+deploy/*
+
+# Configuration files
+*.secret
+*.env
+*.json.backup
+
+# Logs and test results
+*.log
+*.xml
+*.json
+*.png
+*.jpg
+*.jpeg
+*.txt
+*.dSYM
+*.stacktrace
+
+# Visual Studio Code files
+.vscode/
+settings.json
+tasks.json
+launch.json
+
+
+# IDE files
+.idea/
+workspace.xml
+
+# Local environment files
+npm-debug.log
+yarn-error.log
+
+# Other misc files
+*.DS_Store
+*.swp
+*.bak
+
+# Ficheros de angular
+.angular/
+
+
+# Angular specific files
+ng-component-cache/
+node_modules/@angular/cli/node_modules/*
+node_modules/@angular/cli/node_modules/karma/dist/client/
+node_modules/@angular/cli/node_modules/karma/dist/bundle.js
+
+# Typescript compiler output
+*.tsbuildinfo
+**/*.tsbuildinfo
+*.tgz
+**/*.tgz
+
+# Parcel cache
+.parcel-cache/
+
+# Yarn cache
+.yarn/cache
