@@ -5,7 +5,19 @@
         <ion-list id="inbox-list">
           <ion-list-header>To Do Focus</ion-list-header>
           <ion-note>By Isaac Blanco</ion-note>
+          <ion-item routerDirection="root" routerLink="focus/todo" lines="full">
+            <ion-icon
+              aria-hidden="true"
+              slot="start"
+              ios="home"
+              md="home"
+            ></ion-icon>
+            <ion-label>Focus</ion-label>
+          </ion-item>
+        </ion-list>
 
+        <ion-list id="project-list">
+          <ion-list-header>Projects</ion-list-header>
           <ion-menu-toggle
             auto-hide="false"
             *ngFor="let p of appPages; let i = index"
@@ -13,7 +25,7 @@
             <ion-item
               routerDirection="root"
               [routerLink]="[p.url]"
-              lines="none"
+              lines="full"
               detail="false"
               routerLinkActive="selected"
             >
@@ -28,17 +40,24 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list id="labels-list">
-          <ion-list-header></ion-list-header>
-
-          <ion-item *ngFor="let label of labels" lines="none">
+        <ion-list>
+          <ion-item routerDirection="root" routerLink="login" lines="full">
             <ion-icon
               aria-hidden="true"
               slot="start"
-              ios="bookmark-outline"
-              md="bookmark-sharp"
+              ios="log-in"
+              md="log-in"
             ></ion-icon>
-            <ion-label>{{ label }}</ion-label>
+            <ion-label>Log in</ion-label>
+          </ion-item>
+          <ion-item routerDirection="root" routerLink="settings" lines="full">
+            <ion-icon
+              aria-hidden="true"
+              slot="start"
+              ios="settings"
+              md="settings"
+            ></ion-icon>
+            <ion-label>Settings</ion-label>
           </ion-item>
         </ion-list>
       </ion-content>

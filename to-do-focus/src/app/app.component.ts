@@ -60,9 +60,7 @@ import {
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Today', url: '/folder/Today', icon: 'warning' },
-    { title: 'Project', url: '/folder/Project', icon: 'warning' },
-    { title: 'Settings', url: '/folder/Settings', icon: 'warning' },
+    { title: 'Proyecto 1', url: '/todo/project:1', icon: 'folder' },
   ];
   public labels = []; // 'Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'
   constructor() {

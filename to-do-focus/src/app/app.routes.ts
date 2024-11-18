@@ -1,14 +1,37 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/inbox',
-    pathMatch: 'full',
+    redirectTo: 'todo/focus',
+    pathMatch: 'full', // Ruta por defecto
   },
   {
-    path: 'folder/:id',
+    path: 'login',
     loadComponent: () =>
-      import('./folder/folder.page').then((m) => m.FolderPage),
+      import('./auth/login/login.page').then((m) => m.LoginPage), // Página de login
+  },
+  {
+    path: 'settings',
+    loadComponent: () =>
+      import('./config/settings/settings.page').then((m) => m.SettingsPage), // Página de configuración
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'todo/focus',
+    loadComponent: () =>
+      import('./todo/focus/focus.page').then((m) => m.FocusPage), // Página de "Focus"
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'todo/project',
+    loadComponent: () =>
+      import('./todo/project/project.page').then((m) => m.ProjectPage), // Página de proyectos
+    canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    redirectTo: 'todo/focus', // Ruta comodín
   },
 ];

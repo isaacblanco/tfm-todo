@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">TO DO Focus</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-item
+        >Welcome back. Enter your credentials to access your account</ion-item
+      >
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-input
+          [(ngModel)]="userData.username"
+          label="Email"
+          type="email"
+        ></ion-input>
+      </ion-item>
+    </ion-row>
+
+    <ion-row>
+      <ion-item>
+        <ion-input
+          [(ngModel)]="userData.password"
+          type="password"
+          label="Password"
+          value="DemoDemo"
+        >
+        </ion-input>
+      </ion-item>
+    </ion-row>
+
+    <ion-row>
+      <div class="error-message" *ngIf="errMessage.length > 0 ">
+        {{errMessage}}
+      </div>
+    </ion-row>
+
+    <ion-row>
+      <div padding>
+        <!--<button ion-button block (click)="login()">Sign in</button>-->
+        <ion-button expand="full" (click)="login()">Sign in</ion-button>
+      </div>
+    </ion-row>
+  </ion-grid>
+</ion-content>

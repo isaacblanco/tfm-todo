@@ -11,3 +11,5 @@ ionic-serve
 ```
 
 ionic-serve lanzará la app en el navegador en http://localhost:8100
+
+npm
