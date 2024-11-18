@@ -1,4 +1,6 @@
+import { provideHttpClient } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
+
 import {
   PreloadAllModules,
   RouteReuseStrategy,
@@ -15,6 +17,7 @@ import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideHttpClient(),
     // Configuración de Ionic para reutilizar rutas y optimizar la navegación
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 
