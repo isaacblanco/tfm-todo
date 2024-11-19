@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -8,10 +9,14 @@ import {
 import { Task } from "../../tasks/entities/task.entity";
 import { User } from "../../users/entities/user.entity";
 
-@Entity()
+@Entity("projects")
 export class Project {
   @PrimaryGeneratedColumn()
-  id: number;
+  id_project: number;
+
+  @ManyToOne(() => User, (user) => user.projects, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "fk_user" })
+  fk_user: User;
 
   @Column({ length: 100 })
   name: string;
@@ -21,9 +26,6 @@ export class Project {
 
   @Column({ default: false })
   main: boolean;
-
-  @ManyToOne(() => User, (user) => user.projects, { onDelete: "CASCADE" })
-  user: User;
 
   @OneToMany(() => Task, (task) => task.project)
   tasks: Task[];

@@ -1,10 +1,10 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Project } from "../../projects/entities/project.entity";
 
-@Entity()
+@Entity("users")
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id_user: number;
 
   @Column({ length: 100 })
   username: string;
@@ -24,6 +24,6 @@ export class User {
     showAllOpen?: boolean;
   };
 
-  @OneToMany(() => Project, (project) => project.user)
+  @OneToMany(() => Project, (project) => project.fk_user)
   projects: Project[];
 }

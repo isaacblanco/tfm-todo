@@ -6,15 +6,22 @@ import {
   Param,
   Post,
   Put,
+  Req,
   Res,
 } from "@nestjs/common";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { Project } from "./entities/project.entity";
 import { ProjectService } from "./project.service";
 
 @Controller("projects")
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
+
+  @Get()
+  async getAllProjects(@Req() request: Request): Promise<Project[]> {
+    const userId = 1; // Suponiendo que tienes el usuario autenticado en `request.user`
+    return this.projectService.getProjectsByUser(userId);
+  }
 
   @Get()
   getAll(@Res() response: Response): void {

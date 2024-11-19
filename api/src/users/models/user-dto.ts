@@ -1,5 +1,5 @@
 export class UserDto {
-  id: number;
+  id_user: number;
   username: string;
   email: string;
   password?: string; // Opcional, generalmente no se envía al cliente

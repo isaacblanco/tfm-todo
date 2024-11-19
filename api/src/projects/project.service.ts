@@ -10,6 +10,12 @@ export class ProjectService {
     private readonly projectRepository: Repository<Project>
   ) {}
 
+  async getProjectsByUser(userId: number): Promise<Project[]> {
+    return this.projectRepository.find({
+      where: { fk_user: userId },
+    });
+  }
+
   async getAll(): Promise<Project[]> {
     return this.projectRepository.find();
   }

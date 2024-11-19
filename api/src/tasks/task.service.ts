@@ -14,6 +14,13 @@ export class TaskService {
     return this.taskRepository.find();
   }
 
+  async getTasksByProject(projectId: number): Promise<Task[]> {
+    return this.taskRepository.find({
+      where: { project: { id: projectId } },
+      relations: ["tags"], // Incluye relaciones si es necesario
+    });
+  }
+
   async getById(id: number): Promise<Task | undefined> {
     return this.taskRepository.findOne({ where: { id } });
   }
@@ -30,4 +37,21 @@ export class TaskService {
   async delete(id: number): Promise<void> {
     await this.taskRepository.delete(id);
   }
+
+  /*
+  async getHighPriorityTasks(): Promise<Task[]> {
+    return this.taskRepository
+      .createQueryBuilder('task')
+      .where('task.priority = :priority', { priority: 'High' })
+      .getMany();
+  }
+  */
+
+  /*
+  async rawQuery(): Promise<any> {
+    return this.dataSource.query(`
+      SELECT * FROM task WHERE priority = $1
+    `, ['High']);
+  }
+    */
 }

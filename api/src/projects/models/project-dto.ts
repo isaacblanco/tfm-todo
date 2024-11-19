@@ -1,7 +1,7 @@
 export class ProjectDto {
-  id: number;
-  title: string;
+  id_project: number;
+  fk_user: number;
+  name: string;
   pinned: boolean;
   main: boolean;
-  userId: number;
 }
