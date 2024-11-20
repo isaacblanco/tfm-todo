@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import {
   IonApp,
   IonContent,
@@ -16,23 +17,8 @@ import {
   IonRouterOutlet,
   IonSplitPane,
 } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import {
-  archiveOutline,
-  archiveSharp,
-  bookmarkOutline,
-  bookmarkSharp,
-  heartOutline,
-  heartSharp,
-  mailOutline,
-  mailSharp,
-  paperPlaneOutline,
-  paperPlaneSharp,
-  trashOutline,
-  trashSharp,
-  warningOutline,
-  warningSharp,
-} from 'ionicons/icons';
+import { ProjectDTO } from './core/models/project-DTO';
+import { ProjectService } from './core/services/project.service';
 
 @Component({
   selector: 'app-root',
@@ -58,27 +44,47 @@ import {
     IonRouterOutlet,
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  public userId = 1; // ID del usuario actual (simulado)
+  public projects: ProjectDTO[] = []; // Lista de proyectos del usuario
   public appPages = [
     { title: 'Proyecto 1', url: '/todo/project:1', icon: 'folder' },
   ];
   public labels = []; // 'Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'
-  constructor() {
-    addIcons({
-      mailOutline,
-      mailSharp,
-      paperPlaneOutline,
-      paperPlaneSharp,
-      heartOutline,
-      heartSharp,
-      archiveOutline,
-      archiveSharp,
-      trashOutline,
-      trashSharp,
-      warningOutline,
-      warningSharp,
-      bookmarkOutline,
-      bookmarkSharp,
+  constructor(
+    private projectService: ProjectService,
+    private modalController: ModalController
+  ) {}
+
+  ngOnInit() {
+    this.loadProjects();
+  }
+
+  private loadProjects() {
+    this.projectService.getProjects(this.userId).subscribe({
+      next: (data) => {
+        this.projects = data;
+      },
+      error: (err) => {
+        console.error('Error al cargar los proyectos:', err);
+      },
     });
+  }
+
+  async openAddProjectModal(): Promise<void> {
+    const modal = await this.modalController.create({
+      component: await import(
+        './todo/modals/edit-project/edit-project.component'
+      ).then((m) => m.EditProjectComponent), // Carga dinámica del componente
+      componentProps: {
+        userId: this.userId, // Puedes pasar datos al modal si es necesario
+      },
+    });
+    modal.onDidDismiss().then((result) => {
+      if (result.data && result.data.reload) {
+        this.loadProjects(); // Recargar proyectos si el modal indica cambios
+      }
+    });
+    return modal.present();
   }
 }

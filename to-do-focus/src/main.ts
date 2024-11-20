@@ -1,5 +1,6 @@
 import { provideHttpClient } from '@angular/common/http';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { ModalController } from '@ionic/angular';
 
 import {
   PreloadAllModules,
@@ -23,6 +24,9 @@ bootstrapApplication(AppComponent, {
 
     // Proveedor de funcionalidades específicas de Ionic Angular
     provideIonicAngular(),
+
+    // Agregar ModalController explícitamente como proveedor
+    ModalController,
 
     // Configuración de las rutas con pre-carga para mejorar el rendimiento
     provideRouter(routes, withPreloading(PreloadAllModules)),

@@ -18,13 +18,21 @@
 
         <ion-list id="project-list">
           <ion-list-header>Projects</ion-list-header>
-          <ion-menu-toggle
-            auto-hide="false"
-            *ngFor="let p of appPages; let i = index"
-          >
+
+          <ion-item lines="full" (click)="openAddProjectModal()">
+            <ion-icon
+              aria-hidden="true"
+              slot="start"
+              ios="add-circle-outline"
+              md="add-circle-sharp"
+            ></ion-icon>
+            <ion-label>Add New Project</ion-label>
+          </ion-item>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let project of projects">
             <ion-item
               routerDirection="root"
-              [routerLink]="[p.url]"
+              [routerLink]="['/todo/project', project.id]"
               lines="full"
               detail="false"
               routerLinkActive="selected"
@@ -32,10 +40,10 @@
               <ion-icon
                 aria-hidden="true"
                 slot="start"
-                [ios]="p.icon + '-outline'"
-                [md]="p.icon + '-sharp'"
+                ios="folder-outline"
+                md="folder-sharp"
               ></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+              <ion-label>{{ project.name }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

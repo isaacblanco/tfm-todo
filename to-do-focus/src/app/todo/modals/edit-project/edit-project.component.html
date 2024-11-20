@@ -1,3 +1,23 @@
-<p>
-  edit-project works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add New Project</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="stacked">Project Name</ion-label>
+    <ion-input
+      type="text"
+      [(ngModel)]="projectName"
+      placeholder="Enter project name"
+    ></ion-input>
+  </ion-item>
+
+  <ion-footer>
+    <ion-button expand="full" (click)="addProject()">Add Project</ion-button>
+  </ion-footer>
+</ion-content>

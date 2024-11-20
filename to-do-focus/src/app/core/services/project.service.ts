@@ -1,5 +1,5 @@
 /* */
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProjectDTO } from '../models/project-DTO';
@@ -8,7 +8,7 @@ import { ProjectDTO } from '../models/project-DTO';
   providedIn: 'root',
 })
 export class ProjectService {
-  private apiUrl = 'http://localhost:8100/projects'; // URL del API en Node JS
+  private apiUrl = 'http://localhost:3000/projects/'; // URL del API en Node JS
 
   constructor(private http: HttpClient) {}
 
@@ -18,8 +18,8 @@ export class ProjectService {
    * @returns Observable con la lista de proyectos
    */
   getProjects(userId: number): Observable<ProjectDTO[]> {
-    const body = { user_id: userId };
-    return this.http.post<ProjectDTO[]>(`${this.apiUrl}/user`, body);
+    const params = new HttpParams().set('userId', userId.toString());
+    return this.http.get<ProjectDTO[]>(this.apiUrl, { params });
   }
 
   /**

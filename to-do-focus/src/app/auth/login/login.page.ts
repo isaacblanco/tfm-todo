@@ -15,6 +15,7 @@ import {
   IonToolbar,
   NavController,
 } from '@ionic/angular/standalone';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -49,7 +50,10 @@ export class LoginPage implements OnInit {
 
   userPostData = { user_id: '', token: '' };
 
-  constructor(private navCtrl: NavController) {
+  constructor(
+    private navCtrl: NavController,
+    private authService: AuthService
+  ) {
     this.userDetails = { user_id: '0', token: '' };
   }
 
@@ -57,6 +61,21 @@ export class LoginPage implements OnInit {
 
   login() {
     console.log('Lanzamos login');
+
     this.navCtrl.navigateRoot('/todo/focus');
   }
+
+  /*
+  login() {
+    this.authService.login(this.userData.username, this.userData.password).subscribe({
+      next: (response) => {
+        this.authService.setToken(response.token); // Guarda el token
+        this.navCtrl.navigateRoot('/todo/focus'); // Redirige al focus
+      },
+      error: (error) => {
+        this.errMessage = 'Login failed. Please check your credentials.';
+        console.error(error);
+      },
+    });
+  }*/
 }
