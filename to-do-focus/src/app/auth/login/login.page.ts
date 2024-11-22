@@ -44,7 +44,7 @@ export class LoginPage implements OnInit {
   errMessage: string = '';
 
   userData = {
-    username: 'isaacblanco@uoc.edu',
+    email: 'isaacblanco@uoc.edu',
     password: '123456',
   };
 
@@ -60,22 +60,17 @@ export class LoginPage implements OnInit {
   ngOnInit() {}
 
   login() {
-    console.log('Lanzamos login');
-
-    this.navCtrl.navigateRoot('/todo/focus');
+    this.authService
+      .login(this.userData.email, this.userData.password)
+      .subscribe({
+        next: (response) => {
+          this.authService.setToken(response.token); // Guarda el token
+          this.navCtrl.navigateRoot('/todo/focus'); // Redirige al focus
+        },
+        error: (error) => {
+          this.errMessage = 'Login failed. Please check your credentials.';
+          console.error(error);
+        },
+      });
   }
-
-  /*
-  login() {
-    this.authService.login(this.userData.username, this.userData.password).subscribe({
-      next: (response) => {
-        this.authService.setToken(response.token); // Guarda el token
-        this.navCtrl.navigateRoot('/todo/focus'); // Redirige al focus
-      },
-      error: (error) => {
-        this.errMessage = 'Login failed. Please check your credentials.';
-        console.error(error);
-      },
-    });
-  }*/
 }

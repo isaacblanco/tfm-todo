@@ -2,13 +2,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ProjectDTO } from '../models/project-DTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectService {
-  private apiUrl = 'http://localhost:3000/projects/'; // URL del API en Node JS
+  private apiUrl = environment.apiUrl + '/projects/'; // URL del API en Node JS
 
   constructor(private http: HttpClient) {}
 
