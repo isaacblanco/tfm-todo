@@ -17,6 +17,8 @@ import { UserService } from "./user.service";
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  // LOGIN
+  // ------------------------------------------------------------------------
   @Post("login")
   async login(
     @Body("email") email: string,
@@ -36,11 +38,15 @@ export class UserController {
     return { message: "Login successful", user: userWithoutPassword };
   }
 
+  // GET
+  // ------------------------------------------------------------------------
   @Get()
   async getAll(): Promise<User[]> {
     return await this.userService.getAll();
   }
 
+  // GET:ID
+  // ------------------------------------------------------------------------
   @Get(":id")
   async getById(
     @Param("id") id_user: string,
@@ -66,6 +72,8 @@ export class UserController {
     }
   }
 
+  // POST
+  // ------------------------------------------------------------------------
   @Post()
   create(@Body() user: User, @Res() response: Response): void {
     this.userService
@@ -78,6 +86,8 @@ export class UserController {
       );
   }
 
+  // PUT:ID
+  // ------------------------------------------------------------------------
   @Put(":id")
   update(
     @Param("id") id_user: number,
@@ -94,6 +104,8 @@ export class UserController {
       );
   }
 
+  // DELETE:ID
+  // ------------------------------------------------------------------------
   @Delete(":id")
   delete(@Param("id") id_user: number, @Res() response: Response): void {
     this.userService
