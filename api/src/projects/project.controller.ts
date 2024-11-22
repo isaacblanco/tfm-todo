@@ -6,10 +6,9 @@ import {
   Param,
   Post,
   Put,
-  Req,
   Res,
 } from "@nestjs/common";
-import { Request, Response } from "express";
+import { Response } from "express";
 import { Project } from "./entities/project.entity";
 import { ProjectService } from "./project.service";
 
@@ -17,10 +16,11 @@ import { ProjectService } from "./project.service";
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
-  @Get()
-  async getAllProjects(@Req() request: Request): Promise<Project[]> {
-    const userId = 1; // Suponiendo que tienes el usuario autenticado en `request.user`
-    return this.projectService.getProjectsByUser(userId);
+  @Get("user/:id_user")
+  async getProjectsByUser(
+    @Param("id_user") id_user: number
+  ): Promise<Project[]> {
+    return this.projectService.getProjectsByUser(id_user);
   }
 
   @Get()
@@ -36,9 +36,9 @@ export class ProjectController {
   }
 
   @Get(":id")
-  getById(@Param("id") id: number, @Res() response: Response): void {
+  getById(@Param("id") id_project: number, @Res() response: Response): void {
     this.projectService
-      .getById(id)
+      .getById(id_project)
       .then((project) => response.status(200).json(project))
       .catch((err) =>
         response.status(404).json({ message: "Project not found", error: err })
@@ -59,12 +59,12 @@ export class ProjectController {
 
   @Put(":id")
   update(
-    @Param("id") id: number,
+    @Param("id") id_project: number,
     @Body() project: Partial<Project>,
     @Res() response: Response
   ): void {
     this.projectService
-      .update(id, project)
+      .update(id_project, project)
       .then((updatedProject) => response.status(200).json(updatedProject))
       .catch((err) =>
         response
@@ -74,14 +74,14 @@ export class ProjectController {
   }
 
   @Delete(":id")
-  delete(@Param("id") id: number, @Res() response: Response): void {
+  delete(@Param("id") id_project: number, @Res() response: Response): void {
     this.projectService
-      .delete(id)
+      .delete(id_project)
       .then(() => response.status(204).send())
       .catch((err) =>
         response
           .status(500)
-          .json({ message: "Error deleting project", error: err })
+          .json({ message: "Error deleting project ", error: err })
       );
   }
 }

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -16,26 +17,53 @@ import { UserService } from "./user.service";
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Post("login")
+  async login(
+    @Body("email") email: string,
+    @Body("password") password: string
+  ): Promise<{ message: string; user?: Partial<User> }> {
+    if (!email || !password) {
+      throw new BadRequestException("Email and password are required");
+    }
+
+    const user = await this.userService.validateUser(email, password);
+    if (!user) {
+      return { message: "Invalid email or password" }; // Usuario inválido
+    }
+
+    // Excluir la contraseña de la respuesta por seguridad
+    const { password: _, ...userWithoutPassword } = user;
+    return { message: "Login successful", user: userWithoutPassword };
+  }
+
   @Get()
-  getAll(@Res() response: Response): void {
-    this.userService
-      .getAll()
-      .then((users) => response.status(200).json(users))
-      .catch((err) =>
-        response
-          .status(500)
-          .json({ message: "Error fetching users", error: err })
-      );
+  async getAll(): Promise<User[]> {
+    return await this.userService.getAll();
   }
 
   @Get(":id")
-  getById(@Param("id") id: number, @Res() response: Response): void {
-    this.userService
-      .getById(id)
-      .then((user) => response.status(200).json(user))
-      .catch((err) =>
-        response.status(404).json({ message: "User not found", error: err })
-      );
+  async getById(
+    @Param("id") id_user: string,
+    @Res() response: Response
+  ): Promise<void> {
+    const userId = parseInt(id_user, 10); // Asegúrate de que es un número
+    if (isNaN(userId)) {
+      response.status(400).json({ message: `Invalid user ID: ${id_user}` });
+      return;
+    }
+
+    try {
+      const user = await this.userService.getById(userId);
+      if (!user) {
+        response
+          .status(404)
+          .json({ message: `User not found with ID ${userId}` });
+        return;
+      }
+      response.status(200).json(user);
+    } catch (err) {
+      response.status(500).json({ message: "Error fetching user", error: err });
+    }
   }
 
   @Post()
@@ -52,12 +80,12 @@ export class UserController {
 
   @Put(":id")
   update(
-    @Param("id") id: number,
+    @Param("id") id_user: number,
     @Body() user: Partial<User>,
     @Res() response: Response
   ): void {
     this.userService
-      .update(id, user)
+      .update(id_user, user)
       .then((updatedUser) => response.status(200).json(updatedUser))
       .catch((err) =>
         response
@@ -67,9 +95,9 @@ export class UserController {
   }
 
   @Delete(":id")
-  delete(@Param("id") id: number, @Res() response: Response): void {
+  delete(@Param("id") id_user: number, @Res() response: Response): void {
     this.userService
-      .delete(id)
+      .delete(id_user)
       .then(() => response.status(204).send())
       .catch((err) =>
         response

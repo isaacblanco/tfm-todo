@@ -25,6 +25,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'todo/project/:id', // Define el parámetro dinámico :id
+    loadComponent: () =>
+      import('./todo/project/project.page').then((m) => m.ProjectPage),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'todo/project',
     loadComponent: () =>
       import('./todo/project/project.page').then((m) => m.ProjectPage), // Página de proyectos

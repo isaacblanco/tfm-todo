@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { UserService } from '../core/services/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://localhost:8100/auth'; // Cambiar por la URL de tu API
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   /**
    * Inicia sesión con credenciales
@@ -17,7 +18,15 @@ export class AuthService {
    * @returns Observable con los datos de autenticación
    */
   login(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, { username, password });
+    return this.http.post(`${this.apiUrl}/login`, { username, password }).pipe(
+      tap((response: any) => {
+        // Guarda el token y el user_id tras el inicio de sesión
+        if (response.authToken && response.userId) {
+          this.setToken(response.authToken);
+          this.userService.setUserId(response.userId); // Guarda el user_id usando UserService
+        }
+      })
+    );
   }
 
   /**
@@ -33,7 +42,8 @@ export class AuthService {
    * Cierra sesión eliminando el token de almacenamiento local
    */
   logout(): void {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem('authToken'); // Elimina el token del almacenamiento
+    this.userService.clearUserId(); // Limpia el user_id usando UserService
   }
 
   /**

@@ -12,12 +12,13 @@
     <ion-label position="stacked">Project Name</ion-label>
     <ion-input
       type="text"
+      name="projectName"
       [(ngModel)]="projectName"
       placeholder="Enter project name"
     ></ion-input>
   </ion-item>
-
-  <ion-footer>
-    <ion-button expand="full" (click)="addProject()">Add Project</ion-button>
-  </ion-footer>
 </ion-content>
+
+<ion-footer>
+  <ion-button expand="full" (click)="addProject()">Add Project</ion-button>
+</ion-footer>

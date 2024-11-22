@@ -20,20 +20,22 @@ export class ProjectService {
     return this.projectRepository.find();
   }
 
-  async getById(id: number): Promise<Project | undefined> {
-    return this.projectRepository.findOne({ where: { id } });
-  }
-
   async create(project: Project): Promise<Project> {
     return this.projectRepository.save(project);
   }
-
-  async update(id: number, project: Partial<Project>): Promise<Project> {
-    await this.projectRepository.update(id, project);
-    return this.getById(id);
+  async getById(id_project: number): Promise<Project | undefined> {
+    return this.projectRepository.findOne({ where: { id_project } }); // Cambiar "id" por "id_project"
   }
 
-  async delete(id: number): Promise<void> {
-    await this.projectRepository.delete(id);
+  async update(
+    id_project: number,
+    project: Partial<Project>
+  ): Promise<Project> {
+    await this.projectRepository.update(id_project, project); // Cambiar "id" por "id_project"
+    return this.getById(id_project);
+  }
+
+  async delete(id_project: number): Promise<void> {
+    await this.projectRepository.delete(id_project); // Cambiar "id" por "id_project"
   }
 }
