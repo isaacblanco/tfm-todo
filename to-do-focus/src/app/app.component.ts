@@ -45,12 +45,9 @@ import { ProjectService } from './core/services/project.service';
   ],
 })
 export class AppComponent implements OnInit {
-  public userId = 1; // ID del usuario actual (simulado)
   public projects: ProjectDTO[] = []; // Lista de proyectos del usuario
-  public appPages = [
-    { title: 'Proyecto 1', url: '/todo/project:1', icon: 'folder' },
-  ];
-  public labels = []; // 'Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'
+  public labels = []; // Etiquetas, puedes cargar dinámicamente si es necesario
+
   constructor(
     private projectService: ProjectService,
     private modalController: ModalController
@@ -60,8 +57,11 @@ export class AppComponent implements OnInit {
     this.loadProjects();
   }
 
+  /**
+   * Carga los proyectos del usuario desde el servicio
+   */
   private loadProjects() {
-    this.projectService.getProjects(this.userId).subscribe({
+    this.projectService.getProjects().subscribe({
       next: (data) => {
         this.projects = data;
       },
@@ -71,20 +71,22 @@ export class AppComponent implements OnInit {
     });
   }
 
+  /**
+   * Abre un modal para añadir o editar un proyecto
+   */
   async openAddProjectModal(): Promise<void> {
     const modal = await this.modalController.create({
       component: await import(
         './todo/modals/edit-project/edit-project.component'
       ).then((m) => m.EditProjectComponent), // Carga dinámica del componente
-      componentProps: {
-        userId: this.userId, // Puedes pasar datos al modal si es necesario
-      },
     });
+
     modal.onDidDismiss().then((result) => {
       if (result.data && result.data.reload) {
         this.loadProjects(); // Recargar proyectos si el modal indica cambios
       }
     });
+
     return modal.present();
   }
 }

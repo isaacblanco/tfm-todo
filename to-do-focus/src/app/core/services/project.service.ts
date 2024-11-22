@@ -1,5 +1,4 @@
-/* */
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -14,22 +13,42 @@ export class ProjectService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Obtiene todos los proyectos de un usuario
-   * @param userId - ID del usuario cuyos proyectos se desean obtener
-   * @returns Observable con la lista de proyectos
+   * Obtiene el ID del usuario desde el localStorage
+   * @returns number | null
    */
-  getProjects(userId: number): Observable<ProjectDTO[]> {
-    const params = new HttpParams().set('userId', userId.toString());
-    return this.http.get<ProjectDTO[]>(this.apiUrl, { params });
+  private getUserId(): number | null {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      const parsedData = JSON.parse(userData);
+      return parsedData?.id || null;
+    }
+    return null;
   }
 
   /**
-   * Crea un nuevo proyecto
+   * Obtiene todos los proyectos del usuario almacenado en localStorage
+   * @returns Observable con la lista de proyectos
+   */
+  getProjects(): Observable<ProjectDTO[]> {
+    const userId = this.getUserId();
+    if (!userId) {
+      throw new Error('User ID not found in localStorage');
+    }
+
+    return this.http.get<ProjectDTO[]>(`${this.apiUrl}?userId=${userId}`);
+  }
+
+  /**
+   * Crea un nuevo proyecto para el usuario almacenado en localStorage
    * @param name - Nombre del proyecto
-   * @param userId - ID del usuario al que pertenece el proyecto
    * @returns Observable con el proyecto creado
    */
-  addProject(name: string, userId: number): Observable<ProjectDTO> {
+  addProject(name: string): Observable<ProjectDTO> {
+    const userId = this.getUserId();
+    if (!userId) {
+      throw new Error('User ID not found in localStorage');
+    }
+
     const body = { name, user_id: userId };
     return this.http.post<ProjectDTO>(this.apiUrl, body);
   }
@@ -44,7 +63,7 @@ export class ProjectService {
     projectId: number,
     project: ProjectDTO
   ): Observable<ProjectDTO> {
-    return this.http.put<ProjectDTO>(`${this.apiUrl}/${projectId}`, project);
+    return this.http.put<ProjectDTO>(`${this.apiUrl}${projectId}`, project);
   }
 
   /**
@@ -53,6 +72,6 @@ export class ProjectService {
    * @returns Observable vacío
    */
   deleteProject(projectId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${projectId}`);
+    return this.http.delete<void>(`${this.apiUrl}${projectId}`);
   }
 }
