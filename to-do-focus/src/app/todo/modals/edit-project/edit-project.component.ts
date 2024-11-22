@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import {
@@ -13,6 +13,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
+import { ProjectDTO } from '../../../core/models/project-DTO';
 import { ProjectService } from '../../../core/services/project.service';
 
 @Component({
@@ -34,32 +35,53 @@ import { ProjectService } from '../../../core/services/project.service';
     CommonModule,
   ],
 })
-export class EditProjectComponent {
+export class EditProjectComponent implements OnInit {
+  @Input() project: ProjectDTO | null = null; // Datos del proyecto para editar o null para nuevo
+
   public projectName: string = '';
+  public pinned: boolean = false;
+  public main: boolean = false;
 
   constructor(
     private modalController: ModalController,
     private projectService: ProjectService
   ) {}
 
-  /**
-   * Añade un nuevo proyecto utilizando el ProjectService
-   */
-  addProject(): void {
-    if (this.projectName.trim()) {
-      this.projectService.addProject(this.projectName).subscribe({
-        next: () => {
-          console.log('Proyecto añadido correctamente');
-          this.modalController.dismiss({ reload: true });
-        },
-        error: (err) => console.error('Error al añadir el proyecto:', err),
-      });
+  ngOnInit(): void {
+    if (this.project) {
+      this.projectName = this.project.name;
+      this.pinned = this.project.pinned;
+      this.main = this.project.main;
     }
   }
 
-  /**
-   * Cierra el modal sin realizar cambios
-   */
+  saveProject(): void {
+    if (!this.projectName.trim()) {
+      console.error('El nombre del proyecto es obligatorio');
+      return;
+    }
+
+    const projectData: ProjectDTO = {
+      id_project: this.project?.id_project || 0,
+      name: this.projectName,
+      pinned: this.pinned,
+      main: this.main,
+      userId: this.project?.userId || 0,
+    };
+
+    const request = this.project
+      ? this.projectService.updateProject(this.project.id_project, projectData)
+      : this.projectService.addProject(projectData.name);
+
+    request.subscribe({
+      next: () => {
+        console.log('Proyecto guardado correctamente');
+        this.modalController.dismiss({ reload: true });
+      },
+      error: (err) => console.error('Error al guardar el proyecto:', err),
+    });
+  }
+
   closeModal(): void {
     this.modalController.dismiss();
   }

@@ -1,24 +1,43 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Add New Project</ion-title>
+    <ion-title>{{ project ? "Editar Proyecto" : "Nuevo Proyecto" }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Close</ion-button>
+      <ion-button (click)="closeModal()">Cerrar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label position="stacked">Project Name</ion-label>
-    <ion-input
-      type="text"
-      name="projectName"
-      [(ngModel)]="projectName"
-      placeholder="Enter project name"
-    ></ion-input>
-  </ion-item>
+  <form #projectForm="ngForm" (ngSubmit)="saveProject()">
+    <ion-item>
+      <ion-label position="stacked">Nombre del Proyecto</ion-label>
+      <ion-input
+        type="text"
+        name="projectName"
+        required
+        [(ngModel)]="projectName"
+        placeholder="Introduce el nombre del proyecto"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Pinned</ion-label>
+      <ion-checkbox name="pinned" [(ngModel)]="pinned"></ion-checkbox>
+    </ion-item>
+
+    <ion-item *ngIf="false">
+      <ion-label>Main</ion-label>
+      <ion-checkbox name="main" [(ngModel)]="main"></ion-checkbox>
+    </ion-item>
+  </form>
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="full" (click)="addProject()">Add Project</ion-button>
+  <ion-button
+    expand="full"
+    [disabled]="!projectForm.valid"
+    (click)="saveProject()"
+  >
+    {{ project ? "Guardar Cambios" : "Crear Proyecto" }}
+  </ion-button>
 </ion-footer>

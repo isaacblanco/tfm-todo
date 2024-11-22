@@ -63,7 +63,7 @@ export class ProjectService {
       throw new Error('User ID not found in localStorage');
     }
 
-    const body = { name, user_id: userId };
+    const body = { name, pinned: false, main: false, userId };
     return this.http.post<ProjectDTO>(this.apiUrl, body);
   }
 

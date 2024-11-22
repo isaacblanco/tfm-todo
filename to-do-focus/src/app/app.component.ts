@@ -74,19 +74,20 @@ export class AppComponent implements OnInit {
   /**
    * Abre un modal para añadir o editar un proyecto
    */
-  async openAddProjectModal(): Promise<void> {
+  async openAddProjectModal(project: ProjectDTO | null = null): Promise<void> {
     const modal = await this.modalController.create({
       component: await import(
         './todo/modals/edit-project/edit-project.component'
-      ).then((m) => m.EditProjectComponent), // Carga dinámica del componente
+      ).then((m) => m.EditProjectComponent),
+      componentProps: { project },
     });
 
     modal.onDidDismiss().then((result) => {
       if (result.data && result.data.reload) {
-        this.loadProjects(); // Recargar proyectos si el modal indica cambios
+        this.loadProjects();
       }
     });
 
-    return modal.present();
+    await modal.present();
   }
 }
