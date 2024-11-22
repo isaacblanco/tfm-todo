@@ -3,18 +3,38 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
   Res,
 } from "@nestjs/common";
 import { Response } from "express";
+import { Task } from "src/tasks/entities/task.entity";
 import { Project } from "./entities/project.entity";
 import { ProjectService } from "./project.service";
 
 @Controller("projects")
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
+
+  // Nueva ruta para obtener las tareas de un proyecto específico
+  @Get(":id/tasks")
+  async getTasksByProject(@Param("id") id_project: string): Promise<Task[]> {
+    const projectId = parseInt(id_project, 10);
+    if (isNaN(projectId)) {
+      throw new NotFoundException(`Invalid project ID: ${id_project}`);
+    }
+
+    const tasks = await this.projectService.getTasksByProject(projectId);
+    if (!tasks.length) {
+      throw new NotFoundException(
+        `No tasks found for project ID: ${projectId}`
+      );
+    }
+
+    return tasks;
+  }
 
   @Get("user/:id_user")
   async getProjectsByUser(

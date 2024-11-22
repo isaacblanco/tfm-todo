@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Task } from "src/tasks/entities/task.entity";
 import { Repository } from "typeorm";
 import { Project } from "./entities/project.entity";
 
@@ -7,8 +8,18 @@ import { Project } from "./entities/project.entity";
 export class ProjectService {
   constructor(
     @InjectRepository(Project)
-    private readonly projectRepository: Repository<Project>
+    private readonly projectRepository: Repository<Project>,
+    @InjectRepository(Task)
+    private readonly taskRepository: Repository<Task>
   ) {}
+
+  // Obtener tareas asociadas a un proyecto por su ID
+  async getTasksByProject(projectId: number): Promise<Task[]> {
+    return this.taskRepository.find({
+      where: { fk_project: projectId },
+      order: { dini: "ASC" }, // Orden opcional por fecha de inicio (ascendente)
+    });
+  }
 
   async getProjectsByUser(userId: number): Promise<Project[]> {
     return this.projectRepository.find({

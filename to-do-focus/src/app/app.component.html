@@ -32,7 +32,8 @@
           <ion-menu-toggle auto-hide="false" *ngFor="let project of projects">
             <ion-item
               routerDirection="root"
-              [routerLink]="['/todo/project', project.id]"
+              [routerLink]="['/todo/project', project.id_project]"
+              routerLinkActive="selected"
               lines="full"
               detail="false"
             >

@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Project } from "../../projects/entities/project.entity";
 
 @Entity("tasks")
@@ -16,10 +22,10 @@ export class Task {
   completed: boolean;
 
   @Column("timestamp", { nullable: true })
-  dIni: Date;
+  dini: Date;
 
   @Column("timestamp", { nullable: true })
-  dFin: Date;
+  dfin: Date;
 
   @Column()
   tabs: number;
@@ -30,11 +36,6 @@ export class Task {
   @Column()
   priority: number;
 
-  /*
-  @Column({ type: "enum", enum: ["Low", "Normal", "High"], default: "Normal" })
-  priority: string;
-  */
-
   @Column({
     type: "enum",
     enum: ["TO_DO", "IN_PROGRESS", "BLOCKED", "IN_REVIEW", "DONE"],
@@ -43,12 +44,6 @@ export class Task {
   status: string;
 
   @ManyToOne(() => Project, (project) => project.tasks, { onDelete: "CASCADE" })
+  @JoinColumn({ name: "fk_project" }) // Vincular explicitamente fk_project
   project: Project;
-
-  /*
-  // Relación muchos a muchos con Tag
-  @ManyToMany(() => Tag, (tag) => tag.tasks)
-  @JoinTable() // Necesario para crear la tabla intermedia
-  tags: Tag[];
-  */
 }

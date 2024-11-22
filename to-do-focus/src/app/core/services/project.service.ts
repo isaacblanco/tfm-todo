@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ProjectDTO } from '../models/project-DTO';
+import { TaskDTO } from '../models/task-DTO';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,19 @@ export class ProjectService {
       return parsedData?.id || null;
     }
     return null;
+  }
+
+  getTasks(projectId: number): Observable<TaskDTO[]> {
+    return this.http.get<TaskDTO[]>(`${this.apiUrl}${projectId}/tasks`);
+  }
+
+  /**
+   * Obtiene un proyecto por su ID
+   * @param projectId - ID del proyecto
+   * @returns Observable con los datos del proyecto
+   */
+  getProjectById(projectId: number): Observable<ProjectDTO> {
+    return this.http.get<ProjectDTO>(`${this.apiUrl}${projectId}`);
   }
 
   /**

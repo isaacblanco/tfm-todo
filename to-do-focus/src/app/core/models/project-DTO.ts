@@ -1,7 +1,7 @@
 /* import { TaskDTO } from './task-DTO'; */
 
 export interface ProjectDTO {
-  id: number;
+  id_project: number;
   name: string;
   pinned: boolean;
   main: boolean;
