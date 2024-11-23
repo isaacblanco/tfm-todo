@@ -107,6 +107,15 @@ export class ProjectService {
    * @returns Observable vacío
    */
   deleteProject(projectId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}${projectId}`);
+    return this.http.delete<void>(`${this.apiUrl}${projectId}`).pipe(
+      tap(() => {
+        // Actualizar la lista local de proyectos
+        const currentProjects = this.projectsSubject.getValue();
+        const updatedProjects = currentProjects.filter(
+          (project) => project.id_project !== projectId
+        );
+        this.projectsSubject.next(updatedProjects); // Emitir la lista actualizada
+      })
+    );
   }
 }

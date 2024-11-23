@@ -139,6 +139,9 @@ export class ProjectPage implements OnInit {
   /**
    * Elimina el proyecto tras pedir confirmación
    */
+  /**
+   * Elimina el proyecto tras pedir confirmación
+   */
   async deleteProject(): Promise<void> {
     if (this.projectId !== null) {
       const alert = await this.alertController.create({
@@ -155,7 +158,7 @@ export class ProjectPage implements OnInit {
               this.projectService.deleteProject(this.projectId!).subscribe({
                 next: () => {
                   console.log('Proyecto eliminado correctamente');
-                  this.router.navigate(['/todo/focus']);
+                  this.router.navigate(['/todo/focus']); // Navegar después de borrar
                 },
                 error: (err) => {
                   console.error('Error al eliminar el proyecto:', err);

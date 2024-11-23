@@ -4,11 +4,6 @@ Temas pendientes
 
 ## PROYECTOS
 
-- Crear nuevo proyecto
-- Editar proyecto
-- Borrar un proyecto
-  - Debe eliminarse de la lista del lateral
-- Cambiar nombre del proyecto
 - Leer datos de un proyecto
   - No considerar un error que no tenga
     - Devolver un array vacio o null
@@ -38,6 +33,7 @@ Temas pendientes
 
 - Mostrar datos del usuario
 - Falta mostar el menu lateral, no funciona
+- Si no hay tareas en un proyecto, no devolver un 404, devolver un array vacio
 
 ## TODO
 
