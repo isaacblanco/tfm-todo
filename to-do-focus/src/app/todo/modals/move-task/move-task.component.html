@@ -12,7 +12,7 @@
     <!-- Proyecto actual -->
     <ion-item>
       <ion-label>
-        <strong>Proyecto Actual:</strong>
+        <strong>Proyecto Actual: </strong>
         <span>{{ currentProjectName }}</span>
       </ion-label>
     </ion-item>
@@ -26,7 +26,11 @@
       *ngFor="let project of otherProjects"
       (click)="moveTaskToProject(project.id_project)"
     >
-      <ion-label>{{ project.name }}</ion-label>
+      <ion-label>
+        <ion-button>
+          {{ project.name }}
+        </ion-button>
+      </ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

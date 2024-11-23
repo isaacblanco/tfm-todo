@@ -37,9 +37,10 @@
 
   <ion-list>
     <app-task-item
-      *ngFor="let task of filteredTasks"
+      *ngFor="let task of tasks"
       [task]="task"
       [fk_project]="project.id_project || 0"
+      (taskMoved)="onTaskMoved($event)"
     >
     </app-task-item>
   </ion-list>

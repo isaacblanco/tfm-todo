@@ -25,6 +25,11 @@ export class MoveTaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (!this.task || !this.task.id_task) {
+      console.error('La tarea no es válida o no se proporcionó.');
+      this.dismissModal();
+      return;
+    }
     this.loadProjects();
   }
 
@@ -58,12 +63,13 @@ export class MoveTaskComponent implements OnInit {
   moveTaskToProject(projectId: number): void {
     const updatedTask = { ...this.task, fk_project: projectId };
 
-    console.log('Task to move: ', this.task);
-
     this.taskService.updateTask(this.task.id_task, updatedTask).subscribe({
       next: () => {
         console.log('Tarea movida correctamente');
-        this.modalController.dismiss({ reload: true }); // Cierra la modal y recarga la página
+        this.modalController.dismiss({
+          reload: true,
+          updatedTask: { id_task: this.task.id_task, fk_project: projectId },
+        }); // Cierra la modal y envía los datos actualizados
       },
       error: (err) => {
         console.error('Error al mover la tarea:', err);
@@ -75,6 +81,6 @@ export class MoveTaskComponent implements OnInit {
    * Cierra la ventana modal sin realizar cambios
    */
   dismissModal(): void {
-    this.modalController.dismiss();
+    this.modalController.dismiss({ reload: true });
   }
 }

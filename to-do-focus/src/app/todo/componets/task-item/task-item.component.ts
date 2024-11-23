@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AlertController, IonicModule, ModalController } from '@ionic/angular';
 import { TaskDTO } from '../../../core/models/task-DTO';
@@ -15,6 +15,7 @@ import { TaskService } from '../../../core/services/task.service';
 export class TaskItemComponent implements OnInit {
   @Input() task!: TaskDTO; // Objeto de tarea
   @Input() fk_project!: number; // ID del proyecto (opcional)
+  @Output() taskMoved = new EventEmitter<TaskDTO>(); // Emisor para notificar al padre
 
   showDetails = false;
   availableTimes: string[] = []; // Horas disponibles
@@ -131,13 +132,23 @@ export class TaskItemComponent implements OnInit {
   /**
    * Abre el modal para mover una tarea.
    */
-  async openMoveTaskModal() {
+  async openMoveTaskModal(): Promise<void> {
     const modal = await this.modalController.create({
       component: await import(
         '../../modals/move-task/move-task.component'
       ).then((m) => m.MoveTaskComponent),
       componentProps: { task: this.task, fk_project: this.fk_project },
     });
+
+    modal.onDidDismiss().then((result) => {
+      if (result.data && result.data.updatedTask) {
+        const updatedTask = result.data.updatedTask;
+
+        // Emitir evento al padre con la tarea actualizada
+        this.taskMoved.emit(updatedTask);
+      }
+    });
+
     await modal.present();
   }
 

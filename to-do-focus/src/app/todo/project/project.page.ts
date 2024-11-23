@@ -115,6 +115,7 @@ export class ProjectPage implements OnInit {
   /**
    * Abre el modal para editar el proyecto
    */
+
   async openEditProjectModal(): Promise<void> {
     if (this.project) {
       const modal = await this.modalController.create({
@@ -127,8 +128,28 @@ export class ProjectPage implements OnInit {
       });
 
       modal.onDidDismiss().then((result) => {
+        console.log('Modal dismissed:', result);
         if (result.data && result.data.reload) {
-          this.loadProjectData(); // Recargar los datos del proyecto
+          if (result.data.updatedTask) {
+            // Actualizar el fk_project de la tarea movida en la lista local
+            const updatedTask = result.data.updatedTask;
+            const taskIndex = this.tasks.findIndex(
+              (task) => task.id_task === updatedTask.id_task
+            );
+
+            if (taskIndex !== -1) {
+              this.tasks[taskIndex].fk_project = updatedTask.fk_project;
+            }
+          }
+
+          // Filtrar tareas que ya no pertenecen a este proyecto
+          this.tasks = this.tasks.filter(
+            (task) => task.fk_project === this.projectId
+          );
+
+          this.loadTasks();
+
+          console.log('Lista de tareas actualizada:', this.tasks);
         }
       });
 
@@ -136,9 +157,16 @@ export class ProjectPage implements OnInit {
     }
   }
 
-  /**
-   * Elimina el proyecto tras pedir confirmación
-   */
+  onTaskMoved(updatedTask: TaskDTO): void {
+    if (updatedTask.fk_project !== this.projectId) {
+      // Filtrar la tarea movida de la lista
+      this.tasks = this.tasks.filter(
+        (task) => task.id_task !== updatedTask.id_task
+      );
+      console.log('Tarea movida eliminada de la lista actual:', updatedTask);
+    }
+  }
+
   /**
    * Elimina el proyecto tras pedir confirmación
    */
