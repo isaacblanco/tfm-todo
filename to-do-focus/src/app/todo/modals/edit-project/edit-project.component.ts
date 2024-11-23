@@ -1,18 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
-import {
-  IonButton,
-  IonButtons,
-  IonContent,
-  IonFooter,
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { ProjectDTO } from '../../../core/models/project-DTO';
 import { ProjectService } from '../../../core/services/project.service';
 
@@ -21,19 +10,7 @@ import { ProjectService } from '../../../core/services/project.service';
   templateUrl: './edit-project.component.html',
   styleUrls: ['./edit-project.component.scss'],
   standalone: true,
-  imports: [
-    IonFooter,
-    IonItem,
-    IonContent,
-    IonButtons,
-    IonLabel,
-    IonTitle,
-    IonButton,
-    IonToolbar,
-    IonHeader,
-    FormsModule,
-    CommonModule,
-  ],
+  imports: [FormsModule, CommonModule, IonicModule],
 })
 export class EditProjectComponent implements OnInit {
   @Input() project: ProjectDTO | null = null; // Datos del proyecto para editar o null para nuevo
@@ -66,12 +43,12 @@ export class EditProjectComponent implements OnInit {
       name: this.projectName,
       pinned: this.pinned,
       main: this.main,
-      userId: this.project?.userId || 0,
+      fk_user: this.project?.fk_user || 0,
     };
 
     const request = this.project
       ? this.projectService.updateProject(this.project.id_project, projectData)
-      : this.projectService.addProject(projectData.name);
+      : this.projectService.addProject(projectData);
 
     request.subscribe({
       next: () => {

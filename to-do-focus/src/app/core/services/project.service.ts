@@ -57,14 +57,14 @@ export class ProjectService {
    * @param name - Nombre del proyecto
    * @returns Observable con el proyecto creado
    */
-  addProject(name: string): Observable<ProjectDTO> {
+  addProject(data: ProjectDTO): Observable<ProjectDTO> {
     const userId = this.getUserId();
     if (!userId) {
       throw new Error('User ID not found in localStorage');
     }
+    data.fk_user = userId; // Asigna el ID del usuario al proyecto
 
-    const body = { name, pinned: false, main: false, userId };
-    return this.http.post<ProjectDTO>(this.apiUrl, body);
+    return this.http.post<ProjectDTO>(this.apiUrl, data);
   }
 
   /**

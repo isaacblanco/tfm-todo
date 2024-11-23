@@ -5,6 +5,6 @@ export interface ProjectDTO {
   name: string;
   pinned: boolean;
   main: boolean;
-  userId: number; // ID del usuario propietario
+  fk_user: number; // ID del usuario propietario
   /* tasks?: TaskDTO[]; // Lista de tareas asociadas al proyecto */
 }
