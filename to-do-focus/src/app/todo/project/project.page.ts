@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { TaskDTO } from '../../core/models/task-DTO';
 import { ProjectService } from '../../core/services/project.service';
 import { TaskService } from '../../core/services/task.service';
 import { TaskItemComponent } from '../componets/task-item/task-item.component';
@@ -15,10 +16,11 @@ import { TaskItemComponent } from '../componets/task-item/task-item.component';
   imports: [CommonModule, FormsModule, TaskItemComponent, IonicModule],
 })
 export class ProjectPage implements OnInit {
-  projectId: number | null = null; // Si permites null
-  // projectId: number = 0; // Si usas un valor predeterminado
+  projectId: number | null = null;
   project: any = null;
-  tasks: any[] = [];
+  tasks: TaskDTO[] = [];
+  filteredTasks: TaskDTO[] = [];
+  searchTerm: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +34,8 @@ export class ProjectPage implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
-      this.projectId = id ? +id : null; // Cambia a `0` si no quieres permitir `null`
+      this.projectId = id ? +id : null;
+      console.log('Project ID:', this.projectId);
       if (this.projectId) {
         this.loadProjectData();
       }
@@ -58,9 +61,52 @@ export class ProjectPage implements OnInit {
       this.projectService.getTasks(this.projectId).subscribe({
         next: (data) => {
           this.tasks = data;
+          this.filteredTasks = [...this.tasks]; // Inicializar lista filtrada
         },
         error: (err) => {
           console.error('Error al cargar las tareas:', err);
+        },
+      });
+    }
+  }
+
+  /**
+   * Filtra las tareas en función del término de búsqueda
+   */
+  filterTasks(): void {
+    const term = this.searchTerm.toLowerCase();
+    this.filteredTasks = this.tasks.filter((task) =>
+      task.task_name.toLowerCase().includes(term)
+    );
+  }
+
+  /**
+   * Agrega una tarea vacía a la lista de tareas
+   */
+  addEmptyTask(): void {
+    if (this.projectId) {
+      const emptyTask: TaskDTO = {
+        id_task: 0, // Generado por el backend
+        fk_project: this.projectId,
+        task_name: 'Nueva Tarea',
+        completed: false,
+        status: 'TO_DO',
+        priority: 1,
+        dini: undefined,
+        dfin: undefined,
+        description: '',
+        tabs: 1,
+        tags: [],
+      };
+
+      this.taskService.addTask(emptyTask).subscribe({
+        next: (newTask) => {
+          this.tasks.push(newTask);
+          this.filteredTasks = [...this.tasks]; // Actualizar la lista filtrada
+          console.log('Tarea vacía añadida:', newTask);
+        },
+        error: (err) => {
+          console.error('Error al añadir la tarea vacía:', err);
         },
       });
     }
@@ -76,7 +122,7 @@ export class ProjectPage implements OnInit {
           '../modals/edit-project/edit-project.component'
         ).then((m) => m.EditProjectComponent),
         componentProps: {
-          project: this.project, // Pasar los datos del proyecto al modal
+          project: this.project,
         },
       });
 
@@ -95,7 +141,6 @@ export class ProjectPage implements OnInit {
    */
   async deleteProject(): Promise<void> {
     if (this.projectId !== null) {
-      // Validación explícita
       const alert = await this.alertController.create({
         header: 'Confirmar eliminación',
         message: '¿Estás seguro de que quieres eliminar este proyecto?',
@@ -110,7 +155,6 @@ export class ProjectPage implements OnInit {
               this.projectService.deleteProject(this.projectId!).subscribe({
                 next: () => {
                   console.log('Proyecto eliminado correctamente');
-                  this.projectService.getProjects();
                   this.router.navigate(['/todo/focus']);
                 },
                 error: (err) => {

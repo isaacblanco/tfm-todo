@@ -13,7 +13,7 @@ export class TaskService {
   constructor(private http: HttpClient) {}
 
   getTasks(projectId: number): Observable<TaskDTO[]> {
-    return this.http.get<TaskDTO[]>(`${this.apiUrl}?projectId=${projectId}`);
+    return this.http.get<TaskDTO[]>(`${this.apiUrl}/${projectId}`);
   }
 
   addTask(task: TaskDTO): Observable<TaskDTO> {
