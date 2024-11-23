@@ -26,14 +26,11 @@ export class ProjectController {
       throw new NotFoundException(`Invalid project ID: ${id_project}`);
     }
 
+    // Obtener las tareas asociadas al proyecto
     const tasks = await this.projectService.getTasksByProject(projectId);
-    if (!tasks.length) {
-      throw new NotFoundException(
-        `No tasks found for project ID: ${projectId}`
-      );
-    }
 
-    return tasks;
+    // Retornar array vacío si no hay tareas
+    return tasks || [];
   }
 
   @Get("user/:id_user")

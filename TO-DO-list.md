@@ -4,13 +4,8 @@ Temas pendientes
 
 ## PROYECTOS
 
-- Leer datos de un proyecto
-  - No considerar un error que no tenga
-    - Devolver un array vacio o null
+- Leer tareas de un proyecto
   - Pintar con el componente de tareas
-- Editar proyecto
-- Borrar proyecto
-- Buscar
 
 ## Servicio TASK
 
