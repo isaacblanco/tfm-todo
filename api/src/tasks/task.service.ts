@@ -28,30 +28,30 @@ export class TaskService {
   async create(task: Task): Promise<Task> {
     return this.taskRepository.save(task);
   }
-
   async update(id: number, task: Partial<Task>): Promise<Task> {
-    await this.taskRepository.update(id, task);
-    return this.getById(id);
+    // Cambiar "id" por "id_task" en la consulta
+    const existingTask = await this.taskRepository.findOne({
+      where: { id_task: id },
+    });
+
+    if (!existingTask) {
+      throw new Error(`Task with ID ${id} not found`);
+    }
+
+    await this.taskRepository.update({ id_task: id }, task); // Cambiar "id" por "id_task"
+
+    const updatedTask = await this.taskRepository.findOne({
+      where: { id_task: id },
+    });
+
+    if (!updatedTask) {
+      throw new Error(`Error retrieving updated task with ID ${id}`);
+    }
+
+    return updatedTask;
   }
 
   async delete(id: number): Promise<void> {
     await this.taskRepository.delete(id);
   }
-
-  /*
-  async getHighPriorityTasks(): Promise<Task[]> {
-    return this.taskRepository
-      .createQueryBuilder('task')
-      .where('task.priority = :priority', { priority: 'High' })
-      .getMany();
-  }
-  */
-
-  /*
-  async rawQuery(): Promise<any> {
-    return this.dataSource.query(`
-      SELECT * FROM task WHERE priority = $1
-    `, ['High']);
-  }
-    */
 }

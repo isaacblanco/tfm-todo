@@ -1,19 +1,201 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { IonItem, IonLabel } from '@ionic/angular/standalone';
+import { FormsModule } from '@angular/forms';
+import { AlertController, IonicModule, ModalController } from '@ionic/angular';
 import { TaskDTO } from '../../../core/models/task-DTO';
+import { TaskService } from '../../../core/services/task.service';
 
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss'],
-  imports: [IonLabel, IonItem],
+  imports: [IonicModule, FormsModule, CommonModule],
   standalone: true,
 })
 export class TaskItemComponent implements OnInit {
   @Input() task!: TaskDTO; // Objeto de tarea
   @Input() fk_project!: number; // ID del proyecto (opcional)
 
-  constructor() {}
+  showDetails = false;
+  availableTimes: string[] = []; // Horas disponibles
+  selectedTime = '';
 
-  ngOnInit() {}
+  constructor(
+    private modalController: ModalController,
+    private alertController: AlertController,
+    private taskService: TaskService
+  ) {}
+
+  ngOnInit() {
+    this.generateAvailableTimes();
+    if (this.task.dini) {
+      this.selectedTime = this.task.dini.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    }
+  }
+
+  /**
+   * Llama al servicio para actualizar el nombre de la tarea
+   */
+  updateTaskName(): void {
+    if (this.task.id_task) {
+      this.taskService
+        .updateTask(this.task.id_task, { task_name: this.task.task_name })
+        .subscribe({
+          next: (updatedTask) => {
+            console.log(
+              'Nombre de la tarea actualizado:',
+              updatedTask.task_name
+            );
+          },
+          error: (err) => {
+            console.error('Error al actualizar el nombre de la tarea:', err);
+          },
+        });
+    }
+  }
+
+  /**
+   * Genera horas disponibles para el select (intervalos de 15 minutos).
+   */
+  private generateAvailableTimes() {
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 15) {
+        const formattedTime = `${hour.toString().padStart(2, '0')}:${minute
+          .toString()
+          .padStart(2, '0')}`;
+        this.availableTimes.push(formattedTime);
+      }
+    }
+  }
+
+  /**
+   * Alterna la visibilidad de los detalles.
+   */
+  toggleDetails() {
+    this.showDetails = !this.showDetails;
+  }
+
+  /**
+   * Marca o desmarca la tarea como completada.
+   */
+  toggleCompletion() {
+    this.task.completed = !this.task.completed;
+    console.log('Task completed:', this.task.completed);
+  }
+
+  /**
+   * Actualiza la hora de la tarea.
+   */
+  updateTime() {
+    if (this.task.dini) {
+      const [hours, minutes] = this.selectedTime.split(':').map(Number);
+      this.task.dini.setHours(hours, minutes);
+      console.log('Updated time:', this.task.dini);
+    }
+  }
+
+  /**
+   * Disminuye el valor de tabs en 1.
+   */
+  decrementTabs() {
+    if (this.task.tabs && this.task.tabs > 0) {
+      this.task.tabs--;
+    }
+  }
+
+  /**
+   * Incrementa el valor de tabs en 1.
+   */
+  incrementTabs() {
+    if (this.task.tabs) {
+      this.task.tabs++;
+    }
+  }
+
+  /**
+   * Abre el modal de selección de etiquetas.
+   */
+  async openSelectLabelsModal() {
+    const modal = await this.modalController.create({
+      component: await import(
+        '../../modals/select-labels/select-labels.component'
+      ).then((m) => m.SelectLabelsComponent),
+      componentProps: { task: this.task },
+    });
+    await modal.present();
+  }
+
+  /**
+   * Abre el modal para mover una tarea.
+   */
+  async openMoveTaskModal() {
+    const modal = await this.modalController.create({
+      component: await import(
+        '../../modals/move-task/move-task.component'
+      ).then((m) => m.MoveTaskComponent),
+      componentProps: { task: this.task, fk_project: this.fk_project },
+    });
+    await modal.present();
+  }
+
+  /**
+   * Abre el modal para editar la descripción.
+   */
+  async openEditDescriptionModal() {
+    const modal = await this.modalController.create({
+      component: await import(
+        '../../modals/edit-description/edit-description.component'
+      ).then((m) => m.EditDescriptionComponent),
+      componentProps: { task: this.task },
+    });
+    await modal.present();
+  }
+
+  /**
+   * Abre el modal de selección de fechas.
+   */
+  async openSelectDateModal() {
+    const modal = await this.modalController.create({
+      component: await import(
+        '../../modals/select-date/select-date.component'
+      ).then((m) => m.SelectDateComponent),
+      componentProps: { task: this.task },
+    });
+    await modal.present();
+  }
+
+  /**
+   * Establece la prioridad de la tarea.
+   */
+  setPriority(priority: number) {
+    this.task.priority = priority;
+  }
+
+  /**
+   * Borra la tarea tras confirmar.
+   */
+  async deleteTask() {
+    const alert = await this.alertController.create({
+      header: 'Confirmar eliminación',
+      message: '¿Estás seguro de que quieres eliminar esta tarea?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            console.log('Task deleted:', this.task.id_task);
+            // Aquí puedes implementar la lógica para eliminar la tarea en el backend
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
 }

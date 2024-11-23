@@ -2,16 +2,21 @@
 
 Temas pendientes
 
-## PROYECTOS
-
-- Leer tareas de un proyecto
-  - Pintar con el componente de tareas
+https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## Servicio TASK
 
-- Añadir tarea
 - Modificar tarea
+  - Guardar fecha y hora
+  - Editar ambas fechas y horas
+  - tabular derecha
+  - tabular izquierda
+  - Mover de proyecto
+  - Establecer prioridad
 - Borrar tarea
+  - Con confirmación
+
+UPDATE "tasks" SET "id_task" = $1, "fk_project" = $2, "task_name" = $3, "completed" = $4, "dini" = $5, "dfin" = $6, "tabs" = $7, "description" = $8, "priority" = $9, "status" = $10 WHERE "id_task" IN ($11) -- PARAMETERS: [7,3,"Borrame",0,null,null,1,"",1,"TO_DO","7"]
 
 ## Servicios LABELS
 
@@ -29,6 +34,7 @@ Temas pendientes
 - Mostrar datos del usuario
 - Falta mostar el menu lateral, no funciona
 - Si no hay tareas en un proyecto, no devolver un 404, devolver un array vacio
+- No funciona mover tareas: ojo, por tema fechas
 
 ## TODO
 

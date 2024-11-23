@@ -1,3 +1,36 @@
-<p>
-  select-date works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Seleccionar Fechas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <!-- Fecha de Inicio -->
+    <ion-item>
+      <ion-label position="stacked">Fecha de Inicio</ion-label>
+      <ion-datetime
+        [value]="task.dini"
+        (ionChange)="updateDini($event)"
+        presentation="date-time"
+      ></ion-datetime>
+    </ion-item>
+
+    <!-- Fecha de Fin -->
+    <ion-item>
+      <ion-label position="stacked">Fecha de Fin</ion-label>
+      <ion-datetime
+        [value]="task.dfin"
+        (ionChange)="updateDfin($event)"
+        presentation="date-time"
+      ></ion-datetime>
+    </ion-item>
+  </ion-list>
+
+  <ion-footer>
+    <ion-button expand="full" (click)="saveChanges()">Guardar</ion-button>
+  </ion-footer>
+</ion-content>

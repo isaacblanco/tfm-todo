@@ -1,3 +1,32 @@
-<p>
-  move-task works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mover Tarea</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <!-- Proyecto actual -->
+    <ion-item>
+      <ion-label>
+        <strong>Proyecto Actual:</strong>
+        <span>{{ currentProjectName }}</span>
+      </ion-label>
+    </ion-item>
+
+    <ion-list-header>
+      <strong>Mover a otro proyecto:</strong>
+    </ion-list-header>
+
+    <!-- Lista de proyectos -->
+    <ion-item
+      *ngFor="let project of otherProjects"
+      (click)="moveTaskToProject(project.id_project)"
+    >
+      <ion-label>{{ project.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
