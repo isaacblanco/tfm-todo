@@ -1,20 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  IonButton,
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonHeader,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonRow,
-  IonTitle,
-  IonToolbar,
-  NavController,
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
+import { NavController } from '@ionic/angular/standalone';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -22,21 +10,7 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [
-    IonGrid,
-    IonButton,
-    IonCol,
-    IonInput,
-    IonRow,
-    IonLabel,
-    IonItem,
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule],
 })
 export class LoginPage implements OnInit {
   userDetails: any;

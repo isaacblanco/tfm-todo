@@ -2,15 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import {
-  IonContent,
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 import { ProjectService } from '../../core/services/project.service';
 import { TaskService } from '../../core/services/task.service';
 import { TaskItemComponent } from '../componets/task-item/task-item.component';
@@ -20,20 +12,15 @@ import { TaskItemComponent } from '../componets/task-item/task-item.component';
   templateUrl: './project.page.html',
   styleUrls: ['./project.page.scss'],
   standalone: true,
-  imports: [
-    IonLabel,
-    IonItem,
-    IonList,
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-    TaskItemComponent,
-  ],
+  imports: [CommonModule, FormsModule, TaskItemComponent, IonicModule],
 })
 export class ProjectPage implements OnInit {
+  deleteProject() {
+    throw new Error('Method not implemented.');
+  }
+  openEditProjectModal() {
+    throw new Error('Method not implemented.');
+  }
   projectId: number | null = null; // Si permites null
   // projectId: number = 0; // Si usas un valor predeterminado
   project: any = null;

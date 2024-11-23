@@ -1,32 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-focus',
   templateUrl: './focus.page.html',
   styleUrls: ['./focus.page.scss'],
   standalone: true,
-  imports: [
-    IonItem,
-    IonList,
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonLabel,
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule],
 })
 export class FocusPage implements OnInit {
   tasks: any[] = [

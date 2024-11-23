@@ -1,22 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ModalController } from '@ionic/angular';
-import {
-  IonApp,
-  IonContent,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonMenu,
-  IonMenuToggle,
-  IonNote,
-  IonRouterLink,
-  IonRouterOutlet,
-  IonSplitPane,
-} from '@ionic/angular/standalone';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { ProjectDTO } from './core/models/project-DTO';
 import { ProjectService } from './core/services/project.service';
 
@@ -25,24 +10,7 @@ import { ProjectService } from './core/services/project.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    CommonModule,
-    IonApp,
-    IonSplitPane,
-    IonMenu,
-    IonContent,
-    IonList,
-    IonListHeader,
-    IonNote,
-    IonMenuToggle,
-    IonItem,
-    IonIcon,
-    IonLabel,
-    IonRouterLink,
-    IonRouterOutlet,
-  ],
+  imports: [RouterLink, RouterLinkActive, CommonModule, IonicModule],
 })
 export class AppComponent implements OnInit {
   public projects: ProjectDTO[] = []; // Lista de proyectos del usuario
