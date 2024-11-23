@@ -7,11 +7,8 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 ## Servicio TASK
 
 - Modificar tarea
-  - Guardar fecha y hora
-  - Editar ambas fechas y horas
   - tabular derecha
   - tabular izquierda
-  - Mover de proyecto
   - Establecer prioridad
 - Borrar tarea
   - Con confirmación
@@ -35,6 +32,9 @@ UPDATE "tasks" SET "id_task" = $1, "fk_project" = $2, "task_name" = $3, "complet
 - Falta mostar el menu lateral, no funciona
 - Si no hay tareas en un proyecto, no devolver un 404, devolver un array vacio
 - No funciona mover tareas: ojo, por tema fechas
+- Modificar tarea
+  - Guardar fecha y hora
+  - Editar ambas fechas y horas
 
 ## TODO
 

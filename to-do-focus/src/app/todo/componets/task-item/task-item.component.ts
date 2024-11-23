@@ -16,10 +16,12 @@ export class TaskItemComponent implements OnInit {
   @Input() task!: TaskDTO; // Objeto de tarea
   @Input() fk_project!: number; // ID del proyecto (opcional)
   @Output() taskMoved = new EventEmitter<TaskDTO>(); // Emisor para notificar al padre
+  @Output() taskUpdated = new EventEmitter<TaskDTO>(); // Para notificar al padre que se actualizó la tarea
 
   showDetails = false;
   availableTimes: string[] = []; // Horas disponibles
   selectedTime = '';
+  externalDate: string = ''; // Fecha externa para la tarea
 
   constructor(
     private modalController: ModalController,
@@ -55,6 +57,34 @@ export class TaskItemComponent implements OnInit {
             console.error('Error al actualizar el nombre de la tarea:', err);
           },
         });
+    }
+  }
+
+  /**
+   * Combina externalDate y selectedTime para actualizar dini
+   */
+  updateDini(): void {
+    if (this.externalDate && this.selectedTime) {
+      const [hours, minutes] = this.selectedTime.split(':').map(Number);
+      const newDini = new Date(this.externalDate);
+
+      if (!isNaN(newDini.getTime())) {
+        newDini.setHours(hours, minutes);
+
+        // Actualiza la tarea y llama al servicio
+        this.task.dini = newDini;
+        this.taskService.updateTask(this.task.id_task, this.task).subscribe({
+          next: (updatedTask) => {
+            console.log('dini actualizado:', updatedTask.dini);
+            this.taskUpdated.emit(this.task); // Notifica al padre
+          },
+          error: (err) => {
+            console.error('Error al actualizar dini:', err);
+          },
+        });
+      } else {
+        console.error('Fecha inválida:', this.externalDate);
+      }
     }
   }
 
@@ -104,6 +134,7 @@ export class TaskItemComponent implements OnInit {
   decrementTabs() {
     if (this.task.tabs && this.task.tabs > 0) {
       this.task.tabs--;
+      this.updateTask();
     }
   }
 
@@ -113,6 +144,7 @@ export class TaskItemComponent implements OnInit {
   incrementTabs() {
     if (this.task.tabs) {
       this.task.tabs++;
+      this.updateTask();
     }
   }
 
@@ -183,6 +215,36 @@ export class TaskItemComponent implements OnInit {
    */
   setPriority(priority: number) {
     this.task.priority = priority;
+  }
+
+  /**
+   * Actualiza la fecha de inicio (dini) en la base de datos
+   * @param event - Evento que contiene el valor actualizado
+   */
+  updateTaskDate(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const newDate = input.value;
+
+    if (newDate) {
+      this.task.dini = new Date(newDate);
+      this.updateTask();
+    }
+  }
+
+  updateTask() {
+    if (this.task.id_task) {
+      this.taskService.updateTask(this.task.id_task, this.task).subscribe({
+        next: () => {
+          console.log(
+            `Task actualizada ${this.task} para la tarea ${this.task.id_task}`
+          );
+          this.taskUpdated.emit(this.task); // Notifica al componente padre del cambio
+        },
+        error: (err) => {
+          console.error('Error al actualizar la tarea:', err);
+        },
+      });
+    }
   }
 
   /**

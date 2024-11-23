@@ -1,8 +1,12 @@
-<ion-item>
+<ion-item lines="full">
   <!-- Line 1 -->
 
   <ion-reorder slot="start">
     <ion-icon name="arrow-back"></ion-icon>
+    <!-- Iconos vacíos según task.tabs -->
+    <ng-container *ngFor="let _ of [].constructor(task.tabs || 0)">
+      <ion-icon name="return-down-forward-sharp"></ion-icon>
+    </ng-container>
   </ion-reorder>
   <ion-checkbox
     slot="start"
@@ -26,12 +30,13 @@
 <!-- Line 2 (conditionally displayed) -->
 <div *ngIf="showDetails" class="task-details">
   <ion-item>
-    <ion-label>Fecha:</ion-label>
-    <ion-datetime
-      [(ngModel)]="task.dini"
-      displayFormat="DD/MM/YYYY"
+    <ion-label>Fecha:&nbsp;</ion-label>
+    <ion-input
+      type="date"
+      [(ngModel)]="externalDate"
+      (ionChange)="updateDini()"
       placeholder="Selecciona fecha"
-    ></ion-datetime>
+    ></ion-input>
     <ion-select [(ngModel)]="selectedTime" (ionChange)="updateTime()">
       <ion-select-option *ngFor="let time of availableTimes" [value]="time">
         {{ time }}
