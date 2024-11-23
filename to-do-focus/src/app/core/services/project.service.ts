@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ProjectDTO } from '../models/project-DTO';
 import { TaskDTO } from '../models/task-DTO';
@@ -10,6 +10,9 @@ import { TaskDTO } from '../models/task-DTO';
 })
 export class ProjectService {
   private apiUrl = environment.apiUrl + '/projects/'; // URL del API en Node JS
+  // BehaviorSubject para manejar actualizaciones de la lista de proyectos
+  private projectsSubject = new BehaviorSubject<ProjectDTO[]>([]);
+  public projects$ = this.projectsSubject.asObservable(); // Observable público
 
   constructor(private http: HttpClient) {}
 
@@ -43,13 +46,20 @@ export class ProjectService {
    * Obtiene todos los proyectos del usuario almacenado en localStorage
    * @returns Observable con la lista de proyectos
    */
-  getProjects(): Observable<ProjectDTO[]> {
+  getProjects(): void {
     const userId = this.getUserId();
     if (!userId) {
-      throw new Error('User ID not found in localStorage');
+      /* throw new Error('User ID not found in localStorage'); */
+      console.error('User ID not found in localStorage');
+      return;
     }
 
-    return this.http.get<ProjectDTO[]>(`${this.apiUrl}?userId=${userId}`);
+    this.http.get<ProjectDTO[]>(`${this.apiUrl}?userId=${userId}`).subscribe({
+      next: (projects) => {
+        this.projectsSubject.next(projects); // Actualiza el BehaviorSubject
+      },
+      error: (err) => console.error('Error al obtener proyectos:', err),
+    });
   }
 
   /**
@@ -77,7 +87,18 @@ export class ProjectService {
     projectId: number,
     project: ProjectDTO
   ): Observable<ProjectDTO> {
-    return this.http.put<ProjectDTO>(`${this.apiUrl}${projectId}`, project);
+    return this.http
+      .put<ProjectDTO>(`${this.apiUrl}${projectId}`, project)
+      .pipe(
+        tap((updatedProject) => {
+          // Actualizar la lista local de proyectos
+          const currentProjects = this.projectsSubject.getValue();
+          const updatedProjects = currentProjects.map((p) =>
+            p.id_project === updatedProject.id_project ? updatedProject : p
+          );
+          this.projectsSubject.next(updatedProjects); // Emitir la lista actualizada
+        })
+      );
   }
 
   /**

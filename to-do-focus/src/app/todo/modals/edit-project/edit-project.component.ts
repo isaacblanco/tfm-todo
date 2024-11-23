@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
+import { UserService } from 'src/app/core/services/user.service';
 import { ProjectDTO } from '../../../core/models/project-DTO';
 import { ProjectService } from '../../../core/services/project.service';
 
@@ -18,10 +19,12 @@ export class EditProjectComponent implements OnInit {
   public projectName: string = '';
   public pinned: boolean = false;
   public main: boolean = false;
+  private userId: number | null = 0; // ID del usuario propietario
 
   constructor(
     private modalController: ModalController,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +33,8 @@ export class EditProjectComponent implements OnInit {
       this.pinned = this.project.pinned;
       this.main = this.project.main;
     }
+
+    this.userId = this.userService.getUserId();
   }
 
   saveProject(): void {
@@ -38,13 +43,20 @@ export class EditProjectComponent implements OnInit {
       return;
     }
 
+    if (this.userId == null) {
+      console.error('User ID not found in localStorage');
+      return;
+    }
+
     const projectData: ProjectDTO = {
       id_project: this.project?.id_project || 0,
       name: this.projectName,
       pinned: this.pinned,
       main: this.main,
-      fk_user: this.project?.fk_user || 0,
+      fk_user: this.userId == null ? 0 : this.userId,
     };
+
+    console.log('Proyecto a guardar:', projectData);
 
     const request = this.project
       ? this.projectService.updateProject(this.project.id_project, projectData)

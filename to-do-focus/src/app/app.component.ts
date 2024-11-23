@@ -42,20 +42,24 @@ export class AppComponent implements OnInit {
     if (this.isAuthenticated) {
       this.loadProjects();
     }
+
+    // Escuchar cambios en la lista de proyectos
+    this.projectService.projects$.subscribe((projects) => {
+      this.projects = projects;
+    });
   }
 
   /**
    * Carga los proyectos del usuario desde el servicio
    */
   private loadProjects() {
-    this.projectService.getProjects().subscribe({
-      next: (data) => {
-        this.projects = data;
-      },
-      error: (err) => {
-        console.error('Error al cargar los proyectos:', err);
-      },
+    // Escuchar cambios en la lista de proyectos
+    this.projectService.projects$.subscribe((projects) => {
+      this.projects = projects;
     });
+
+    // Inicializar la carga de proyectos
+    this.projectService.getProjects();
   }
 
   /**
@@ -86,7 +90,6 @@ export class AppComponent implements OnInit {
     this.isAuthenticated = false;
     this.projects = []; // Limpia los proyectos en caso de logout
 
-    // Redirecciona al login
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 }

@@ -1,16 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-menu-toggle></ion-menu-toggle>
     <ion-title>TO DO Focus</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">focus</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <ion-list>
     <ion-item *ngFor="let task of tasks; let i = index" lines="none">
       <ion-label>{{ task.title }}</ion-label>

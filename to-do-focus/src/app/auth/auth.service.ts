@@ -65,7 +65,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('authToken'); // Elimina el token de autenticación
     localStorage.removeItem('userData'); // Elimina los datos del usuario
-    this.userService.clearUserId(); // Limpia el user_id usando UserService
+    this.userService.clearUserData(); // Limpia el user_id usando UserService
     console.log('AuthService: User logged out');
     this.loginStatus.next(false); // Emite el estado de logout
   }
@@ -87,6 +87,14 @@ export class AuthService {
   }
 
   /**
+   * Establece los datos del usuario en localStorage
+   * @param userData - Objeto con los datos del usuario
+   */
+  setUserData(userData: any): void {
+    localStorage.setItem('userData', JSON.stringify(userData));
+  }
+
+  /**
    * Obtiene el token de autenticación almacenado
    * @returns string | null
    */
@@ -101,5 +109,29 @@ export class AuthService {
   getUserData(): any {
     const userData = localStorage.getItem('userData');
     return userData ? JSON.parse(userData) : null;
+  }
+
+  /**
+   * Obtiene el ID del usuario (`id_user`) desde localStorage
+   * @returns number | null - Retorna el ID del usuario o null si no existe
+   */
+  getUserId(): number | null {
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      try {
+        const parsedData = JSON.parse(userData);
+        return parsedData.id_user || null;
+      } catch (error) {
+        console.error('Error al parsear userData desde localStorage:', error);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Elimina los datos del usuario de localStorage
+   */
+  clearUserData(): void {
+    localStorage.removeItem('userData');
   }
 }

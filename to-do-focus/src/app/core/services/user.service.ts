@@ -4,26 +4,35 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UserService {
-  private userId: number | null = null;
-
-  setUserId(id: number): void {
-    this.userId = id;
-    localStorage.setItem('user_id', id.toString()); // Persistir en localStorage
+  /**
+   * Establece los datos del usuario en localStorage
+   * @param userData - Objeto con los datos del usuario
+   */
+  setUserData(userData: any): void {
+    localStorage.setItem('userData', JSON.stringify(userData));
   }
 
+  /**
+   * Obtiene el ID del usuario (`id_user`) desde localStorage
+   * @returns number | null - Retorna el ID del usuario o null si no existe
+   */
   getUserId(): number | null {
-    if (this.userId !== null) {
-      return this.userId;
+    const userData = localStorage.getItem('userData');
+    if (userData) {
+      try {
+        const parsedData = JSON.parse(userData);
+        return parsedData.id || null;
+      } catch (error) {
+        console.error('Error al parsear userData desde localStorage:', error);
+      }
     }
-    const storedId = localStorage.getItem('user_id');
-    if (storedId) {
-      this.userId = parseInt(storedId, 10);
-    }
-    return this.userId;
+    return null;
   }
 
-  clearUserId(): void {
-    this.userId = null;
-    localStorage.removeItem('user_id'); // Eliminar del almacenamiento local
+  /**
+   * Elimina los datos del usuario de localStorage
+   */
+  clearUserData(): void {
+    localStorage.removeItem('userData');
   }
 }
