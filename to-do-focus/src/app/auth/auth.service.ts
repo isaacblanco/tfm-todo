@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../core/services/user.service';
 
@@ -9,8 +10,14 @@ import { UserService } from '../core/services/user.service';
 })
 export class AuthService {
   private apiUrl = environment.apiUrl; // URL de la API
+  private loginStatus = new BehaviorSubject<boolean>(this.isAuthenticated());
+  loginStatus$ = this.loginStatus.asObservable(); // Observable del estado del login
 
-  constructor(private http: HttpClient, private userService: UserService) {}
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   /**
    * Inicia sesión con credenciales y guarda los datos en localStorage
@@ -36,6 +43,7 @@ export class AuthService {
             };
 
             localStorage.setItem('userData', JSON.stringify(userData));
+            this.loginStatus.next(true); // Estamos logados, lo emitimos
             console.log('AuthService: User data saved in localStorage');
           }
         })
@@ -59,6 +67,7 @@ export class AuthService {
     localStorage.removeItem('userData'); // Elimina los datos del usuario
     this.userService.clearUserId(); // Limpia el user_id usando UserService
     console.log('AuthService: User logged out');
+    this.loginStatus.next(false); // Emite el estado de logout
   }
 
   /**

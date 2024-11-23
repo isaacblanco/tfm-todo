@@ -24,11 +24,20 @@ export class ProjectService {
   async getProjectsByUser(userId: number): Promise<Project[]> {
     return this.projectRepository.find({
       where: { fk_user: userId },
+      order: {
+        pinned: "DESC", // Primero los proyectos con pinned = true
+        name: "ASC", // Luego orden alfabético por nombre
+      },
     });
   }
 
   async getAll(): Promise<Project[]> {
-    return this.projectRepository.find();
+    return this.projectRepository.find({
+      order: {
+        pinned: "DESC", // Primero los proyectos con pinned = true
+        name: "ASC", // Luego orden alfabético por nombre
+      },
+    });
   }
 
   async create(project: Project): Promise<Project> {

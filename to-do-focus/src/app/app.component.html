@@ -1,11 +1,16 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
+      <ion-header>
+        <ion-title>TO DO Focus</ion-title>
+      </ion-header>
       <ion-content>
-        <ion-list>
-          <ion-list-header>To Do Focus</ion-list-header>
-          <ion-note>By Isaac Blanco</ion-note>
-          <ion-item routerDirection="root" routerLink="focus/todo">
+        <ion-list *ngIf="isAuthenticated">
+          <ion-item
+            lines="full"
+            routerDirection="root"
+            [routerLink]="['/todo/focus']"
+          >
             <ion-icon
               aria-hidden="true"
               slot="start"
@@ -16,7 +21,7 @@
           </ion-item>
         </ion-list>
 
-        <ion-list>
+        <ion-list *ngIf="isAuthenticated">
           <ion-list-header>Projects</ion-list-header>
           <ion-item (click)="openAddProjectModal()">
             <ion-icon
@@ -30,6 +35,7 @@
 
           <ion-menu-toggle auto-hide="false" *ngFor="let project of projects">
             <ion-item
+              lines="full"
               routerDirection="root"
               [routerLink]="['/todo/project', project.id_project]"
             >
@@ -44,10 +50,28 @@
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
-
       <ion-footer>
         <ion-list>
-          <ion-item routerDirection="root" routerLink="login" lines="full">
+          <ion-item
+            *ngIf="isAuthenticated"
+            (click)="logout()"
+            routerDirection="root"
+            lines="full"
+          >
+            <ion-icon
+              aria-hidden="true"
+              slot="start"
+              ios="log-out-outline"
+              md="log-out-outline"
+            ></ion-icon>
+            <ion-label>Logout</ion-label>
+          </ion-item>
+          <ion-item
+            *ngIf="!isAuthenticated"
+            routerDirection="root"
+            routerLink="login"
+            lines="full"
+          >
             <ion-icon
               aria-hidden="true"
               slot="start"
@@ -56,7 +80,12 @@
             ></ion-icon>
             <ion-label>Log in</ion-label>
           </ion-item>
-          <ion-item routerDirection="root" routerLink="settings" lines="full">
+          <ion-item
+            *ngIf="isAuthenticated"
+            routerDirection="root"
+            routerLink="settings"
+            lines="full"
+          >
             <ion-icon
               aria-hidden="true"
               slot="start"

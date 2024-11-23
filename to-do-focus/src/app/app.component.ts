@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { IonicModule, ModalController } from '@ionic/angular';
+import { AuthService } from './auth/auth.service';
 import { ProjectDTO } from './core/models/project-DTO';
 import { ProjectService } from './core/services/project.service';
 
@@ -15,14 +16,32 @@ import { ProjectService } from './core/services/project.service';
 export class AppComponent implements OnInit {
   public projects: ProjectDTO[] = []; // Lista de proyectos del usuario
   public labels = []; // Etiquetas, puedes cargar dinámicamente si es necesario
+  public isAuthenticated = false; // Controla si el usuario está logado
 
   constructor(
     private projectService: ProjectService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.loadProjects();
+    this.isAuthenticated = this.authService.isAuthenticated();
+
+    // Suscribirse al estado del login
+    this.authService.loginStatus$.subscribe((isLoggedIn) => {
+      this.isAuthenticated = isLoggedIn;
+
+      if (isLoggedIn) {
+        this.loadProjects(); // Cargar proyectos al iniciar sesión
+      } else {
+        this.projects = []; // Limpiar proyectos al cerrar sesión
+      }
+    });
+
+    if (this.isAuthenticated) {
+      this.loadProjects();
+    }
   }
 
   /**
@@ -57,5 +76,17 @@ export class AppComponent implements OnInit {
     });
 
     await modal.present();
+  }
+
+  /**
+   * Realiza logout del usuario
+   */
+  logout() {
+    this.authService.logout();
+    this.isAuthenticated = false;
+    this.projects = []; // Limpia los proyectos en caso de logout
+
+    // Redirecciona al login
+    this.router.navigate(['/auth/login']);
   }
 }
