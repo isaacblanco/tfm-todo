@@ -9,7 +9,7 @@ export interface TaskDTO {
   dfin?: Date; // Fecha de fin
   description?: string;
   status: 'TO_DO' | 'IN_PROGRESS' | 'BLOCKED' | 'IN_REVIEW' | 'DONE';
-  tabs?: number; // 1..2..3
+  tabs?: number; // 0..3
   priority: number;
   tags?: TagDTO[]; // Lista de etiquetas asociadas
 }

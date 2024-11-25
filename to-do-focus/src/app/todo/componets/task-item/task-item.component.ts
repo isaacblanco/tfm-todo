@@ -32,6 +32,12 @@ export class TaskItemComponent implements OnInit {
 
   ngOnInit() {
     this.generateAvailableTimes();
+
+    // Asegurar que task.dini sea un objeto Date
+    if (this.task.dini && typeof this.task.dini === 'string') {
+      this.task.dini = new Date(this.task.dini);
+    }
+
     if (this.task.dini) {
       this.selectedTime = this.task.dini.toLocaleTimeString([], {
         hour: '2-digit',

@@ -6,8 +6,6 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## Servicio TASK
 
-- Modificar tarea
-  - Guardar la descripción
 - Borrar tarea
   - Con confirmación
 
