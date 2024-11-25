@@ -7,9 +7,7 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 ## Servicio TASK
 
 - Modificar tarea
-  - tabular derecha
-  - tabular izquierda
-  - Establecer prioridad
+  - Guardar la descripción
 - Borrar tarea
   - Con confirmación
 
@@ -35,6 +33,8 @@ UPDATE "tasks" SET "id_task" = $1, "fk_project" = $2, "task_name" = $3, "complet
 - Modificar tarea
   - Guardar fecha y hora
   - Editar ambas fechas y horas
+  - Tabular derecha
+  - Tabular izquierda
 
 ## TODO
 

@@ -1,0 +1,17 @@
+.html-preview {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #414141;
+  margin-top: 10px;
+  max-height: 200px;
+  min-height: 200px;
+  overflow-y: auto;
+  padding: 10px;
+  width: 100%;
+
+  p {
+    margin: 0;
+    line-height: 1.5;
+  }
+}

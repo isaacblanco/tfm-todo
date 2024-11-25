@@ -3,11 +3,13 @@
 
   <ion-reorder slot="start">
     <ion-icon name="arrow-back"></ion-icon>
-    <!-- Iconos vacíos según task.tabs -->
-    <ng-container *ngFor="let _ of [].constructor(task.tabs || 0)">
-      <ion-icon name="return-down-forward-sharp"></ion-icon>
-    </ng-container>
   </ion-reorder>
+  <span *ngIf="task.dini !== null">{{ formatDate(task.dini) }} &nbsp; </span>
+  <ng-container *ngFor="let _ of [].constructor(task.tabs || 0)">
+    <ion-icon name="return-down-forward-sharp"></ion-icon>
+  </ng-container>
+  <!-- Iconos vacíos según task.tabs -->
+
   <ion-checkbox
     slot="start"
     [(ngModel)]="task.completed"

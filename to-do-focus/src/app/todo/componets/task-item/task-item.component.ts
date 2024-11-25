@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { formatDateTime } from 'src/app/core/utils/date-utils';
 import { TaskDTO } from '../../../core/models/task-DTO';
 import { TaskService } from '../../../core/services/task.service';
 
@@ -39,25 +40,15 @@ export class TaskItemComponent implements OnInit {
     }
   }
 
+  formatDate(date: Date | undefined): string {
+    return date ? formatDateTime(date) : 'Fecha no disponible';
+  }
+
   /**
    * Llama al servicio para actualizar el nombre de la tarea
    */
   updateTaskName(): void {
-    if (this.task.id_task) {
-      this.taskService
-        .updateTask(this.task.id_task, { task_name: this.task.task_name })
-        .subscribe({
-          next: (updatedTask) => {
-            console.log(
-              'Nombre de la tarea actualizado:',
-              updatedTask.task_name
-            );
-          },
-          error: (err) => {
-            console.error('Error al actualizar el nombre de la tarea:', err);
-          },
-        });
-    }
+    this.updateTask();
   }
 
   /**
@@ -70,18 +61,9 @@ export class TaskItemComponent implements OnInit {
 
       if (!isNaN(newDini.getTime())) {
         newDini.setHours(hours, minutes);
-
         // Actualiza la tarea y llama al servicio
         this.task.dini = newDini;
-        this.taskService.updateTask(this.task.id_task, this.task).subscribe({
-          next: (updatedTask) => {
-            console.log('dini actualizado:', updatedTask.dini);
-            this.taskUpdated.emit(this.task); // Notifica al padre
-          },
-          error: (err) => {
-            console.error('Error al actualizar dini:', err);
-          },
-        });
+        this.updateTask();
       } else {
         console.error('Fecha inválida:', this.externalDate);
       }
@@ -215,6 +197,7 @@ export class TaskItemComponent implements OnInit {
    */
   setPriority(priority: number) {
     this.task.priority = priority;
+    this.updateTask();
   }
 
   /**
