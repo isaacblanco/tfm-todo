@@ -1,5 +1,3 @@
-import { TagDTO } from './tag-DTO';
-
 export interface TaskDTO {
   id_task: number;
   fk_project: number;
@@ -11,5 +9,4 @@ export interface TaskDTO {
   status: 'TO_DO' | 'IN_PROGRESS' | 'BLOCKED' | 'IN_REVIEW' | 'DONE';
   tabs?: number; // 0..3
   priority: number;
-  tags?: TagDTO[]; // Lista de etiquetas asociadas
 }

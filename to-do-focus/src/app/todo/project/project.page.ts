@@ -95,8 +95,7 @@ export class ProjectPage implements OnInit {
         dini: undefined,
         dfin: undefined,
         description: '',
-        tabs: 1,
-        tags: [],
+        tabs: 0,
       };
 
       this.taskService.addTask(emptyTask).subscribe({

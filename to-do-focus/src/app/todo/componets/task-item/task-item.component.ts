@@ -61,8 +61,13 @@ export class TaskItemComponent implements OnInit {
    * Combina externalDate y selectedTime para actualizar dini
    */
   updateDini(): void {
-    if (this.externalDate && this.selectedTime) {
-      const [hours, minutes] = this.selectedTime.split(':').map(Number);
+    console.log('updateDini', this.externalDate, this.selectedTime);
+
+    // Usar "23:45:00" si selectedTime no está definido
+    const time = this.selectedTime || '23:45';
+    const [hours, minutes] = time.split(':').map(Number);
+
+    if (this.externalDate) {
       const newDini = new Date(this.externalDate);
 
       if (!isNaN(newDini.getTime())) {
@@ -73,6 +78,8 @@ export class TaskItemComponent implements OnInit {
       } else {
         console.error('Fecha inválida:', this.externalDate);
       }
+    } else {
+      console.error('Fecha externa no proporcionada.');
     }
   }
 
