@@ -1,3 +1,4 @@
+<!-- Indicador de carga -->
 <ion-item *ngIf="task.dini !== null" lines="">
   <ion-label position="stacked" *ngIf="task.dini !== null"
     >{{ formatDate(task.dini) }} &nbsp;</ion-label
@@ -12,7 +13,7 @@
 
   <!-- Iconos vacíos según task.tabs -->
   <ng-container *ngFor="let _ of [].constructor(task.tabs || 0)">
-    <ion-icon name="return-down-forward-sharp"></ion-icon>
+    <ion-icon slot="start" name="return-down-forward-sharp"></ion-icon>
   </ng-container>
 
   <!-- Checkbox para completar la tarea -->
@@ -61,12 +62,21 @@
 <div *ngIf="showDetails" class="task-actions">
   <ion-item>
     <div class="actions-left">
-      <ion-button fill="clear" (click)="decrementTabs()">
+      <ion-button
+        fill="clear"
+        (click)="decrementTabs()"
+        [disabled]="task.tabs === 0"
+      >
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
-      <ion-button fill="clear" (click)="incrementTabs()">
+      <ion-button
+        fill="clear"
+        (click)="incrementTabs()"
+        [disabled]="task.tabs === 4"
+      >
         <ion-icon name="arrow-forward"></ion-icon>
       </ion-button>
+
       <ion-button fill="clear" (click)="openSelectLabelsModal()">
         <ion-icon name="bookmarks"></ion-icon>
       </ion-button>

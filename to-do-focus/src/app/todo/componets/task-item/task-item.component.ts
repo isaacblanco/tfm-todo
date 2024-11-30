@@ -24,6 +24,7 @@ export class TaskItemComponent implements OnInit {
   availableTimes: string[] = []; // Horas disponibles
   selectedTime = '';
   externalDate: string = ''; // Fecha externa para la tarea
+  loading: boolean = false; // Por si queremos bloquear el formularios
 
   constructor(
     private modalController: ModalController,
@@ -45,6 +46,16 @@ export class TaskItemComponent implements OnInit {
         minute: '2-digit',
       });
     }
+
+    // Control de la tabulación por defecto
+    if (this.task.tabs === undefined || this.task.tabs === null) {
+      this.task.tabs = 0; // Valor por defecto
+    }
+    if (isNaN(this.task.tabs)) {
+      this.task.tabs = 0;
+    }
+
+    console.log('TaskItemComponent initialized', this.task);
   }
 
   formatDate(date: Date | undefined): string {
@@ -117,20 +128,19 @@ export class TaskItemComponent implements OnInit {
    * Actualiza la hora de la tarea.
    */
   updateTime(): void {
-    if (this.externalDate && this.selectedTime) {
-      const [hours, minutes] = this.selectedTime.split(':').map(Number);
+    if (this.externalDate) {
       const newDini = new Date(this.externalDate);
+      const [hours, minutes] = this.selectedTime.split(':').map(Number);
+      newDini.setHours(hours, minutes);
 
       if (!isNaN(newDini.getTime())) {
-        newDini.setHours(hours, minutes);
-
         this.task.dini = newDini;
         this.updateTask();
       } else {
         console.error('Fecha inválida:', this.externalDate);
       }
     } else {
-      console.error('Fecha o hora no proporcionadas.');
+      console.error('Fecha no proporcionada.');
     }
   }
 
@@ -138,7 +148,7 @@ export class TaskItemComponent implements OnInit {
    * Disminuye el valor de tabs en 1.
    */
   decrementTabs() {
-    if (this.task.tabs && this.task.tabs > 0) {
+    if (this.task.tabs !== undefined && this.task.tabs > 0) {
       this.task.tabs--;
       this.updateTask();
     }
@@ -148,7 +158,7 @@ export class TaskItemComponent implements OnInit {
    * Incrementa el valor de tabs en 1.
    */
   incrementTabs() {
-    if (this.task.tabs) {
+    if (this.task.tabs !== undefined && this.task.tabs < 5) {
       this.task.tabs++;
       this.updateTask();
     }
@@ -240,15 +250,17 @@ export class TaskItemComponent implements OnInit {
 
   updateTask() {
     if (this.task.id_task) {
+      this.loading = true;
       this.taskService.updateTask(this.task.id_task, this.task).subscribe({
         next: () => {
-          console.log(
-            `Task actualizada ${this.task} para la tarea ${this.task.id_task}`
-          );
-          this.taskUpdated.emit(this.task); // Notifica al componente padre del cambio
+          console.log(`Task actualizada: ${this.task.id_task}`);
+          this.taskUpdated.emit(this.task);
         },
         error: (err) => {
           console.error('Error al actualizar la tarea:', err);
+        },
+        complete: () => {
+          this.loading = false;
         },
       });
     }
