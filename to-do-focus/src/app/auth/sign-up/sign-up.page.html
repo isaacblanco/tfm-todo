@@ -1,13 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>LOGIN</ion-title>
+    <ion-title>Registrase</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-text-center">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">TO DO Focus</ion-title>
+      <ion-title size="large">Registrarse</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -15,18 +15,30 @@
     <ion-row>
       <ion-col size="12">
         <ion-text>
-          <h3>Bienvenido!</h3>
-          <p>Ingresa tus datos para acceder</p>
+          <h3>Crea tu cuenta</h3>
+          <p>Rellena el siguiente formulario para registrarte</p>
         </ion-text>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col size="12">
-        <ion-item lines="none">
+        <ion-item>
+          <ion-label position="stacked">Usuario</ion-label>
+          <ion-input
+            [(ngModel)]="user.username"
+            placeholder="Alias"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
           <ion-label position="stacked">Email</ion-label>
           <ion-input
-            [(ngModel)]="userData.email"
+            [(ngModel)]="user.email"
             type="email"
             placeholder="Correo electrónico"
           ></ion-input>
@@ -36,12 +48,12 @@
 
     <ion-row>
       <ion-col size="12">
-        <ion-item lines="none">
+        <ion-item>
           <ion-label position="stacked">Contraseña</ion-label>
           <ion-input
-            [(ngModel)]="userData.password"
+            [(ngModel)]="user.password"
             type="password"
-            placeholder="Contraseña"
+            placeholder="Escribe la contraseña"
           ></ion-input>
         </ion-item>
       </ion-col>
@@ -49,15 +61,15 @@
 
     <ion-row>
       <ion-col size="12">
-        <div class="error-message" *ngIf="errMessage.length > 0">
-          <ion-text color="danger">{{ errMessage }}</ion-text>
+        <div class="error-message" *ngIf="errorMessage">
+          <ion-text color="danger">{{ errorMessage }}</ion-text>
         </div>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col size="12">
-        <ion-button expand="block" (click)="login()">Acceder</ion-button>
+        <ion-button expand="block" (click)="register()">Registrarse</ion-button>
       </ion-col>
     </ion-row>
 
@@ -65,8 +77,8 @@
       <ion-col size="12">
         <ion-text>
           <p>
-            No tienes cuenta
-            <a (click)="navigateToRegister()">Registrate aquí</a>
+            Si ya tienes una cuenta
+            <a (click)="navigateToLogin()">accede aquí</a>
           </p>
         </ion-text>
       </ion-col>

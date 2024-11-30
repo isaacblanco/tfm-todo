@@ -4,10 +4,10 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
-## CONFIGURACION
+## Auth
 
-- Definir entre días o numero de tareas
-- Definir dias a mostrar
+- Registrarse
+- Usar contraseña encriptada
 
 ## Otros: importantes y FALLOS
 
@@ -71,7 +71,7 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 ## [--Para nota--]
 
 Validarse con google
-Reordendar
+Reordendar las tareas
 Uso de teclas
 
 Las tareas no deberían de actualizarse si no hay cambios (al perder el foco de una seleccionada)

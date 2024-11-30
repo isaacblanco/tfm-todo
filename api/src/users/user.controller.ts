@@ -18,7 +18,6 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   // LOGIN
-  // ------------------------------------------------------------------------
   @Post("login")
   async login(
     @Body("email") email: string,
@@ -30,29 +29,40 @@ export class UserController {
 
     const user = await this.userService.validateUser(email, password);
     if (!user) {
-      return { message: "Invalid email or password" }; // Usuario inválido
+      return { message: "Invalid email or password" };
     }
 
-    // Excluir la contraseña de la respuesta por seguridad
     const { password: _, ...userWithoutPassword } = user;
     return { message: "Login successful", user: userWithoutPassword };
   }
 
-  // GET
-  // ------------------------------------------------------------------------
+  // REGISTER (Alias for Create)
+  @Post("register")
+  async register(@Body() user: User, @Res() response: Response): Promise<void> {
+    try {
+      const newUser = await this.userService.create(user);
+      response.status(201).json(newUser);
+    } catch (err) {
+      console.error("Error registering user:", err.message);
+      response
+        .status(500)
+        .json({ message: "Error registering user", error: err.message });
+    }
+  }
+
+  // GET ALL USERS
   @Get()
   async getAll(): Promise<User[]> {
     return await this.userService.getAll();
   }
 
-  // GET:ID
-  // ------------------------------------------------------------------------
+  // GET USER BY ID
   @Get(":id")
   async getById(
     @Param("id") id_user: string,
     @Res() response: Response
   ): Promise<void> {
-    const userId = parseInt(id_user, 10); // Asegúrate de que es un número
+    const userId = parseInt(id_user, 10);
     if (isNaN(userId)) {
       response.status(400).json({ message: `Invalid user ID: ${id_user}` });
       return;
@@ -72,8 +82,7 @@ export class UserController {
     }
   }
 
-  // POST
-  // ------------------------------------------------------------------------
+  // CREATE USER
   @Post()
   create(@Body() user: User, @Res() response: Response): void {
     this.userService
@@ -86,8 +95,7 @@ export class UserController {
       );
   }
 
-  // PUT:ID
-  // ------------------------------------------------------------------------
+  // UPDATE USER
   @Put(":id")
   update(
     @Param("id") id_user: number,
@@ -104,8 +112,7 @@ export class UserController {
       );
   }
 
-  // DELETE:ID
-  // ------------------------------------------------------------------------
+  // DELETE USER
   @Delete(":id")
   delete(@Param("id") id_user: number, @Res() response: Response): void {
     this.userService

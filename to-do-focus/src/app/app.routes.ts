@@ -8,6 +8,11 @@ export const routes: Routes = [
     pathMatch: 'full', // Ruta por defecto
   },
   {
+    path: 'sign-up',
+    loadComponent: () =>
+      import('./auth/sign-up/sign-up.page').then((m) => m.SignUpPage),
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./auth/login/login.page').then((m) => m.LoginPage), // Página de login

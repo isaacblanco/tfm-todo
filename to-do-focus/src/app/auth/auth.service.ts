@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { UserDTO } from '../core/models/user-DTO';
 import { UserService } from '../core/services/user.service';
 
 @Injectable({
@@ -55,8 +56,17 @@ export class AuthService {
    * @param userData - Datos del usuario
    * @returns Observable con la respuesta del registro
    */
-  register(userData: any): Observable<any> {
+  registerOld(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, userData);
+  }
+
+  /**
+   * Registra un nuevo usuario
+   * @param userData - Datos del usuario
+   * @returns Observable con la respuesta del registro
+   */
+  register(userData: UserDTO): Observable<any> {
+    return this.http.post(`${this.apiUrl}/users/register`, userData);
   }
 
   /**
