@@ -4,13 +4,6 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
-## Servicios LABELS
-
-- Agregar label
-- Leer labels
-- Borrar label
-  - Borrar en todos los proyectos
-
 ## CONFIGURACION
 
 - Definir entre días o numero de tareas
@@ -47,6 +40,11 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 - Mover tarea a proyecto
 - Filtrar tareas
 - Marcar como completada
+
+## Servicios LABELS
+
+- Borrar label
+  - Borrar en todos los proyectos
 
 ## CONFIGURACION
 

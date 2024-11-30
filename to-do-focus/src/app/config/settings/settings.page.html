@@ -5,7 +5,7 @@
         <ion-icon name="menu"></ion-icon>
       </ion-menu-button>
     </ion-buttons>
-    <ion-title>Settings</ion-title>
+    <ion-title>Configuración</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,22 +17,40 @@
   </ion-header>
 
   <ion-list>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="6">
-          <ion-label>Número de tareas a mostrar</ion-label>
-        </ion-col>
-        <ion-col size="6">
-          <ion-input
-            type="number"
-            [(ngModel)]="user.settings!.numberOfTaskToShow"
-            (ionChange)="updateSettings()"
-            placeholder="Ingrese el número"
-          ></ion-input>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-item>
+      <ion-label>Número de elementos a mostrar</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-segment
+        [(ngModel)]="user.settings!.numberType"
+        (ionChange)="updateSettings()"
+      >
+        <ion-segment-button value="true">
+          <ion-label>Días</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="false">
+          <ion-label>Número de tareas</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
 
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-label>Número de tareas/días a mostrar</ion-label>
+          </ion-col>
+          <ion-col size="6">
+            <ion-input
+              type="number"
+              [(ngModel)]="user.settings!.numberOfTaskToShow"
+              (ionChange)="updateSettings()"
+              placeholder="Ingrese el número"
+            ></ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
     <ion-item>
       <ion-label>Mostrar listado completo</ion-label>
       <ion-toggle

@@ -17,6 +17,7 @@ export class User {
 
   @Column("jsonb", { nullable: true })
   settings: {
+    numberType?: boolean;
     numberOfTaskToShow?: number;
     projectOrder?: string;
     showDescription?: boolean;

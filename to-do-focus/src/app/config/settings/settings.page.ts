@@ -84,6 +84,7 @@ export class SettingsPage implements OnInit {
       username: '',
       email: '',
       settings: {
+        numberType: true, // por defecto son días
         numberOfTaskToShow: 50,
         projectOrder: 'name',
         showDescription: true,
