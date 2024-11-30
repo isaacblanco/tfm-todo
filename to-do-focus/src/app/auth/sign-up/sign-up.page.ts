@@ -54,7 +54,7 @@ export class SignUpPage implements OnInit {
 
         // Guardar los datos del usuario localmente
         const userData: UserDTO = {
-          id: response.id_user, // Asegúrate de que el backend devuelva un ID del usuario registrado
+          id: response.id_user,
           username: response.username,
           email: response.email,
           settings: response.settings,

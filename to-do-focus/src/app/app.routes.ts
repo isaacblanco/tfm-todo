@@ -4,8 +4,14 @@ import { AuthGuard } from './auth/auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'todo/focus',
-    pathMatch: 'full', // Ruta por defecto
+    canActivate: [AuthGuard], // Protección de la ruta raíz
+    children: [
+      {
+        path: '',
+        redirectTo: 'todo/focus',
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: 'sign-up',
@@ -33,7 +39,6 @@ export const routes: Routes = [
     path: 'todo/project/:id', // Define el parámetro dinámico :id
     loadComponent: () =>
       import('./todo/project/project.page').then((m) => m.ProjectPage),
-
     canActivate: [AuthGuard],
   },
   {
@@ -44,6 +49,13 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'todo/focus', // Ruta comodín
+    canActivate: [AuthGuard], // Protege la ruta comodín
+    children: [
+      {
+        path: '',
+        redirectTo: 'todo/focus',
+        pathMatch: 'full',
+      },
+    ],
   },
 ];

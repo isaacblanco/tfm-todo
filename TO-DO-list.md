@@ -4,10 +4,10 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
-## Auth
+## Auth - Temas de autentificación
 
-- Registrarse
-- Usar contraseña encriptada
+- Bloquear paginas
+- Si no esta logado ir a login
 
 ## Otros: importantes y FALLOS
 
@@ -56,13 +56,6 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 - Cambiar a vista: kanbam
 - Cambiar a vista de calendario
 - Filtrar tareas
-
-## Auth - Temas de autentificación
-
-- Bloquear paginas
-- Si no esta logado ir a login
-- Crear usuario: registro
-- Encriptar clave de usuario
 
 ## Capa de pintura
 

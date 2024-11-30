@@ -20,8 +20,8 @@ export class LoginPage implements OnInit {
   errMessage: string = '';
 
   userData = {
-    email: 'isaacblanco@uoc.edu',
-    password: '123456',
+    email: '',
+    password: '',
   };
 
   userPostData = { user_id: '', token: '' };
