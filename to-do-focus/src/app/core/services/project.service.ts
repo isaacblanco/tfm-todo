@@ -46,20 +46,22 @@ export class ProjectService {
    * Obtiene todos los proyectos del usuario almacenado en localStorage
    * @returns Observable con la lista de proyectos
    */
-  getProjects(): void {
+  getProjects(): Observable<ProjectDTO[]> {
     const userId = this.getUserId();
     if (!userId) {
       console.error('User ID not found in localStorage');
-      return;
+      return new BehaviorSubject<ProjectDTO[]>([]).asObservable(); // Retorna un Observable vacío si no hay ID
     }
 
-    // Usar la ruta adecuada para obtener proyectos del usuario
+    // Llama a la API y actualiza el BehaviorSubject
     this.http.get<ProjectDTO[]>(`${this.apiUrl}user/${userId}`).subscribe({
       next: (projects) => {
         this.projectsSubject.next(projects); // Actualiza el BehaviorSubject
       },
       error: (err) => console.error('Error al obtener proyectos:', err),
     });
+
+    return this.projects$; // Devuelve el Observable del BehaviorSubject
   }
 
   /**

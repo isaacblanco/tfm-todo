@@ -5,12 +5,30 @@
     </ion-buttons>
     <ion-title>TO DO Focus</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="Buscar tarea"
+      [(ngModel)]="searchTerm"
+      (ionInput)="filterTasks()"
+    ></ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="addEmptyTask()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        Agregar Tarea
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item *ngFor="let task of tasks; let i = index" lines="none">
-      <ion-label>{{ task.title }}</ion-label>
-    </ion-item>
+    <app-task-item
+      *ngFor="let task of filteredTasks"
+      [task]="task"
+      [fk_project]="mainProject?.id_project || 0"
+      (taskUpdated)="onTaskUpdated($event)"
+      (taskDeleted)="onTaskDeleted($event)"
+      (taskMoved)="onTaskMoved($event)"
+    ></app-task-item>
   </ion-list>
 </ion-content>

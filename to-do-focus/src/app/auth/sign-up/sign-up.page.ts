@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule, ModalController } from '@ionic/angular';
 import * as CryptoJS from 'crypto-js';
+import { ProjectDTO } from 'src/app/core/models/project-DTO';
+import { ProjectService } from 'src/app/core/services/project.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { UserDTO } from '../../core/models/user-DTO';
 import { AuthService } from '../auth.service';
@@ -22,6 +24,7 @@ export class SignUpPage implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UserService,
+    private projectService: ProjectService,
     private router: Router,
     private modalController: ModalController
   ) {}
@@ -63,6 +66,9 @@ export class SignUpPage implements OnInit {
         this.userService.setUserData(userData); // Guardar en localStorage
         console.log('Datos del usuario guardados en localStorage.');
 
+        // Crear el proyecto predeterminado "TODO"
+        this.createDefaultProject(response.id_user);
+
         this.router.navigate(['/login']); // Navegar al login tras el registro
       },
       error: (err) => {
@@ -103,5 +109,31 @@ export class SignUpPage implements OnInit {
         showAllOpen: false,
       },
     };
+  }
+
+  /**
+   * Crear un proyecto predeterminado después de registrarse.
+   * @param userId - ID del usuario registrado
+   */
+  private createDefaultProject(userId: number): void {
+    const defaultProject: ProjectDTO = {
+      id_project: 0, // Será asignado por el backend
+      name: 'TODO',
+      pinned: true,
+      main: true,
+      fk_user: userId,
+    };
+
+    this.projectService.addProject(defaultProject).subscribe({
+      next: () => {
+        console.log('Proyecto TODO creado con éxito.');
+        this.router.navigate(['/login']); // Navegar al login tras crear el proyecto
+      },
+      error: (err) => {
+        console.error('Error al crear el proyecto TODO:', err);
+        this.errorMessage =
+          'El proyecto predeterminado no pudo ser creado. Intente más tarde.';
+      },
+    });
   }
 }

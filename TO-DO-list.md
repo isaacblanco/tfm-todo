@@ -4,18 +4,8 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
-## Otros: importantes y FALLOS
-
-- Modificar tarea
-  - Tabular derecha
-  - Tabular izquierda
-
 ## TODO
 
-- Leer todo
-- Leer nice to be done
-- Leer next
-- Crear tarea
 - Editar tarea
   - Poner fechas
   - Tabular
@@ -33,10 +23,19 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 - Borrar label
   - Borrar en todos los proyectos
 
-## CONFIGURACION
+## CONFIGURACION APLICADA A FOCUS y el resto
 
 - Revisar temas de configuración y aplicar
-  - Aplicar numero
+  - Aplicar numero a mostrar
+    - Por días
+    - Por número de tarea
+  - Crear la opción de NEXT
+    - Crear el grupo
+    - Mostrar o ocultar
+
+## AJUSTES
+
+- No mostrar el proyecto de TODO en la lista de proyectos
 
 ## PROYECTOS con tiempo
 

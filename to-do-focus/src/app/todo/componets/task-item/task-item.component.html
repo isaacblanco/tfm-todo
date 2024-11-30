@@ -23,7 +23,7 @@
     (ionChange)="toggleCompletion()"
   ></ion-checkbox>
   <!-- Nombre de la tarea -->
-  <ion-label>
+  <ion-label [ngClass]="{ 'completed-task': task.completed }">
     <ion-input
       [(ngModel)]="task.task_name"
       (ionBlur)="updateTaskName()"
