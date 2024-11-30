@@ -73,7 +73,7 @@ export class TaskService {
    * @returns Observable vacío.
    */
   deleteTask(taskId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${taskId}`).pipe(
+    return this.http.delete<void>(`${this.apiUrl}${taskId}`).pipe(
       tap(() => {
         const currentTasks = this.tasksSubject.getValue();
         const filteredTasks = currentTasks.filter((t) => t.id_task !== taskId);

@@ -18,6 +18,7 @@ export class TaskItemComponent implements OnInit {
   @Input() fk_project!: number; // ID del proyecto (opcional)
   @Output() taskMoved = new EventEmitter<TaskDTO>(); // Emisor para notificar al padre
   @Output() taskUpdated = new EventEmitter<TaskDTO>(); // Para notificar al padre que se actualizó la tarea
+  @Output() taskDeleted = new EventEmitter<TaskDTO>(); // Notifica al padre sobre tareas eliminadas
 
   showDetails = false;
   availableTimes: string[] = []; // Horas disponibles
@@ -258,8 +259,16 @@ export class TaskItemComponent implements OnInit {
         {
           text: 'Eliminar',
           handler: () => {
-            console.log('Task deleted:', this.task.id_task);
-            // Aquí puedes implementar la lógica para eliminar la tarea en el backend
+            this.taskService.deleteTask(this.task.id_task).subscribe({
+              next: () => {
+                console.log(`Tarea eliminada: ${this.task.id_task}`);
+                // Emitir evento específico para eliminación
+                this.taskDeleted.emit(this.task);
+              },
+              error: (err) => {
+                console.error('Error al eliminar la tarea:', err);
+              },
+            });
           },
         },
       ],

@@ -166,6 +166,39 @@ export class ProjectPage implements OnInit {
     }
   }
 
+  onTaskUpdated(updatedTask: TaskDTO): void {
+    const taskIndex = this.tasks.findIndex(
+      (task) => task.id_task === updatedTask.id_task
+    );
+
+    if (taskIndex !== -1) {
+      // Actualiza la tarea en la lista
+      this.tasks[taskIndex] = updatedTask;
+
+      // Si la tarea ya no pertenece al proyecto actual, la elimina
+      if (updatedTask.fk_project !== this.projectId) {
+        this.tasks = this.tasks.filter(
+          (task) => task.id_task !== updatedTask.id_task
+        );
+        console.log('Tarea eliminada de la lista actual:', updatedTask);
+      }
+
+      // Actualiza la lista filtrada
+      this.filteredTasks = [...this.tasks];
+    } else {
+      console.warn('Tarea actualizada no encontrada en la lista:', updatedTask);
+    }
+  }
+
+  onTaskDeleted(deletedTask: TaskDTO): void {
+    // Filtra la tarea eliminada de la lista de tareas
+    this.tasks = this.tasks.filter(
+      (task) => task.id_task !== deletedTask.id_task
+    );
+    this.filteredTasks = [...this.tasks];
+    console.log('Tarea eliminada:', deletedTask);
+  }
+
   /**
    * Elimina el proyecto tras pedir confirmación
    */

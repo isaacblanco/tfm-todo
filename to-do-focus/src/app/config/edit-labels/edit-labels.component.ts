@@ -2,18 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
-import { TagDTO } from '../../../core/models/tag-DTO';
-import { TagService } from '../../../core/services/tag.service';
-import { UserService } from '../../../core/services/user.service';
+import { TagService } from '../../core/services/tag.service';
+import { UserService } from '../../core/services/user.service';
+import { TagDTO } from './../../core/models/tag-DTO';
 
 @Component({
-  selector: 'app-select-labels',
-  templateUrl: './select-labels.component.html',
-  styleUrls: ['./select-labels.component.scss'],
+  selector: 'app-edit-labels',
+  templateUrl: './edit-labels.component.html',
+  styleUrls: ['./edit-labels.component.scss'],
   standalone: true,
   imports: [IonicModule, FormsModule, CommonModule],
 })
-export class SelectLabelsComponent implements OnInit {
+export class EditLabelsComponent implements OnInit {
   tags: TagDTO[] = [];
   newTagName: string = '';
   errorMessage: string | null = null;

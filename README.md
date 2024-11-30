@@ -20,9 +20,13 @@ Se esta utilizando PostGreeSQL
 
 ## API
 
+Información del API en /api/README.md
+
 ```
 cd ./api
-
+npm run start:dev
 ```
 
 ### Peticiones al API
+
+### Base de datos

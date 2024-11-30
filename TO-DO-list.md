@@ -4,11 +4,6 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
-## Servicio TASK
-
-- Borrar tarea
-  - Con confirmación
-
 ## Servicios LABELS
 
 - Agregar label
@@ -18,10 +13,12 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## CONFIGURACION
 
+- Definir entre días o numero de tareas
 - Definir dias a mostrar
 
 ## Otros: importantes y FALLOS
 
+- Revisar al entrar --> si hay localStorage se muestra el TO DO Focus pero no los proyectos
 - Mostrar datos del usuario
 - Falta mostar el menu lateral, no funciona
 - Si no hay tareas en un proyecto, no devolver un 404, devolver un array vacio
@@ -31,6 +28,7 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
   - Editar ambas fechas y horas
   - Tabular derecha
   - Tabular izquierda
+- Arreglar errores de consola
 
 ## TODO
 
@@ -49,6 +47,10 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 - Mover tarea a proyecto
 - Filtrar tareas
 - Marcar como completada
+
+## CONFIGURACION
+
+- Revisar temas de configuración y aplicar
 
 ## PROYECTOS con tiempo
 
@@ -71,3 +73,7 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 ## [--Para nota--]
 
 Validarse con google
+Reordendar
+Uso de teclas
+
+Las tareas no deberían de actualizarse si no hay cambios (al perder el foco de una seleccionada)

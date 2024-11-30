@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UserDTO } from './../models/user-DTO';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ export class UserService {
    */
   setUserData(userData: any): void {
     localStorage.setItem('userData', JSON.stringify(userData));
+    // TODO: Implementar la lógica para almacenar los datos en el backend
   }
 
   /**
@@ -27,6 +29,11 @@ export class UserService {
       }
     }
     return null;
+  }
+
+  getUserData(): UserDTO | null {
+    const userData = localStorage.getItem('userData');
+    return userData ? JSON.parse(userData) : null;
   }
 
   /**

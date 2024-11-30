@@ -6,9 +6,6 @@
       </ion-menu-button>
     </ion-buttons>
     <ion-title>Settings</ion-title>
-    <ion-buttons slot="end">
-      <ion-icon name="menu"></ion-icon>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,4 +15,54 @@
       <ion-title size="large">Settings</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label>Número de tareas a mostrar</ion-label>
+        </ion-col>
+        <ion-col size="6">
+          <ion-input
+            type="number"
+            [(ngModel)]="user.settings!.numberOfTaskToShow"
+            (ionChange)="updateSettings()"
+            placeholder="Ingrese el número"
+          ></ion-input>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-item>
+      <ion-label>Mostrar listado completo</ion-label>
+      <ion-toggle
+        [(ngModel)]="user.settings!.showAllOpen"
+        (ionChange)="updateSettings()"
+      ></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>Orden proyectos</ion-label>
+      <ion-select
+        [(ngModel)]="user.settings!.projectOrder"
+        (ionChange)="updateSettings()"
+      >
+        <ion-select-option value="name">Por Nombre</ion-select-option>
+        <ion-select-option value="date">Por Fecha</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label> Mostrar descripción </ion-label>
+      <ion-toggle
+        [(ngModel)]="user.settings!.showDescription"
+        (ionChange)="updateSettings()"
+      ></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label> Etiquetas </ion-label>
+      <ion-button expand="block" (click)="openLabelsModal()">
+        <ion-icon name="pricetags-outline"></ion-icon>
+        &nbsp; Ver y editar
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

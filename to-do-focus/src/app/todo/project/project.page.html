@@ -40,6 +40,8 @@
       *ngFor="let task of tasks"
       [task]="task"
       [fk_project]="project.id_project || 0"
+      (taskUpdated)="onTaskUpdated($event)"
+      (taskDeleted)="onTaskDeleted($event)"
       (taskMoved)="onTaskMoved($event)"
     >
     </app-task-item>
