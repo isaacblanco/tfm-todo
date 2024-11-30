@@ -4,14 +4,8 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
-## Auth - Temas de autentificación
-
-- Bloquear paginas
-- Si no esta logado ir a login
-
 ## Otros: importantes y FALLOS
 
-- Revisar al entrar --> si hay localStorage se muestra el TO DO Focus pero no los proyectos
 - Mostrar datos del usuario
 - Falta mostar el menu lateral, no funciona
 - Si no hay tareas en un proyecto, no devolver un 404, devolver un array vacio

@@ -1,8 +1,11 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
+    <!-- Menú lateral -->
     <ion-menu contentId="main-content" type="overlay">
       <ion-header>
-        <ion-title>TO DO Focus</ion-title>
+        <ion-toolbar>
+          <ion-title>TO DO Focus</ion-title>
+        </ion-toolbar>
       </ion-header>
       <ion-content>
         <ion-list *ngIf="isAuthenticated">
@@ -98,6 +101,7 @@
       </ion-footer>
     </ion-menu>
 
+    <!-- Contenido principal -->
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>
