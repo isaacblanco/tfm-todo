@@ -34,12 +34,12 @@ export class TaskItemComponent implements OnInit {
   ngOnInit() {
     this.generateAvailableTimes();
 
-    // Asegurar que task.dini sea un objeto Date
     if (this.task.dini && typeof this.task.dini === 'string') {
       this.task.dini = new Date(this.task.dini);
     }
 
     if (this.task.dini) {
+      this.externalDate = this.task.dini.toISOString().split('T')[0];
       this.selectedTime = this.task.dini.toLocaleTimeString([], {
         hour: '2-digit',
         minute: '2-digit',
@@ -116,11 +116,21 @@ export class TaskItemComponent implements OnInit {
   /**
    * Actualiza la hora de la tarea.
    */
-  updateTime() {
-    if (this.task.dini) {
+  updateTime(): void {
+    if (this.externalDate && this.selectedTime) {
       const [hours, minutes] = this.selectedTime.split(':').map(Number);
-      this.task.dini.setHours(hours, minutes);
-      console.log('Updated time:', this.task.dini);
+      const newDini = new Date(this.externalDate);
+
+      if (!isNaN(newDini.getTime())) {
+        newDini.setHours(hours, minutes);
+
+        this.task.dini = newDini;
+        this.updateTask();
+      } else {
+        console.error('Fecha inválida:', this.externalDate);
+      }
+    } else {
+      console.error('Fecha o hora no proporcionadas.');
     }
   }
 

@@ -6,13 +6,9 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## Otros: importantes y FALLOS
 
-- No funciona mover tareas: ojo, por tema fechas
 - Modificar tarea
-  - Guardar fecha y hora: no se guarda: revisar lógica
-  - Editar ambas fechas y horas
   - Tabular derecha
   - Tabular izquierda
-- Arreglar errores de consola
 
 ## TODO
 
@@ -44,11 +40,12 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## PROYECTOS con tiempo
 
-- Leer datos de un proyecto
 - Aplicar filtros de etiquetas
 - Cambiar a vista: kanbam
 - Cambiar a vista de calendario
 - Filtrar tareas
+- Evitar que se dupliquen usuarios, confirmar que no sucede
+- Mejorar seguridad, revisión del token en las peticiones al API
 
 ## Capa de pintura
 

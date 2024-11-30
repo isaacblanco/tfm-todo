@@ -12,21 +12,31 @@
     <!-- Fecha de Inicio -->
     <ion-item>
       <ion-label position="stacked">Fecha de Inicio</ion-label>
-      <ion-datetime
-        [value]="task.dini"
-        (ionChange)="updateDini($event)"
-        presentation="date-time"
-      ></ion-datetime>
+      <ion-input
+        type="date"
+        [(ngModel)]="externalStartDate"
+        (ionChange)="updateDini()"
+      ></ion-input>
+      <ion-select [(ngModel)]="startTime" (ionChange)="updateDini()">
+        <ion-select-option *ngFor="let time of availableTimes" [value]="time">
+          {{ time }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
 
     <!-- Fecha de Fin -->
     <ion-item>
       <ion-label position="stacked">Fecha de Fin</ion-label>
-      <ion-datetime
-        [value]="task.dfin"
-        (ionChange)="updateDfin($event)"
-        presentation="date-time"
-      ></ion-datetime>
+      <ion-input
+        type="date"
+        [(ngModel)]="externalEndDate"
+        (ionChange)="updateDfin()"
+      ></ion-input>
+      <ion-select [(ngModel)]="endTime" (ionChange)="updateDfin()">
+        <ion-select-option *ngFor="let time of availableTimes" [value]="time">
+          {{ time }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
   </ion-list>
 

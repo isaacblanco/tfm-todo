@@ -1,20 +1,27 @@
+<ion-item *ngIf="task.dini !== null" lines="">
+  <ion-label position="stacked" *ngIf="task.dini !== null"
+    >{{ formatDate(task.dini) }} &nbsp;</ion-label
+  >
+</ion-item>
 <ion-item lines="full">
   <!-- Line 1 -->
 
   <ion-reorder slot="start">
     <ion-icon name="arrow-back"></ion-icon>
   </ion-reorder>
-  <span *ngIf="task.dini !== null">{{ formatDate(task.dini) }} &nbsp; </span>
+
+  <!-- Iconos vacíos según task.tabs -->
   <ng-container *ngFor="let _ of [].constructor(task.tabs || 0)">
     <ion-icon name="return-down-forward-sharp"></ion-icon>
   </ng-container>
-  <!-- Iconos vacíos según task.tabs -->
 
+  <!-- Checkbox para completar la tarea -->
   <ion-checkbox
     slot="start"
     [(ngModel)]="task.completed"
     (ionChange)="toggleCompletion()"
   ></ion-checkbox>
+  <!-- Nombre de la tarea -->
   <ion-label>
     <ion-input
       [(ngModel)]="task.task_name"
