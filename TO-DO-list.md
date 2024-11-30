@@ -6,9 +6,6 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## Otros: importantes y FALLOS
 
-- Mostrar datos del usuario
-- Falta mostar el menu lateral, no funciona
-- Si no hay tareas en un proyecto, no devolver un 404, devolver un array vacio
 - No funciona mover tareas: ojo, por tema fechas
 - Modificar tarea
   - Guardar fecha y hora: no se guarda: revisar lógica
@@ -43,10 +40,12 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 ## CONFIGURACION
 
 - Revisar temas de configuración y aplicar
+  - Aplicar numero
 
 ## PROYECTOS con tiempo
 
 - Leer datos de un proyecto
+- Aplicar filtros de etiquetas
 - Cambiar a vista: kanbam
 - Cambiar a vista de calendario
 - Filtrar tareas

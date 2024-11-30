@@ -144,4 +144,31 @@ export class AuthService {
   clearUserData(): void {
     localStorage.removeItem('userData');
   }
+
+  /**
+   * Elimina al usuario
+   * @param userId - ID del usuario a eliminar
+   * @returns Observable<void>
+   */
+  deleteUser(userId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/users/${userId}`).pipe(
+      tap(() => {
+        this.clearUserData(); // Elimina datos locales
+        this.loginStatus.next(false); // Emitir estado de logout
+        this.router.navigate(['/login']); // Redirige al login
+      })
+    );
+  }
+
+  /**
+   * Actualiza la contraseña del usuario
+   * @param userId - ID del usuario
+   * @param password - Nueva contraseña
+   * @returns Observable<void>
+   */
+  updateUserPassword(userId: number, password: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/users/${userId}/password`, {
+      password,
+    });
+  }
 }

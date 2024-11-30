@@ -49,12 +49,12 @@ export class ProjectService {
   getProjects(): void {
     const userId = this.getUserId();
     if (!userId) {
-      /* throw new Error('User ID not found in localStorage'); */
       console.error('User ID not found in localStorage');
       return;
     }
 
-    this.http.get<ProjectDTO[]>(`${this.apiUrl}?userId=${userId}`).subscribe({
+    // Usar la ruta adecuada para obtener proyectos del usuario
+    this.http.get<ProjectDTO[]>(`${this.apiUrl}user/${userId}`).subscribe({
       next: (projects) => {
         this.projectsSubject.next(projects); // Actualiza el BehaviorSubject
       },

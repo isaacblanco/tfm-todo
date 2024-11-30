@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { AuthService } from 'src/app/auth/auth.service';
 import { UserDTO } from 'src/app/core/models/user-DTO';
 import { UserService } from './../../core/services/user.service';
 
@@ -15,37 +16,22 @@ import { UserService } from './../../core/services/user.service';
 })
 export class SettingsPage implements OnInit {
   user: UserDTO = this.createDefaultUser();
+  newPassword: string = ''; // Para cambiar la contraseña
+  deleteToggle: boolean = false; // Para confirmar la eliminación del usuario
 
   constructor(
     private route: ActivatedRoute,
     private modalController: ModalController,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {
     this.loadUserSettings();
-    // Valores por defecto si hay problemas al cargar los datos
-    if (this.user.settings?.numberOfTaskToShow === null) {
-      this.user.settings.numberOfTaskToShow = 50;
-    }
-    if (this.user.settings?.projectOrder === null) {
-      this.user.settings.projectOrder = 'asc';
-    }
-    if (this.user.settings?.showDescription === null) {
-      this.user.settings.showDescription = false;
-    }
-    if (this.user.settings?.showEmptyTask === null) {
-      this.user.settings.showEmptyTask = false;
-    }
-    if (this.user.settings?.showAllOpen === null) {
-      this.user.settings.showAllOpen = false;
-    }
   }
 
-  /**
-   * Carga los datos del usuario desde el servicio
-   */
   private loadUserSettings(): void {
     const storedUser = this.userService.getUserData();
     if (storedUser) {
@@ -53,31 +39,101 @@ export class SettingsPage implements OnInit {
     }
   }
 
-  /**
-   * Actualiza los ajustes del usuario en el servicio
-   */
   updateSettings(): void {
     console.log('Ajustes actualizados:', this.user.settings);
     this.userService.setUserData(this.user);
   }
 
   /**
-   * Abre el modal para editar etiquetas
+   * Cambia la contraseña del usuario
    */
-  async openLabelsModal(): Promise<void> {
-    const modal = await this.modalController.create({
-      component: await import('./../edit-labels/edit-labels.component').then(
-        (m) => m.EditLabelsComponent
-      ),
-      componentProps: {},
-    });
+  updatePassword(): void {
+    if (!this.newPassword) {
+      this.showAlert('Error', 'La contraseña no puede estar vacía.');
+      return;
+    }
 
-    await modal.present();
+    // Actualiza la contraseña en el backend
+    this.authService
+      .updateUserPassword(this.user.id, this.newPassword)
+      .subscribe({
+        next: () => {
+          this.showAlert('Éxito', 'Contraseña actualizada correctamente.');
+          this.newPassword = ''; // Limpia el campo de contraseña
+        },
+        error: (err) => {
+          console.error('Error al actualizar la contraseña:', err);
+          this.showAlert(
+            'Error',
+            'No se pudo actualizar la contraseña. Inténtelo más tarde.'
+          );
+        },
+      });
   }
 
   /**
-   * Crea un usuario por defecto
+   * Borra al usuario del sistema
    */
+  async deleteUser(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Confirmar eliminación',
+      message: '¿Está seguro de que desea eliminar su cuenta?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            if (this.user.id) {
+              this.authService.deleteUser(this.user.id).subscribe({
+                next: () => {
+                  console.log('Usuario eliminado correctamente');
+                  this.userService.clearUserData();
+                  this.router.navigate(['/login']);
+                },
+                error: (err) => {
+                  console.error('Error al eliminar al usuario:', err);
+                  this.showAlert(
+                    'Error',
+                    'No se pudo eliminar su cuenta. Inténtelo más tarde.'
+                  );
+                },
+              });
+            }
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async openLabelsModal(): Promise<void> {
+    const modal = await this.modalController.create({
+      component: await import(
+        './../../todo/modals/select-labels/select-labels.component'
+      ).then((m) => m.SelectLabelsComponent),
+      componentProps: {},
+    });
+  }
+
+  /**
+   * Muestra una alerta con un mensaje
+   * @param header - Título de la alerta
+   * @param message - Mensaje de la alerta
+   */
+  private async showAlert(header: string, message: string): Promise<void> {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
+
   createDefaultUser(): UserDTO {
     return {
       id: 0,

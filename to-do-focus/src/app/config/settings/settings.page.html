@@ -1,9 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button>
-        <ion-icon name="menu"></ion-icon>
-      </ion-menu-button>
+      <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
     <ion-title>Configuración</ion-title>
   </ion-toolbar>
@@ -17,6 +15,10 @@
   </ion-header>
 
   <ion-list>
+    <ion-list-header>
+      <ion-label>Preferencias</ion-label>
+    </ion-list-header>
+
     <ion-item>
       <ion-label>Número de elementos a mostrar</ion-label>
     </ion-item>
@@ -80,6 +82,50 @@
       <ion-button expand="block" (click)="openLabelsModal()">
         <ion-icon name="pricetags-outline"></ion-icon>
         &nbsp; Ver y editar
+      </ion-button>
+    </ion-item>
+
+    <ion-list-header>
+      <ion-label>Cuenta de usuario</ion-label>
+    </ion-list-header>
+
+    <!-- Información del Usuario -->
+    <ion-item>
+      <ion-label>Usuario</ion-label>
+      <ion-text>{{ user.username }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-text>{{ user.email }}</ion-text>
+    </ion-item>
+
+    <!-- Cambiar contraseña -->
+    <ion-item>
+      <ion-label position="stacked">Cambiar contraseña</ion-label>
+      <ion-input
+        type="password"
+        [(ngModel)]="newPassword"
+        placeholder="Nueva contraseña"
+      ></ion-input>
+      <ion-button expand="block" (click)="updatePassword()">Guardar</ion-button>
+    </ion-item>
+
+    <!-- Borrar usuario -->
+    <ion-list-header>
+      <ion-label>Borrar usuario</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Estoy seguro de lo que hago</ion-label>
+      <ion-toggle [(ngModel)]="deleteToggle"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-button
+        expand="block"
+        color="danger"
+        [disabled]="!deleteToggle"
+        (click)="deleteUser()"
+      >
+        Eliminar usuario
       </ion-button>
     </ion-item>
   </ion-list>
