@@ -42,6 +42,18 @@ export class ProjectService {
     return this.http.get<ProjectDTO>(`${this.apiUrl}${projectId}`);
   }
 
+  getProjectsByUserId(userId: number): Observable<ProjectDTO[]> {
+    // Llama a la API y actualiza el BehaviorSubject
+    this.http.get<ProjectDTO[]>(`${this.apiUrl}user/${userId}`).subscribe({
+      next: (projects) => {
+        this.projectsSubject.next(projects); // Actualiza el BehaviorSubject
+      },
+      error: (err) => console.error('Error al obtener proyectos:', err),
+    });
+
+    return this.projects$; // Devuelve el Observable del BehaviorSubject
+  }
+
   /**
    * Obtiene todos los proyectos del usuario almacenado en localStorage
    * @returns Observable con la lista de proyectos

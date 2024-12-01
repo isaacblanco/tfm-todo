@@ -61,13 +61,21 @@ export class FocusPage implements OnInit {
   }
 
   private loadMainProject(): void {
-    this.projectService.getProjects().subscribe({
+    const userId = this.userService.getUserId(); // Obtén el ID del usuario
+    if (!userId) {
+      console.error('No se encontró un usuario autenticado.');
+      return;
+    }
+
+    this.projectService.getProjectsByUserId(userId).subscribe({
       next: (projects: ProjectDTO[]) => {
+        // Encuentra el proyecto principal
         this.mainProject = projects.find((project: ProjectDTO) => project.main);
         if (this.mainProject) {
           this.loadTasks();
         } else {
           console.error('No se encontró un proyecto principal.');
+          // Aquí podrías crear uno si es necesario
         }
       },
       error: (err: any) => {
