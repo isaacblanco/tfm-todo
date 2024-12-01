@@ -38,25 +38,23 @@
 </ion-item>
 
 <!-- Line 2 (conditionally displayed) -->
-<div *ngIf="showDetails" class="task-details">
-  <ion-item>
-    <ion-label>Fecha:&nbsp;</ion-label>
-    <ion-input
-      type="date"
-      [(ngModel)]="externalDate"
-      (ionChange)="updateDini()"
-      placeholder="Selecciona fecha"
-    ></ion-input>
-    <ion-select [(ngModel)]="selectedTime" (ionChange)="updateTime()">
-      <ion-select-option *ngFor="let time of availableTimes" [value]="time">
-        {{ time }}
-      </ion-select-option>
-    </ion-select>
-    <ion-button fill="clear" slot="end" (click)="openSelectDateModal()">
-      <ion-icon name="calendar"></ion-icon>
-    </ion-button>
-  </ion-item>
-</div>
+<ion-item *ngIf="showDetails">
+  <ion-label>Fecha:&nbsp;</ion-label>
+  <ion-input
+    type="date"
+    [(ngModel)]="externalDate"
+    (ionChange)="updateDini()"
+    placeholder="Selecciona fecha"
+  ></ion-input>
+  <ion-select [(ngModel)]="selectedTime" (ionChange)="updateTime()">
+    <ion-select-option *ngFor="let time of availableTimes" [value]="time">
+      {{ time }}
+    </ion-select-option>
+  </ion-select>
+  <ion-button fill="clear" slot="end" (click)="openSelectDateModal()">
+    <ion-icon name="calendar"></ion-icon>
+  </ion-button>
+</ion-item>
 
 <!-- Line 3 (conditionally displayed) -->
 <div *ngIf="showDetails" class="task-actions">

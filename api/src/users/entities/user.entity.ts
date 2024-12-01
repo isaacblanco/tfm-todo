@@ -23,6 +23,7 @@ export class User {
     showDescription?: boolean;
     showEmptyTask?: boolean;
     showAllOpen?: boolean;
+    showCompleted?: boolean;
   };
 
   @OneToMany(() => Project, (project) => project.fk_user)

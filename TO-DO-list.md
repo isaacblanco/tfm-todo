@@ -7,16 +7,15 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 ## TODO
 
 - Editar tarea
-  - Poner fechas
-  - Tabular
   - Etiquetar
-  - Mover
   - Añadir descripción
   - Establecer prioridad
   - Borrar
 - Mover tarea a proyecto
 - Filtrar tareas
 - Marcar como completada
+- Revisar la ordenación por fecha
+- Incluir la opción de borrar las fechas
 
 ## Servicios LABELS
 
@@ -36,24 +35,36 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 ## AJUSTES
 
 - No mostrar el proyecto de TODO en la lista de proyectos
+- Las fechas necesitas una hora por defecto, poner 10:00 en la ventana modal
 
 ## PROYECTOS con tiempo
 
+- Agregar la opción de ShowCompleted en setting
+  - Filtrar en listados
 - Aplicar filtros de etiquetas
 - Cambiar a vista: kanbam
 - Cambiar a vista de calendario
+  - Incluir la opción de mostrar progreso
 - Filtrar tareas
-- Evitar que se dupliquen usuarios, confirmar que no sucede
+- Evitar que se dupliquen usuarios, confirmar que no sucede al registrarse
 - Mejorar seguridad, revisión del token en las peticiones al API
 
 ## Capa de pintura
 
 - Poner bonito
+  - Poner color corporativo
 
 ## [--Para nota--]
 
-Validarse con google
-Reordendar las tareas
-Uso de teclas
+- Mejorar como se muestran las fechas
+  - Utilizar una línea hace que tenga demasiado scroll
+  - Hay un problema entre las fechas: la visible no se actualiza al modificar desde modal
+- Reordendar las tareas: ojo fechas
+- Uso de teclas: agregar atajos de teclado
+- Al agregar una tarea que el foco se vaya a la nueva tarea (campo texto)
+- Al seleccionar una hora en el dialogo de fechas, que se aplique y cierre el dialogo (un clic menos)
+- En las tareas: cambiar el color de la prioridad: 0 morado, azul a verde a amarillo a rojo
+- Gestión de etiquetas con #hashtag
+- Validarse con google
 
 Las tareas no deberían de actualizarse si no hay cambios (al perder el foco de una seleccionada)

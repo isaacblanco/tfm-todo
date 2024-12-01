@@ -107,6 +107,7 @@ export class SignUpPage implements OnInit {
         showDescription: false,
         showEmptyTask: false,
         showAllOpen: false,
+        showCompleted: false,
       },
     };
   }

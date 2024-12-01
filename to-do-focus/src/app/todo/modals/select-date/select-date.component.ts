@@ -37,6 +37,8 @@ export class SelectDateComponent implements OnInit {
         hour: '2-digit',
         minute: '2-digit',
       });
+    } else {
+      this.startTime = '10:00'; // Hora predeterminada si no hay hora
     }
 
     if (this.task.dfin) {
@@ -46,6 +48,8 @@ export class SelectDateComponent implements OnInit {
         hour: '2-digit',
         minute: '2-digit',
       });
+    } else {
+      this.endTime = '23:45'; // Hora predeterminada para la fecha de fin
     }
   }
 
@@ -67,60 +71,52 @@ export class SelectDateComponent implements OnInit {
    * Actualiza la fecha de inicio (dini) combinando fecha y hora
    */
   updateDini(): void {
-    if (this.externalStartDate && this.startTime) {
-      const [hours, minutes] = this.startTime.split(':').map(Number);
+    if (this.isValidDate(this.externalStartDate)) {
+      const time = this.startTime || '10:00'; // Usar 10:00 si no hay hora seleccionada
+      const [hours, minutes] = time.split(':').map(Number);
       const newDini = new Date(this.externalStartDate);
 
-      if (!isNaN(newDini.getTime())) {
-        newDini.setHours(hours, minutes);
-        this.task.dini = newDini;
-        this.validateDates();
-      } else {
-        console.error('Fecha de inicio inválida:', this.externalStartDate);
-      }
+      newDini.setHours(hours, minutes);
+      this.task.dini = newDini;
+      console.log('Fecha de inicio actualizada:', this.task.dini);
+      this.validateDates();
+    } else {
+      console.warn(
+        'Fecha de inicio inválida o el año es menor o igual a 2020:',
+        this.externalStartDate
+      );
     }
   }
 
-  /**
-   * Actualiza la fecha de fin (dfin) combinando fecha y hora
-   */
   /**
    * Actualiza la fecha de fin (dfin) combinando fecha y hora
    */
   updateDfin(): void {
-    if (this.externalEndDate && this.endTime) {
-      const [hours, minutes] = this.endTime.split(':').map(Number);
+    if (this.isValidDate(this.externalEndDate)) {
+      const time = this.endTime || '23:45'; // Usar 23:45 si no hay hora seleccionada
+      const [hours, minutes] = time.split(':').map(Number);
       const newDfin = new Date(this.externalEndDate);
 
-      if (!isNaN(newDfin.getTime())) {
-        newDfin.setHours(hours, minutes);
-        this.task.dfin = newDfin;
-        this.validateDates();
-
-        // Llama al servicio para actualizar la tarea
-        this.updateTaskService();
-      } else {
-        console.error('Fecha de fin inválida:', this.externalEndDate);
-      }
+      newDfin.setHours(hours, minutes);
+      this.task.dfin = newDfin;
+      console.log('Fecha de fin actualizada:', this.task.dfin);
+      this.validateDates();
+    } else {
+      console.warn(
+        'Fecha de fin inválida o el año es menor o igual a 2020:',
+        this.externalEndDate
+      );
     }
   }
 
   /**
-   * Llama al servicio para actualizar la tarea en la base de datos
+   * Valida que una fecha sea válida y el año sea mayor que 2020
+   * @param dateStr - Fecha en formato string
+   * @returns boolean
    */
-  updateTaskService(): void {
-    if (this.task.id_task) {
-      this.taskService.updateTask(this.task.id_task, this.task).subscribe({
-        next: () => {
-          console.log('Tarea actualizada correctamente en el servidor.');
-        },
-        error: (err) => {
-          console.error('Error al actualizar la tarea en el servidor:', err);
-        },
-      });
-    } else {
-      console.error('ID de tarea no disponible para la actualización.');
-    }
+  private isValidDate(dateStr: string): boolean {
+    const date = new Date(dateStr);
+    return !isNaN(date.getTime()) && date.getFullYear() > 2020;
   }
 
   /**
@@ -131,6 +127,7 @@ export class SelectDateComponent implements OnInit {
       const temp = this.task.dini;
       this.task.dini = this.task.dfin;
       this.task.dfin = temp;
+      console.warn('Fechas intercambiadas para mantener consistencia.');
     }
   }
 

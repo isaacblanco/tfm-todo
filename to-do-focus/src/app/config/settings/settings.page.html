@@ -54,6 +54,13 @@
       </ion-grid>
     </ion-item>
     <ion-item>
+      <ion-label>Mostrar tareas completadas</ion-label>
+      <ion-toggle
+        [(ngModel)]="user.settings!.showCompleted"
+        (ionChange)="updateSettings()"
+      ></ion-toggle>
+    </ion-item>
+    <ion-item>
       <ion-label>Mostrar listado completo</ion-label>
       <ion-toggle
         [(ngModel)]="user.settings!.showAllOpen"

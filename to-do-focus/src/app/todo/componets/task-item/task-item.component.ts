@@ -75,23 +75,75 @@ export class TaskItemComponent implements OnInit {
   updateDini(): void {
     console.log('updateDini', this.externalDate, this.selectedTime);
 
-    // Usar "23:45:00" si selectedTime no está definido
-    const time = this.selectedTime || '23:45';
+    // Si no hay una hora seleccionada, usar la hora predeterminada 10:00
+    const time = this.selectedTime || '10:00';
+
+    // Actualizar también el valor en selectedTime
+    if (!this.selectedTime) {
+      this.selectedTime = '10:00';
+    }
+
     const [hours, minutes] = time.split(':').map(Number);
 
-    if (this.externalDate) {
+    // Verificar que externalDate esté completo (no vacío o inválido)
+    if (this.externalDate && this.externalDate.split('-').length === 3) {
       const newDini = new Date(this.externalDate);
 
-      if (!isNaN(newDini.getTime())) {
+      // Validar que el año sea mayor a 2020
+      if (!isNaN(newDini.getTime()) && newDini.getFullYear() > 2020) {
         newDini.setHours(hours, minutes);
-        // Actualiza la tarea y llama al servicio
+
+        // Actualizar la fecha solo si es válida y cumple con los criterios
         this.task.dini = newDini;
+        console.log('Fecha y hora actualizadas:', this.task.dini);
+
+        // Llama al servicio para actualizar la tarea
         this.updateTask();
       } else {
-        console.error('Fecha inválida:', this.externalDate);
+        console.error(
+          'Fecha inválida o el año es menor o igual a 2020:',
+          this.externalDate
+        );
       }
     } else {
-      console.error('Fecha externa no proporcionada.');
+      console.error('Fecha incompleta, no se actualiza.');
+    }
+  }
+
+  /*
+   * Se actualiza el tiempo de la tarea
+   */
+  updateTime(): void {
+    console.log('updateTime', this.selectedTime, this.externalDate);
+
+    // Si no se selecciona una hora, usar el valor predeterminado 10:00
+    if (!this.selectedTime) {
+      this.selectedTime = '10:00';
+    }
+
+    const [hours, minutes] = this.selectedTime.split(':').map(Number);
+
+    // Solo actualizar si externalDate es válido, completo y el año es mayor a 2020
+    if (this.externalDate && this.externalDate.split('-').length === 3) {
+      const newDini = new Date(this.externalDate);
+
+      if (!isNaN(newDini.getTime()) && newDini.getFullYear() > 2020) {
+        newDini.setHours(hours, minutes);
+
+        // Actualizar la fecha y hora solo si es válida
+        this.task.dini = newDini;
+        console.log('Hora actualizada:', this.task.dini);
+
+        // Llama al servicio para actualizar la tarea
+        this.updateTask();
+      } else {
+        console.error(
+          'Fecha inválida o el año es menor o igual a 2020:',
+          this.externalDate
+        );
+      }
+    } else {
+      console.error('Fecha incompleta, no se actualiza la hora.');
     }
   }
 
@@ -122,26 +174,6 @@ export class TaskItemComponent implements OnInit {
   toggleCompletion() {
     this.task.completed = !this.task.completed;
     console.log('Task completed:', this.task.completed);
-  }
-
-  /**
-   * Actualiza la hora de la tarea.
-   */
-  updateTime(): void {
-    if (this.externalDate) {
-      const newDini = new Date(this.externalDate);
-      const [hours, minutes] = this.selectedTime.split(':').map(Number);
-      newDini.setHours(hours, minutes);
-
-      if (!isNaN(newDini.getTime())) {
-        this.task.dini = newDini;
-        this.updateTask();
-      } else {
-        console.error('Fecha inválida:', this.externalDate);
-      }
-    } else {
-      console.error('Fecha no proporcionada.');
-    }
   }
 
   /**

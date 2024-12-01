@@ -9,5 +9,6 @@ export class UserDto {
     showDescription?: boolean;
     showEmptyTask?: boolean;
     showAllOpen?: boolean;
+    showCompleted?: boolean;
   };
 }

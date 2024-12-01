@@ -10,5 +10,6 @@ export interface UserDTO {
     showDescription?: boolean;
     showEmptyTask?: boolean;
     showAllOpen?: boolean;
+    showCompleted?: boolean;
   };
 }
