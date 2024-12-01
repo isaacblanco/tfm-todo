@@ -15,10 +15,12 @@ export class ProjectService {
 
   // Obtener tareas asociadas a un proyecto por su ID
   async getTasksByProject(projectId: number): Promise<Task[]> {
-    return this.taskRepository.find({
-      where: { fk_project: projectId },
-      order: { dini: "ASC" }, // Orden opcional por fecha de inicio (ascendente)
-    });
+    return this.taskRepository
+      .createQueryBuilder("task")
+      .where("task.fk_project = :projectId", { projectId })
+      .orderBy("task.dini IS NULL", "DESC") // Prioriza nulos primero
+      .addOrderBy("task.dini", "ASC") // Ordena ascendentemente por fecha
+      .getMany();
   }
 
   async getProjectsByUser(userId: number): Promise<Project[]> {

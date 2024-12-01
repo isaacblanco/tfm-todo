@@ -172,8 +172,13 @@ export class TaskItemComponent implements OnInit {
    * Marca o desmarca la tarea como completada.
    */
   toggleCompletion() {
+    // TODO: revisar si los estilos se cambian
     this.task.completed = !this.task.completed;
-    console.log('Task completed:', this.task.completed);
+    // Llama al servicio para actualizar el estado
+    this.updateTask();
+
+    // Opcional: Si el cambio no se refleja de inmediato en la vista
+    console.log('Task completion toggled:', this.task.completed);
   }
 
   /**
@@ -280,12 +285,15 @@ export class TaskItemComponent implements OnInit {
     }
   }
 
+  /* Función generica para actualizar la tarea */
   updateTask() {
     if (this.task.id_task) {
       this.loading = true;
       this.taskService.updateTask(this.task.id_task, this.task).subscribe({
         next: () => {
-          console.log(`Task actualizada: ${this.task.id_task}`);
+          console.log(
+            `Task actualizada: ${this.task.id_task}, completada: ${this.task.completed}`
+          );
           this.taskUpdated.emit(this.task);
         },
         error: (err) => {
