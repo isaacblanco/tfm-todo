@@ -11,7 +11,7 @@ export class UserService {
    */
   setUserData(userData: any): void {
     localStorage.setItem('userData', JSON.stringify(userData));
-    // TODO: Implementar la lógica para almacenar los datos en el backend
+    console.log('Usuario guardado en localStorage:', userData);
   }
 
   /**
@@ -55,6 +55,7 @@ export class UserService {
         showDescription: true,
         showEmptyTask: false,
         showAllOpen: false,
+        showCompleted: false,
       },
     };
   }

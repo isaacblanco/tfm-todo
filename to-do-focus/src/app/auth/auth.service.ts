@@ -139,6 +139,23 @@ export class AuthService {
   }
 
   /**
+   * Actualiza los settings del usuario
+   * @param userId - ID del usuario
+   * @param settings - Configuración actualizada del usuario
+   * @returns Observable<any>
+   */
+  updateUserSettings(
+    userId: number,
+    settings: { username: string; email: string; settings: any }
+  ): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/${userId}`, settings).pipe(
+      tap((updatedSettings) => {
+        console.log('User settings updated:', updatedSettings);
+      })
+    );
+  }
+
+  /**
    * Elimina los datos del usuario de localStorage
    */
   clearUserData(): void {

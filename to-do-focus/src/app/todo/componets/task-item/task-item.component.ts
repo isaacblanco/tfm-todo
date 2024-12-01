@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { UserService } from 'src/app/core/services/user.service';
 import { formatDateTime } from 'src/app/core/utils/date-utils';
 import { TaskDTO } from '../../../core/models/task-DTO';
 import { TaskService } from '../../../core/services/task.service';
@@ -20,6 +21,8 @@ export class TaskItemComponent implements OnInit {
   @Output() taskUpdated = new EventEmitter<TaskDTO>(); // Para notificar al padre que se actualizó la tarea
   @Output() taskDeleted = new EventEmitter<TaskDTO>(); // Notifica al padre sobre tareas eliminadas
 
+  user: any = null; // Usuario actual
+  showDesctiption = false;
   showDetails = false;
   availableTimes: string[] = []; // Horas disponibles
   selectedTime = '';
@@ -29,7 +32,8 @@ export class TaskItemComponent implements OnInit {
   constructor(
     private modalController: ModalController,
     private alertController: AlertController,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -54,6 +58,21 @@ export class TaskItemComponent implements OnInit {
     if (isNaN(this.task.tabs)) {
       this.task.tabs = 0;
     }
+
+    // Control de la descripcion
+    if (this.task.description === undefined || this.task.description === null) {
+      this.task.description = '';
+    }
+
+    // Mostrar o no la descripción
+    this.user = this.userService.getUserData();
+    if (this.user) {
+      if (this.user.settings !== undefined && this.user.settings !== null) {
+        this.showDesctiption = this.user.settings.showDescription;
+      }
+    }
+
+    console.log('Mostrar o no la descripción', this.showDesctiption);
 
     console.log('TaskItemComponent initialized', this.task);
   }

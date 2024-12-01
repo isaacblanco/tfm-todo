@@ -1,4 +1,4 @@
-<ion-item-sliding>
+<ion-item-sliding class="item-active">
   <!-- Indicador de carga -->
   <ion-item *ngIf="task.dini !== null" lines="">
     <ion-label position="stacked" *ngIf="task.dini !== null"
@@ -36,6 +36,11 @@
     <ion-button fill="clear" slot="end" (click)="toggleDetails()">
       <ion-icon [name]="showDetails ? 'caret-up' : 'caret-down'"></ion-icon>
     </ion-button>
+  </ion-item>
+
+  <ion-item *ngIf="this.showDesctiption && task.description" lines="full">
+    <ion-icon slot="start" name="reader-outline"></ion-icon>
+    <ion-label>{{ task.description }}</ion-label>
   </ion-item>
 
   <!-- Line 2 (conditionally displayed) -->

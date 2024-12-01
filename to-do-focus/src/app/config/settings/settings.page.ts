@@ -40,6 +40,40 @@ export class SettingsPage implements OnInit {
   updateSettings(): void {
     console.log('Ajustes actualizados:', this.user.settings);
     this.userService.setUserData(this.user);
+
+    // Construye un objeto sin incluir el campo `id`
+    const userToUpdate = {
+      username: this.user.username,
+      email: this.user.email,
+      settings: {
+        numberType: this.user.settings?.numberType ?? true,
+        numberOfTaskToShow: this.user.settings?.numberOfTaskToShow ?? 50,
+        projectOrder: this.user.settings?.projectOrder ?? 'name',
+        showDescription: this.user.settings?.showDescription ?? true,
+        showEmptyTask: this.user.settings?.showEmptyTask ?? false,
+        showAllOpen: this.user.settings?.showAllOpen ?? false,
+        showCompleted: this.user.settings?.showCompleted ?? false,
+      },
+    };
+
+    console.log('Datos a enviar al API:', userToUpdate);
+
+    // Envía la configuración al backend si el usuario tiene ID
+    const userId = this.user.id;
+    if (userId) {
+      this.authService.updateUserSettings(userId, userToUpdate).subscribe({
+        next: () => {
+          console.log('Ajustes de usuario actualizados en el backend.');
+        },
+        error: (err) => {
+          console.error('Error al actualizar los ajustes del usuario:', err);
+        },
+      });
+    } else {
+      console.error(
+        'No se pudo obtener el ID del usuario. Revisa la autenticación.'
+      );
+    }
   }
 
   async openLabelsModal(): Promise<void> {

@@ -2,3 +2,11 @@
   font-style: italic;
   opacity: 0.8;
 }
+
+.item-active {
+  margin: 2px;
+}
+
+.item-active:hover {
+  outline: 2px solid rgba(255, 192, 0, 0.2);
+}

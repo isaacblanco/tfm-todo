@@ -4,8 +4,6 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
-Incluir un ION-slide para borrar la tarea
-
 ## CONFIGURACION APLICADA A FOCUS y el resto
 
 - Revisar temas de configuración y aplicar
