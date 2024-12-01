@@ -1,4 +1,4 @@
-<ion-item-sliding class="item-active">
+<ion-item-sliding class="item-active" *ngIf="showCompleted || !task.completed">
   <!-- Indicador de carga -->
   <ion-item *ngIf="task.dini !== null" lines="">
     <ion-label position="stacked" *ngIf="task.dini !== null"

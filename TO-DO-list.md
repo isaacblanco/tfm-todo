@@ -6,8 +6,6 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## PROYECTOS con tiempo
 
-- Agregar la opción de ShowCompleted en setting
-  - Filtrar en listados
 - Aplicar filtros de etiquetas
 - Cambiar a vista: kanbam
 - Cambiar a vista de calendario
@@ -23,6 +21,7 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## [--Para nota--]
 
+- Poder tener una opción en el settings para borrar sin confirmación
 - Marcar tarea como completada: revisar los estilos
 - Settings: agregar la opción de borrar sin confirmación
 - Account: crear una nueva pantalla para gestionar la cuenta

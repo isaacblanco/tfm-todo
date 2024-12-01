@@ -46,8 +46,8 @@ export class FocusPage implements OnInit {
 
   private loadUserSettings(): void {
     const userData = this.userService.getUserData();
-    console.log('Localstorage userData:', userData);
-    console.log('Localstorage:', userData?.settings);
+    //console.log('Localstorage userData:', userData);
+    //console.log('Localstorage:', userData?.settings);
     if (userData) {
       this.userSettings = {
         showAllOpen: userData.settings.showAllOpen,
@@ -55,7 +55,7 @@ export class FocusPage implements OnInit {
         numberOfTaskToShow: userData.settings.numberOfTaskToShow,
       };
     }
-    console.log('Settings a usar:', this.userSettings);
+    //console.log('Settings a usar:', this.userSettings);
 
     this.loadMainProject();
   }

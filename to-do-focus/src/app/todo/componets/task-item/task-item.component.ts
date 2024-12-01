@@ -22,6 +22,7 @@ export class TaskItemComponent implements OnInit {
   @Output() taskDeleted = new EventEmitter<TaskDTO>(); // Notifica al padre sobre tareas eliminadas
 
   user: any = null; // Usuario actual
+  showCompleted = false;
   showDesctiption = false;
   showDetails = false;
   availableTimes: string[] = []; // Horas disponibles
@@ -69,11 +70,12 @@ export class TaskItemComponent implements OnInit {
     if (this.user) {
       if (this.user.settings !== undefined && this.user.settings !== null) {
         this.showDesctiption = this.user.settings.showDescription;
+        this.showCompleted = this.user.settings.showCompleted;
       }
     }
 
     //console.log('Mostrar o no la descripción', this.showDesctiption);
-
+    // console.log('Mostrar completadas', this.showCompleted);
     //console.log('TaskItemComponent initialized', this.task);
   }
 
