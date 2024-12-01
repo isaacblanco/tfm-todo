@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, IonInput } from '@ionic/angular';
 import { ProjectDTO } from '../../core/models/project-DTO';
 import { TaskDTO } from '../../core/models/task-DTO';
 import { ProjectService } from '../../core/services/project.service';
@@ -17,6 +17,8 @@ import { TaskItemComponent } from '../componets/task-item/task-item.component';
   imports: [CommonModule, FormsModule, TaskItemComponent, IonicModule],
 })
 export class FocusPage implements OnInit {
+  @ViewChildren('taskNameInput') taskNameInputs!: QueryList<IonInput>;
+
   mainProject: any = null; // Proyecto principal
   tasks: TaskDTO[] = []; // Todas las tareas
   focusTasks: TaskDTO[] = []; // Tareas en la lista "Focus"
@@ -135,8 +137,16 @@ export class FocusPage implements OnInit {
 
       this.taskService.addTask(emptyTask).subscribe({
         next: (newTask) => {
-          this.tasks.unshift(newTask); // Agrega la tarea al principio de la lista
+          this.tasks.unshift(newTask);
           this.splitTasks(); // Recalcula las listas "Focus" y "Next"
+
+          // Mueve el foco al primer elemento tras actualizar la lista
+          setTimeout(() => {
+            const firstInput = this.taskNameInputs.first;
+            if (firstInput) {
+              firstInput.setFocus();
+            }
+          });
         },
         error: (err) => {
           console.error('Error al añadir la tarea vacía:', err);
