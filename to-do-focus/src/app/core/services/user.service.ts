@@ -42,4 +42,20 @@ export class UserService {
   clearUserData(): void {
     localStorage.removeItem('userData');
   }
+
+  getDefaultUser(): UserDTO {
+    return {
+      id: 0,
+      username: '',
+      email: '',
+      settings: {
+        numberType: true, // por defecto son días
+        numberOfTaskToShow: 50,
+        projectOrder: 'name',
+        showDescription: true,
+        showEmptyTask: false,
+        showAllOpen: false,
+      },
+    };
+  }
 }

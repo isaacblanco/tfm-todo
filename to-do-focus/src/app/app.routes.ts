@@ -30,6 +30,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'account',
+    loadComponent: () =>
+      import('./config/account/account.page').then((m) => m.AccountPage), // Página de configuración
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'todo/focus',
     loadComponent: () =>
       import('./todo/focus/focus.page').then((m) => m.FocusPage), // Página de "Focus"

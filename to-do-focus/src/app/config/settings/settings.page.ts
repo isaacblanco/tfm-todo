@@ -16,8 +16,6 @@ import { UserService } from './../../core/services/user.service';
 })
 export class SettingsPage implements OnInit {
   user: UserDTO = this.createDefaultUser();
-  newPassword: string = ''; // Para cambiar la contraseña
-  deleteToggle: boolean = false; // Para confirmar la eliminación del usuario
 
   constructor(
     private route: ActivatedRoute,
@@ -42,72 +40,6 @@ export class SettingsPage implements OnInit {
   updateSettings(): void {
     console.log('Ajustes actualizados:', this.user.settings);
     this.userService.setUserData(this.user);
-  }
-
-  /**
-   * Cambia la contraseña del usuario
-   */
-  updatePassword(): void {
-    if (!this.newPassword) {
-      this.showAlert('Error', 'La contraseña no puede estar vacía.');
-      return;
-    }
-
-    // Actualiza la contraseña en el backend
-    this.authService
-      .updateUserPassword(this.user.id, this.newPassword)
-      .subscribe({
-        next: () => {
-          this.showAlert('Éxito', 'Contraseña actualizada correctamente.');
-          this.newPassword = ''; // Limpia el campo de contraseña
-        },
-        error: (err) => {
-          console.error('Error al actualizar la contraseña:', err);
-          this.showAlert(
-            'Error',
-            'No se pudo actualizar la contraseña. Inténtelo más tarde.'
-          );
-        },
-      });
-  }
-
-  /**
-   * Borra al usuario del sistema
-   */
-  async deleteUser(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: 'Confirmar eliminación',
-      message: '¿Está seguro de que desea eliminar su cuenta?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-        },
-        {
-          text: 'Eliminar',
-          handler: () => {
-            if (this.user.id) {
-              this.authService.deleteUser(this.user.id).subscribe({
-                next: () => {
-                  console.log('Usuario eliminado correctamente');
-                  this.userService.clearUserData();
-                  this.router.navigate(['/login']);
-                },
-                error: (err) => {
-                  console.error('Error al eliminar al usuario:', err);
-                  this.showAlert(
-                    'Error',
-                    'No se pudo eliminar su cuenta. Inténtelo más tarde.'
-                  );
-                },
-              });
-            }
-          },
-        },
-      ],
-    });
-
-    await alert.present();
   }
 
   async openLabelsModal(): Promise<void> {
@@ -135,18 +67,6 @@ export class SettingsPage implements OnInit {
   }
 
   createDefaultUser(): UserDTO {
-    return {
-      id: 0,
-      username: '',
-      email: '',
-      settings: {
-        numberType: true, // por defecto son días
-        numberOfTaskToShow: 50,
-        projectOrder: 'name',
-        showDescription: true,
-        showEmptyTask: false,
-        showAllOpen: false,
-      },
-    };
+    return this.userService.getDefaultUser();
   }
 }
