@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { TaskFilterPipe } from 'src/app/core/pipes/task-filter.pipe';
 import { TaskDTO } from '../../core/models/task-DTO';
 import { ProjectService } from '../../core/services/project.service';
 import { TaskService } from '../../core/services/task.service';
@@ -13,7 +14,13 @@ import { TaskItemComponent } from '../componets/task-item/task-item.component';
   templateUrl: './project.page.html',
   styleUrls: ['./project.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TaskItemComponent, IonicModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TaskItemComponent,
+    IonicModule,
+    TaskFilterPipe,
+  ],
 })
 export class ProjectPage implements OnInit {
   projectId: number | null = null;

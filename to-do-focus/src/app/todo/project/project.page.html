@@ -31,7 +31,7 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     <app-task-item
-      *ngFor="let task of tasks"
+      *ngFor="let task of tasks | taskFilter: searchTerm"
       [task]="task"
       [fk_project]="project.id_project || 0"
       (taskUpdated)="onTaskUpdated($event)"

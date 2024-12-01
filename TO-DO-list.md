@@ -6,12 +6,6 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## TODO
 
-- Editar tarea
-  - Etiquetar
-  - Añadir descripción
-  - Establecer prioridad
-  - Borrar
-- Mover tarea a proyecto
 - Filtrar tareas
 - Marcar como completada
 - Revisar la ordenación por fecha
@@ -56,6 +50,9 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## [--Para nota--]
 
+- Settings: agregar la opción de borrar sin confirmación
+- Account: crear una nueva pantalla para gestionar la cuenta
+- Agregar las etiquetas
 - Mejorar como se muestran las fechas
   - Utilizar una línea hace que tenga demasiado scroll
   - Hay un problema entre las fechas: la visible no se actualiza al modificar desde modal
