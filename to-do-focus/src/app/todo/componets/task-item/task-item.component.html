@@ -1,103 +1,112 @@
-<!-- Indicador de carga -->
-<ion-item *ngIf="task.dini !== null" lines="">
-  <ion-label position="stacked" *ngIf="task.dini !== null"
-    >{{ formatDate(task.dini) }} &nbsp;</ion-label
-  >
-</ion-item>
-<ion-item lines="full">
-  <!-- Line 1 -->
+<ion-item-sliding>
+  <!-- Indicador de carga -->
+  <ion-item *ngIf="task.dini !== null" lines="">
+    <ion-label position="stacked" *ngIf="task.dini !== null"
+      >{{ formatDate(task.dini) }} &nbsp;</ion-label
+    >
+  </ion-item>
+  <ion-item lines="full">
+    <!-- Line 1 -->
 
-  <ion-reorder slot="start">
-    <ion-icon name="arrow-back"></ion-icon>
-  </ion-reorder>
+    <ion-reorder slot="start">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-reorder>
 
-  <!-- Iconos vacíos según task.tabs -->
-  <ng-container *ngFor="let _ of [].constructor(task.tabs || 0)">
-    <ion-icon slot="start" name="return-down-forward-sharp"></ion-icon>
-  </ng-container>
+    <!-- Iconos vacíos según task.tabs -->
+    <ng-container *ngFor="let _ of [].constructor(task.tabs || 0)">
+      <ion-icon slot="start" name="return-down-forward-sharp"></ion-icon>
+    </ng-container>
 
-  <!-- Checkbox para completar la tarea -->
-  <ion-checkbox
-    slot="start"
-    [(ngModel)]="task.completed"
-    (ionChange)="toggleCompletion()"
-  ></ion-checkbox>
-  <!-- Nombre de la tarea -->
-  <ion-label [ngClass]="{ 'completed-task': task.completed }">
-    <ion-input
-      [(ngModel)]="task.task_name"
-      (ionBlur)="updateTaskName()"
-      placeholder="Nombre de la tarea"
-      clearInput
-    ></ion-input>
-  </ion-label>
+    <!-- Checkbox para completar la tarea -->
+    <ion-checkbox
+      slot="start"
+      [(ngModel)]="task.completed"
+      (ionChange)="toggleCompletion()"
+    ></ion-checkbox>
+    <!-- Nombre de la tarea -->
+    <ion-label [ngClass]="{ 'completed-task': task.completed }">
+      <ion-input
+        [(ngModel)]="task.task_name"
+        (ionBlur)="updateTaskName()"
+        placeholder="Nombre de la tarea"
+        clearInput
+      ></ion-input>
+    </ion-label>
 
-  <ion-button fill="clear" slot="end" (click)="toggleDetails()">
-    <ion-icon [name]="showDetails ? 'caret-up' : 'caret-down'"></ion-icon>
-  </ion-button>
-</ion-item>
-
-<!-- Line 2 (conditionally displayed) -->
-<ion-item *ngIf="showDetails">
-  <ion-label>Fecha:&nbsp;</ion-label>
-  <ion-input
-    type="date"
-    [(ngModel)]="externalDate"
-    (ionChange)="updateDini()"
-    placeholder="Selecciona fecha"
-  ></ion-input>
-  <ion-select [(ngModel)]="selectedTime" (ionChange)="updateTime()">
-    <ion-select-option *ngFor="let time of availableTimes" [value]="time">
-      {{ time }}
-    </ion-select-option>
-  </ion-select>
-  <ion-button fill="clear" slot="end" (click)="clearDates()">
-    <ion-icon color="warning" name="backspace"></ion-icon>
-  </ion-button>
-  <ion-button fill="clear" slot="end" (click)="openSelectDateModal()">
-    <ion-icon name="calendar"></ion-icon>
-  </ion-button>
-</ion-item>
-
-<!-- Line 3 (conditionally displayed) -->
-<div *ngIf="showDetails" class="task-actions">
-  <ion-item>
-    <div class="actions-left">
-      <ion-button
-        fill="clear"
-        (click)="decrementTabs()"
-        [disabled]="task.tabs === 0"
-      >
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
-      <ion-button
-        fill="clear"
-        (click)="incrementTabs()"
-        [disabled]="task.tabs === 4"
-      >
-        <ion-icon name="arrow-forward"></ion-icon>
-      </ion-button>
-
-      <ion-button fill="clear" (click)="openSelectLabelsModal()">
-        <ion-icon name="bookmarks"></ion-icon>
-      </ion-button>
-      <ion-button fill="clear" (click)="openMoveTaskModal()">
-        <ion-icon name="shuffle"></ion-icon>
-      </ion-button>
-      <ion-button fill="clear" (click)="openEditDescriptionModal()">
-        <ion-icon name="document-text"></ion-icon>
-      </ion-button>
-    </div>
-    <div class="actions-priority">
-      <ion-button
-        *ngFor="let p of [1, 2, 3, 4, 5]"
-        [color]="task.priority === p ? 'primary' : 'medium'"
-        (click)="setPriority(p)"
-        >{{ p }}</ion-button
-      >
-    </div>
-    <ion-button fill="clear" slot="end" (click)="deleteTask()">
-      <ion-icon name="trash" color="danger"></ion-icon>
+    <ion-button fill="clear" slot="end" (click)="toggleDetails()">
+      <ion-icon [name]="showDetails ? 'caret-up' : 'caret-down'"></ion-icon>
     </ion-button>
   </ion-item>
-</div>
+
+  <!-- Line 2 (conditionally displayed) -->
+  <ion-item *ngIf="showDetails">
+    <ion-label>Fecha:&nbsp;</ion-label>
+    <ion-input
+      type="date"
+      [(ngModel)]="externalDate"
+      (ionChange)="updateDini()"
+      placeholder="Selecciona fecha"
+    ></ion-input>
+    <ion-select [(ngModel)]="selectedTime" (ionChange)="updateTime()">
+      <ion-select-option *ngFor="let time of availableTimes" [value]="time">
+        {{ time }}
+      </ion-select-option>
+    </ion-select>
+    <ion-button fill="clear" slot="end" (click)="clearDates()">
+      <ion-icon color="warning" name="backspace"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" slot="end" (click)="openSelectDateModal()">
+      <ion-icon name="calendar"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <!-- Line 3 (conditionally displayed) -->
+  <div *ngIf="showDetails" class="task-actions">
+    <ion-item>
+      <div class="actions-left">
+        <ion-button
+          fill="clear"
+          (click)="decrementTabs()"
+          [disabled]="task.tabs === 0"
+        >
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+        <ion-button
+          fill="clear"
+          (click)="incrementTabs()"
+          [disabled]="task.tabs === 4"
+        >
+          <ion-icon name="arrow-forward"></ion-icon>
+        </ion-button>
+
+        <ion-button fill="clear" (click)="openSelectLabelsModal()">
+          <ion-icon name="bookmarks"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" (click)="openMoveTaskModal()">
+          <ion-icon name="shuffle"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" (click)="openEditDescriptionModal()">
+          <ion-icon name="document-text"></ion-icon>
+        </ion-button>
+      </div>
+      <div class="actions-priority">
+        <ion-button
+          *ngFor="let p of [1, 2, 3, 4, 5]"
+          [color]="task.priority === p ? 'primary' : 'medium'"
+          (click)="setPriority(p)"
+          >{{ p }}</ion-button
+        >
+      </div>
+      <ion-button fill="clear" slot="end" (click)="deleteTask()">
+        <ion-icon name="trash" color="danger"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </div>
+
+  <ion-item-options side="end">
+    <ion-item-option (click)="toggleCompletion()">Completar</ion-item-option>
+    <ion-item-option color="danger" (click)="deleteTask()"
+      >Borrar</ion-item-option
+    >
+  </ion-item-options>
+</ion-item-sliding>

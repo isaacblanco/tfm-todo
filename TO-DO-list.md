@@ -4,6 +4,8 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
+Incluir un ION-slide para borrar la tarea
+
 ## CONFIGURACION APLICADA A FOCUS y el resto
 
 - Revisar temas de configuración y aplicar
@@ -49,7 +51,7 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 - Al seleccionar una hora en el dialogo de fechas, que se aplique y cierre el dialogo (un clic menos)
 - En las tareas: cambiar el color de la prioridad: 0 morado, azul a verde a amarillo a rojo
 - Gestión de etiquetas con #hashtag
-- Exportar datos
+- Exportar datos a otros formatos
 - Recordatorio de contraseña
 - Validarse con google
 
