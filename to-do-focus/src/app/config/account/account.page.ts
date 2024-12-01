@@ -84,7 +84,7 @@ export class AccountPage implements OnInit {
             if (this.user.id) {
               this.authService.deleteUser(this.user.id).subscribe({
                 next: () => {
-                  console.log('Usuario eliminado correctamente');
+                  //console.log('Usuario eliminado correctamente');
                   this.userService.clearUserData();
                   this.router.navigate(['/login']);
                 },

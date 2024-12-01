@@ -72,9 +72,9 @@ export class TaskItemComponent implements OnInit {
       }
     }
 
-    console.log('Mostrar o no la descripción', this.showDesctiption);
+    //console.log('Mostrar o no la descripción', this.showDesctiption);
 
-    console.log('TaskItemComponent initialized', this.task);
+    //console.log('TaskItemComponent initialized', this.task);
   }
 
   formatDate(date: Date | undefined): string {
@@ -92,7 +92,7 @@ export class TaskItemComponent implements OnInit {
    * Combina externalDate y selectedTime para actualizar dini
    */
   updateDini(): void {
-    console.log('updateDini', this.externalDate, this.selectedTime);
+    //console.log('updateDini', this.externalDate, this.selectedTime);
 
     // Si no hay una hora seleccionada, usar la hora predeterminada 10:00
     const time = this.selectedTime || '10:00';
@@ -114,7 +114,7 @@ export class TaskItemComponent implements OnInit {
 
         // Actualizar la fecha solo si es válida y cumple con los criterios
         this.task.dini = newDini;
-        console.log('Fecha y hora actualizadas:', this.task.dini);
+        //console.log('Fecha y hora actualizadas:', this.task.dini);
 
         // Llama al servicio para actualizar la tarea
         this.updateTask();
@@ -133,7 +133,7 @@ export class TaskItemComponent implements OnInit {
    * Se actualiza el tiempo de la tarea
    */
   updateTime(): void {
-    console.log('updateTime', this.selectedTime, this.externalDate);
+    //console.log('updateTime', this.selectedTime, this.externalDate);
 
     // Si no se selecciona una hora, usar el valor predeterminado 10:00
     if (!this.selectedTime) {
@@ -151,7 +151,7 @@ export class TaskItemComponent implements OnInit {
 
         // Actualizar la fecha y hora solo si es válida
         this.task.dini = newDini;
-        console.log('Hora actualizada:', this.task.dini);
+        //console.log('Hora actualizada:', this.task.dini);
 
         // Llama al servicio para actualizar la tarea
         this.updateTask();
@@ -197,7 +197,7 @@ export class TaskItemComponent implements OnInit {
     this.updateTask();
 
     // Opcional: Si el cambio no se refleja de inmediato en la vista
-    console.log('Task completion toggled:', this.task.completed);
+    //console.log('Task completion toggled:', this.task.completed);
   }
 
   /**
@@ -297,7 +297,7 @@ export class TaskItemComponent implements OnInit {
           this.externalDate = '';
           this.selectedTime = '';
         }
-        console.log('Tarea actualizada desde la modal:', this.task);
+        //console.log('Tarea actualizada desde la modal:', this.task);
       }
     });
 
@@ -332,9 +332,7 @@ export class TaskItemComponent implements OnInit {
       this.loading = true;
       this.taskService.updateTask(this.task.id_task, this.task).subscribe({
         next: () => {
-          console.log(
-            `Task actualizada: ${this.task.id_task}, completada: ${this.task.completed}`
-          );
+          //console.log(`Task actualizada: ${this.task.id_task}, completada: ${this.task.completed}`);
           this.taskUpdated.emit(this.task);
         },
         error: (err) => {
@@ -352,7 +350,7 @@ export class TaskItemComponent implements OnInit {
     this.task.dfin = null;
     this.externalDate = ''; // Limpia el input de la fecha externa
     this.selectedTime = ''; // Limpia el tiempo seleccionado
-    console.log('Fechas y horas borradas.');
+    //console.log('Fechas y horas borradas.');
     this.updateTask();
   }
 
@@ -373,7 +371,7 @@ export class TaskItemComponent implements OnInit {
           handler: () => {
             this.taskService.deleteTask(this.task.id_task).subscribe({
               next: () => {
-                console.log(`Tarea eliminada: ${this.task.id_task}`);
+                //console.log(`Tarea eliminada: ${this.task.id_task}`);
                 // Emitir evento específico para eliminación
                 this.taskDeleted.emit(this.task);
               },

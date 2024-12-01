@@ -22,13 +22,38 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
+    <!-- Lista FOCUS -->
+    <ion-item-divider color="light">
+      <ion-label>Focus</ion-label>
+    </ion-item-divider>
     <app-task-item
-      *ngFor="let task of filteredTasks"
+      *ngFor="let task of focusTasks"
       [task]="task"
       [fk_project]="mainProject?.id_project || 0"
       (taskUpdated)="onTaskUpdated($event)"
       (taskDeleted)="onTaskDeleted($event)"
       (taskMoved)="onTaskMoved($event)"
     ></app-task-item>
+
+    <!-- Lista NEXT -->
+    <ion-item-divider color="light">
+      <ion-label (click)="toggleNextList()">
+        Next
+        <ion-icon
+          [name]="showNext ? 'caret-down-outline' : 'caret-forward-outline'"
+          slot="end"
+        ></ion-icon>
+      </ion-label>
+    </ion-item-divider>
+    <div *ngIf="showNext">
+      <app-task-item
+        *ngFor="let task of nextTasks"
+        [task]="task"
+        [fk_project]="mainProject?.id_project || 0"
+        (taskUpdated)="onTaskUpdated($event)"
+        (taskDeleted)="onTaskDeleted($event)"
+        (taskMoved)="onTaskMoved($event)"
+      ></app-task-item>
+    </div>
   </ion-list>
 </ion-content>

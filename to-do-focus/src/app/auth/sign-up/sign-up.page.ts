@@ -53,7 +53,7 @@ export class SignUpPage implements OnInit {
 
     this.authService.register(this.user).subscribe({
       next: (response) => {
-        console.log('Usuario registrado correctamente. Iniciando sesión...');
+        //console.log('Usuario registrado correctamente. Iniciando sesión...');
 
         // Guardar los datos del usuario localmente
         const userData: UserDTO = {
@@ -64,7 +64,7 @@ export class SignUpPage implements OnInit {
         };
 
         this.userService.setUserData(userData); // Guardar en localStorage
-        console.log('Datos del usuario guardados en localStorage.');
+        //console.log('Datos del usuario guardados en localStorage.');
 
         // Crear el proyecto predeterminado "TODO"
         this.createDefaultProject(response.id_user);
@@ -127,7 +127,7 @@ export class SignUpPage implements OnInit {
 
     this.projectService.addProject(defaultProject).subscribe({
       next: () => {
-        console.log('Proyecto TODO creado con éxito.');
+        //console.log('Proyecto TODO creado con éxito.');
         this.router.navigate(['/login']); // Navegar al login tras crear el proyecto
       },
       error: (err) => {

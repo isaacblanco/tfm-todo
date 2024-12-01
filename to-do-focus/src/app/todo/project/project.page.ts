@@ -42,7 +42,7 @@ export class ProjectPage implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       this.projectId = id ? +id : null;
-      console.log('Project ID:', this.projectId);
+      //console.log('Project ID:', this.projectId);
       if (this.projectId) {
         this.loadProjectData();
       }
@@ -107,9 +107,9 @@ export class ProjectPage implements OnInit {
 
       this.taskService.addTask(emptyTask).subscribe({
         next: (newTask) => {
-          this.tasks.push(newTask);
+          this.tasks.unshift(newTask); // Agrega la tarea al principio de la lista
           this.filteredTasks = [...this.tasks]; // Actualizar la lista filtrada
-          console.log('Tarea vacía añadida:', newTask);
+          //console.log('Tarea vacía añadida:', newTask);
         },
         error: (err) => {
           console.error('Error al añadir la tarea vacía:', err);
@@ -134,7 +134,7 @@ export class ProjectPage implements OnInit {
       });
 
       modal.onDidDismiss().then((result) => {
-        console.log('Modal dismissed:', result);
+        //console.log('Modal dismissed:', result);
         if (result.data && result.data.reload) {
           if (result.data.updatedTask) {
             // Actualizar el fk_project de la tarea movida en la lista local
@@ -155,7 +155,7 @@ export class ProjectPage implements OnInit {
 
           this.loadTasks();
 
-          console.log('Lista de tareas actualizada:', this.tasks);
+          //console.log('Lista de tareas actualizada:', this.tasks);
         }
       });
 
@@ -169,7 +169,7 @@ export class ProjectPage implements OnInit {
       this.tasks = this.tasks.filter(
         (task) => task.id_task !== updatedTask.id_task
       );
-      console.log('Tarea movida eliminada de la lista actual:', updatedTask);
+      //console.log('Tarea movida eliminada de la lista actual:', updatedTask);
     }
   }
 
@@ -187,7 +187,7 @@ export class ProjectPage implements OnInit {
         this.tasks = this.tasks.filter(
           (task) => task.id_task !== updatedTask.id_task
         );
-        console.log('Tarea eliminada de la lista actual:', updatedTask);
+        //console.log('Tarea eliminada de la lista actual:', updatedTask);
       }
 
       // Actualiza la lista filtrada
@@ -203,7 +203,7 @@ export class ProjectPage implements OnInit {
       (task) => task.id_task !== deletedTask.id_task
     );
     this.filteredTasks = [...this.tasks];
-    console.log('Tarea eliminada:', deletedTask);
+    //console.log('Tarea eliminada:', deletedTask);
   }
 
   /**
@@ -224,7 +224,7 @@ export class ProjectPage implements OnInit {
             handler: () => {
               this.projectService.deleteProject(this.projectId!).subscribe({
                 next: () => {
-                  console.log('Proyecto eliminado correctamente');
+                  //console.log('Proyecto eliminado correctamente');
                   this.router.navigate(['/todo/focus']); // Navegar después de borrar
                 },
                 error: (err) => {

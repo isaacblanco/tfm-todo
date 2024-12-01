@@ -43,7 +43,7 @@
     <ion-item lines="full">
       <ion-label
         >Usar número de
-        <b>{{ user.settings?.numberType ? 'días' : 'tareas' }}</b>
+        <b>{{ user.settings.numberType ? 'días' : 'tareas' }}</b>
       </ion-label>
       <ion-toggle
         [(ngModel)]="user.settings!.numberType"
@@ -53,7 +53,7 @@
 
     <ion-item lines="full">
       <ion-label position="stacked"
-        >Número de <b>{{ user.settings?.numberType ? 'días' : 'tareas' }}</b> a
+        >Número de <b>{{ user.settings.numberType ? 'días' : 'tareas' }}</b> a
         mostrar</ion-label
       >
       <ion-input

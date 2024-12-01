@@ -31,9 +31,6 @@ export class AuthService {
       .post(`${this.apiUrl}/users/login`, { email, password })
       .pipe(
         tap((response: any) => {
-          console.log('AuthService: Login successful');
-          console.log(response);
-
           // Guarda el mensaje, datos del usuario y sus preferencias en localStorage
           if (response?.user) {
             const userData = {
@@ -45,7 +42,7 @@ export class AuthService {
 
             localStorage.setItem('userData', JSON.stringify(userData));
             this.loginStatus.next(true); // Estamos logados, lo emitimos
-            console.log('AuthService: User data saved in localStorage');
+            // //console.log('AuthService: User data saved in localStorage');
           }
         })
       );
@@ -76,7 +73,7 @@ export class AuthService {
     localStorage.removeItem('authToken'); // Elimina el token de autenticación
     localStorage.removeItem('userData'); // Elimina los datos del usuario
     this.userService.clearUserData(); // Limpia el user_id usando UserService
-    console.log('AuthService: User logged out');
+    //console.log('AuthService: User logged out');
     this.loginStatus.next(false); // Emite el estado de logout
   }
 
@@ -144,13 +141,40 @@ export class AuthService {
    * @param settings - Configuración actualizada del usuario
    * @returns Observable<any>
    */
+  /*
   updateUserSettings(
     userId: number,
     settings: { username: string; email: string; settings: any }
   ): Observable<any> {
     return this.http.put(`${this.apiUrl}/users/${userId}`, settings).pipe(
       tap((updatedSettings) => {
-        console.log('User settings updated:', updatedSettings);
+        //console.log('User settings updated:', updatedSettings);
+      })
+    );
+  }
+    */
+
+  /**
+   * Actualiza los settings del usuario
+   * @param userId - ID del usuario
+   * @param userUpdate - Objeto con los datos a actualizar (sin `id`)
+   * @returns Observable<any>
+   */
+  updateUserSettings(
+    userId: number,
+    userUpdate: { username: string; email: string; settings: any }
+  ): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/${userId}`, userUpdate).pipe(
+      tap((updatedSettings: any) => {
+        console.log('User settings updated on the backend:', updatedSettings);
+
+        // Actualiza los datos del usuario en localStorage
+        const userData = this.getUserData();
+        if (userData) {
+          userData.settings = updatedSettings.settings; // Asegura que los settings se actualicen correctamente
+          this.setUserData(userData);
+          console.log('User settings updated in localStorage:', userData);
+        }
       })
     );
   }

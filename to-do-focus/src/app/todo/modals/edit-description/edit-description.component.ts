@@ -48,7 +48,7 @@ export class EditDescriptionComponent implements OnInit {
         .updateTask(this.task.id_task, { description: this.task.description })
         .subscribe({
           next: () => {
-            console.log('Descripción actualizada correctamente.');
+            //console.log('Descripción actualizada correctamente.');
           },
           error: (err) => {
             console.error('Error al actualizar la descripción:', err);

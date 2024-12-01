@@ -56,7 +56,7 @@ export class EditProjectComponent implements OnInit {
       fk_user: this.userId == null ? 0 : this.userId,
     };
 
-    console.log('Proyecto a guardar:', projectData);
+    //console.log('Proyecto a guardar:', projectData);
 
     const request = this.project
       ? this.projectService.updateProject(this.project.id_project, projectData)
@@ -64,7 +64,7 @@ export class EditProjectComponent implements OnInit {
 
     request.subscribe({
       next: () => {
-        console.log('Proyecto guardado correctamente');
+        //console.log('Proyecto guardado correctamente');
         this.modalController.dismiss({ reload: true });
       },
       error: (err) => console.error('Error al guardar el proyecto:', err),

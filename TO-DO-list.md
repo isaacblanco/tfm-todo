@@ -4,16 +4,6 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
-## CONFIGURACION APLICADA A FOCUS y el resto
-
-- Revisar temas de configuración y aplicar
-  - Aplicar numero a mostrar
-    - Por días
-    - Por número de tarea
-  - Crear la opción de NEXT
-    - Crear el grupo
-    - Mostrar o ocultar
-
 ## PROYECTOS con tiempo
 
 - Agregar la opción de ShowCompleted en setting
@@ -51,6 +41,7 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 - Gestión de etiquetas con #hashtag
 - Exportar datos a otros formatos
 - Recordatorio de contraseña
+- console.error('No se encontró un proyecto principal.'); revisar, en algunas ocasiones carga mal, ¿asincronismo?
 - Validarse con google
 
 Las tareas no deberían de actualizarse si no hay cambios (al perder el foco de una seleccionada)

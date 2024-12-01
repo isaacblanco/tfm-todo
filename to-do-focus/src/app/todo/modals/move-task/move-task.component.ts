@@ -65,7 +65,7 @@ export class MoveTaskComponent implements OnInit {
 
     this.taskService.updateTask(this.task.id_task, updatedTask).subscribe({
       next: () => {
-        console.log('Tarea movida correctamente');
+        //console.log('Tarea movida correctamente');
         this.modalController.dismiss({
           reload: true,
           updatedTask: { id_task: this.task.id_task, fk_project: projectId },

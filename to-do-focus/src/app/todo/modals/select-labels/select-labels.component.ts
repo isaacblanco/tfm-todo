@@ -94,7 +94,7 @@ export class SelectLabelsComponent implements OnInit {
       .updateTag(tag.id_tag, { tag_name: tag.tag_name })
       .subscribe({
         next: (updatedTag) => {
-          console.log('Etiqueta actualizada:', updatedTag);
+          //console.log('Etiqueta actualizada:', updatedTag);
         },
         error: (err) => {
           this.errorMessage = 'Error al actualizar la etiqueta.';

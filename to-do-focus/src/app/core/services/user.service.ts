@@ -11,7 +11,7 @@ export class UserService {
    */
   setUserData(userData: any): void {
     localStorage.setItem('userData', JSON.stringify(userData));
-    console.log('Usuario guardado en localStorage:', userData);
+    //console.log('Usuario guardado en localStorage:', userData);
   }
 
   /**
@@ -50,10 +50,10 @@ export class UserService {
       email: '',
       settings: {
         numberType: true, // por defecto son días
-        numberOfTaskToShow: 50,
+        numberOfTaskToShow: 7, // mostrar 7 dias (mas anteriores)
         projectOrder: 'name',
         showDescription: true,
-        showEmptyTask: false,
+        showEmptyTask: false, // TODO: actualmente no se utiliza
         showAllOpen: false,
         showCompleted: false,
       },

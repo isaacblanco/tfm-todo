@@ -4,6 +4,7 @@ export class UserDto {
   email: string;
   password?: string; // Opcional, generalmente no se envía al cliente
   settings?: {
+    numberType?: boolean;
     numberOfTaskToShow?: number;
     projectOrder?: string;
     showDescription?: boolean;

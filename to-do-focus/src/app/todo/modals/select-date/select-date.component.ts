@@ -78,7 +78,7 @@ export class SelectDateComponent implements OnInit {
 
       newDini.setHours(hours, minutes);
       this.task.dini = newDini;
-      console.log('Fecha de inicio actualizada:', this.task.dini);
+      //console.log('Fecha de inicio actualizada:', this.task.dini);
       this.validateDates();
     } else {
       console.warn(
@@ -99,7 +99,7 @@ export class SelectDateComponent implements OnInit {
 
       newDfin.setHours(hours, minutes);
       this.task.dfin = newDfin;
-      console.log('Fecha de fin actualizada:', this.task.dfin);
+      //console.log('Fecha de fin actualizada:', this.task.dfin);
       this.validateDates();
     } else {
       console.warn(
@@ -119,7 +119,7 @@ export class SelectDateComponent implements OnInit {
     this.externalEndDate = '';
     this.startTime = '';
     this.endTime = '';
-    console.log('Fechas y horas borradas.');
+    //console.log('Fechas y horas borradas.');
     this.saveChanges();
   }
 
