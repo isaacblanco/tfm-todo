@@ -117,3 +117,13 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+
+.main-header {
+  background-color: #1f1f1f;
+  color: #fafafa;
+}
+
+ion-thumbnail.img {
+  height: 24px;
+  width: 24px;
+}

@@ -1,2 +1,25 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+/* Ionic Global Variables */
+:root {
+  /* Color Primario */
+  --ion-color-primary: #a11692;
+  --ion-color-primary-rgb: 161, 22, 146;
+
+  /* Colores de fondo */
+  --ion-background-color: #fafafa;
+  --ion-background-color-rgb: 240, 240, 240;
+
+  /* Otros colores del tema (opcional) */
+  --ion-color-secondary: #ffbd00;
+  --ion-color-tertiary: #32cd32;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Opcional: Cambiar colores para modo oscuro */
+    --ion-background-color: #121212; /* Fondo oscuro */
+    --ion-color-primary: #bb86fc; /* Un color primario diferente */
+  }
+}

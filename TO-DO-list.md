@@ -4,6 +4,11 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
+## Capa de pintura
+
+- Poner bonito
+  - Poner color corporativo
+
 ## PROYECTOS con tiempo
 
 - Aplicar filtros de etiquetas
@@ -13,11 +18,6 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 - Filtrar tareas: revisar opciones
 - Evitar que se dupliquen usuarios, confirmar que no sucede al registrarse
 - Mejorar seguridad, revisión del token en las peticiones al API
-
-## Capa de pintura
-
-- Poner bonito
-  - Poner color corporativo
 
 ## [--Para nota--]
 

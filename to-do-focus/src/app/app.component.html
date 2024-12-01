@@ -2,8 +2,14 @@
   <ion-split-pane contentId="main-content">
     <!-- Menú lateral -->
     <ion-menu contentId="main-content" type="overlay">
-      <ion-header>
+      <ion-header class="main-header">
         <ion-toolbar>
+          <ion-thumbnail slot="start">
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABBCAYAAABhNaJ7AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAPSSURBVHgB7Zs/TBNRHMe/d9hOjUIH2wViAgNEksqgibAQTPyTMBgY3EAWSDTxX8RNjbJh1GjiAAvoYMAExYREMMF0aR00EQyEpSUElnaBauoCoef7HW3TNkXuvfauh+8+SVPKXa73+977vfv93veqgDHmv3iiStsZ0zTtFPtYjf8cRVGmdxXX7b7Y7JpCwaup7R+QIPACEinV3aJWpXaeQ77giWoa9aoG7TIkhVJehdxUyy4AjvDsfHroGmqaG1AK8fACFp+8yfufp9aPxv4u/d19zAMekhsx/GTHo3cRuASg4P2tAZTCn/X8E6Wgz394qr+LEUDDlQuY67qDeGgRvFQ8BZrSV75UAnd7IQLXCKChtlrnK7qtnl0FX3p0bHwKYWM2VHS/5Ho873NuSkUn5hD/avwq1pysZwJ26397an0QgUuAGMtfhItv850NZAXYXIogwoLhhY4fnfxseH9Kx4wAotj6LrA3PzxDT3wenfOjZUmVQmwtQPv4o+yk622uR+vLeyg3thbAW3DLLfUOVAxbCxAL50+Im8sRlBtbCxC+MaxPqARNkMHehyg3XHcBq6HqbubcAMxE+l7AEQCS4wgAyXEEgOTYqg5wsdUgnrbWxbl6VIyKC6CvEKVr/DND1/WXCNu/kxCh4ikQmeRfNyhGdML4OkIuFRcgzhqeEKv5RRc16cp/u/8KK6NTEEF5fbxDg8Q4t0FIjiMAJMcRAJLj9AJGdyTXtn38sdHdsf0rqRc3W0tR5vYYq/bcRz1oGujWLS9el5i+jyy5KGdlaVwAdnKi6/KBwR5Wqb0/sFrr/DJSkvtTd6lNF46nKrQkBSgoerYgMLi/g0vmanlc4h6u/YW7wfDN4X9ud7ER42VD2dcWyAZGJ5dk3V+xYZrbBpPPH33HN5RbX+zZZm69pfYb7i2EBTDq/tLJ0NxB3h5B6XBQntLJ87rLGQF4MT0FKJjg1QfZzyQIjQoezHSJLZkDSIRcn49SgwczXWLL6oDcZ4PojsKDmS7xoSiEzHSJD4UAZrrEtnaHM5jpEjvNECTHEQCSY5kAuTaWqItjBpYJkOkFiK3lKOyCJQLQg8yZ+l0viwWe6jYL4TrAiItLJWxjf3de6WpkxYbXJS4FYQG6vr8FL3T1C38skSF3XqCVHXqJQstjRrFsDqASdqZj/2qOnhIvx+RIj9zzHMfUUngv3xewyoIrbGgKoatGAlHr6xX4WQ4FvTIypa898uC4w5AcEiABiVEVRVmArCjaR3VX2e2DnKMgkVK0W2pfLLiWUlMtCjANOUiwUR+kmCl2yM5fTlJd96LAHdIAAAAASUVORK5CYII="
+              alt="TO DO"
+            />
+          </ion-thumbnail>
           <ion-title>TO DO Focus</ion-title>
         </ion-toolbar>
       </ion-header>
@@ -19,6 +25,7 @@
               slot="start"
               ios="checkbox"
               md="checkbox"
+              color="primary"
             ></ion-icon>
             <ion-label>Focus</ion-label>
           </ion-item>
@@ -32,6 +39,7 @@
               slot="start"
               ios="add-circle-outline"
               md="add-circle-sharp"
+              color="primary"
             ></ion-icon>
             <ion-label>Add New Project</ion-label>
           </ion-item>
@@ -48,6 +56,7 @@
                 slot="start"
                 ios="folder-outline"
                 md="folder-sharp"
+                color="primary"
               ></ion-icon>
               <ion-label>{{ project.name }}</ion-label>
             </ion-item>
@@ -67,6 +76,7 @@
               slot="start"
               ios="log-out-outline"
               md="log-out-outline"
+              color="primary"
             ></ion-icon>
             <ion-label>Logout</ion-label>
           </ion-item>
@@ -81,6 +91,7 @@
               slot="start"
               ios="log-in"
               md="log-in"
+              color="primary"
             ></ion-icon>
             <ion-label>Log in</ion-label>
           </ion-item>
@@ -95,6 +106,7 @@
               slot="start"
               ios="person-circle"
               md="person-circle"
+              color="primary"
             ></ion-icon>
             <ion-label>Account</ion-label>
           </ion-item>
@@ -109,6 +121,7 @@
               slot="start"
               ios="settings"
               md="settings"
+              color="primary"
             ></ion-icon>
             <ion-label>Settings</ion-label>
           </ion-item>
