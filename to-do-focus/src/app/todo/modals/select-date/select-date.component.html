@@ -41,6 +41,9 @@
   </ion-list>
 
   <ion-footer>
+    <ion-button color="warning" position="end" (click)="clearDates()">
+      <ion-icon name="backspace"></ion-icon>
+    </ion-button>
     <ion-button expand="full" (click)="saveChanges()">Guardar</ion-button>
   </ion-footer>
 </ion-content>

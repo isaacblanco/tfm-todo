@@ -260,6 +260,28 @@ export class TaskItemComponent implements OnInit {
       ).then((m) => m.SelectDateComponent),
       componentProps: { task: this.task },
     });
+
+    modal.onDidDismiss().then((result) => {
+      if (result.data && result.data.updatedTask) {
+        this.task = result.data.updatedTask;
+
+        // Sincroniza los datos actualizados con los inputs externos
+        if (this.task.dini) {
+          this.externalDate = new Date(this.task.dini)
+            .toISOString()
+            .split('T')[0];
+          this.selectedTime = new Date(this.task.dini).toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+        } else {
+          this.externalDate = '';
+          this.selectedTime = '';
+        }
+        console.log('Tarea actualizada desde la modal:', this.task);
+      }
+    });
+
     await modal.present();
   }
 
@@ -304,6 +326,15 @@ export class TaskItemComponent implements OnInit {
         },
       });
     }
+  }
+
+  clearDates() {
+    this.task.dini = null;
+    this.task.dfin = null;
+    this.externalDate = ''; // Limpia el input de la fecha externa
+    this.selectedTime = ''; // Limpia el tiempo seleccionado
+    console.log('Fechas y horas borradas.');
+    this.updateTask();
   }
 
   /**

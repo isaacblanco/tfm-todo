@@ -110,6 +110,20 @@ export class SelectDateComponent implements OnInit {
   }
 
   /**
+   * Borra las fechas y horas de inicio y fin
+   */
+  clearDates(): void {
+    this.task.dini = null;
+    this.task.dfin = null;
+    this.externalStartDate = '';
+    this.externalEndDate = '';
+    this.startTime = '';
+    this.endTime = '';
+    console.log('Fechas y horas borradas.');
+    this.saveChanges();
+  }
+
+  /**
    * Valida que una fecha sea válida y el año sea mayor que 2020
    * @param dateStr - Fecha en formato string
    * @returns boolean

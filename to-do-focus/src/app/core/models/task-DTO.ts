@@ -3,8 +3,8 @@ export interface TaskDTO {
   fk_project: number;
   task_name: string;
   completed: boolean;
-  dini?: Date; // Fecha de inicio
-  dfin?: Date; // Fecha de fin
+  dini: Date | null | undefined;
+  dfin: Date | null | undefined;
   description?: string;
   status: 'TO_DO' | 'IN_PROGRESS' | 'BLOCKED' | 'IN_REVIEW' | 'DONE';
   tabs?: number; // 0..3

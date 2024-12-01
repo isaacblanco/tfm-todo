@@ -51,6 +51,9 @@
       {{ time }}
     </ion-select-option>
   </ion-select>
+  <ion-button fill="clear" slot="end" (click)="clearDates()">
+    <ion-icon color="warning" name="backspace"></ion-icon>
+  </ion-button>
   <ion-button fill="clear" slot="end" (click)="openSelectDateModal()">
     <ion-icon name="calendar"></ion-icon>
   </ion-button>
