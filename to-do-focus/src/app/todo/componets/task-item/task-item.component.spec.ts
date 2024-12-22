@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'; // Para manejar servicios HTTP
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms'; // Importar FormsModule
+import { IonicModule } from '@ionic/angular'; // Importar IonicModule
 import { TaskItemComponent } from './task-item.component';
 
 describe('TaskItemComponent', () => {
@@ -10,9 +11,10 @@ describe('TaskItemComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        IonicModule.forRoot(),
-        HttpClientTestingModule, // Añade este módulo para manejar HttpClient
-        TaskItemComponent, // Incluye TaskItemComponent como standalone
+        IonicModule.forRoot(), // Configuración básica de Ionic
+        HttpClientTestingModule, // Mock para servicios HTTP
+        FormsModule, // Manejo de [(ngModel)]
+        TaskItemComponent, // Componente standalone
       ],
     }).compileComponents();
 
@@ -27,7 +29,7 @@ describe('TaskItemComponent', () => {
       completed: false,
       status: 'TO_DO',
       priority: 1,
-      dini: new Date(), // Changed from toISOString() to return Date object
+      dini: new Date(), // Fecha de inicio como objeto Date
       dfin: null,
       description: 'Mock task description',
       tabs: 0,

@@ -17,21 +17,14 @@
     </ng-container>
 
     <!-- Checkbox para completar la tarea -->
-    <ion-checkbox
-      slot="start"
-      [(ngModel)]="task.completed"
-      (ionChange)="toggleCompletion()"
-    ></ion-checkbox>
+    <ion-checkbox slot="start" [(ngModel)]="task.completed" (ionChange)="toggleCompletion()" name="completedCheckbox"
+      aria-labelledby="completedCheckbox"></ion-checkbox>
+
 
     <!-- Nombre de la tarea -->
     <ion-label [ngClass]="{ 'completed-task': task.completed }">
-      <ion-input
-        #taskNameInput
-        [(ngModel)]="task.task_name"
-        (ionBlur)="updateTaskName()"
-        placeholder="Nombre de la tarea"
-        clearInput
-      ></ion-input>
+      <ion-input #taskNameInput [(ngModel)]="task.task_name" (ionBlur)="updateTaskName()"
+        placeholder="Nombre de la tarea" clearInput name="taskNameInput"></ion-input>
     </ion-label>
 
     <ion-button fill="clear" slot="end" (click)="toggleDetails()">
@@ -47,13 +40,9 @@
   <!-- Line 2 (conditionally displayed) -->
   <ion-item *ngIf="showDetails">
     <ion-label>Fecha:&nbsp;</ion-label>
-    <ion-input
-      type="date"
-      [(ngModel)]="externalDate"
-      (ionChange)="updateDini()"
-      placeholder="Selecciona fecha"
-    ></ion-input>
-    <ion-select [(ngModel)]="selectedTime" (ionChange)="updateTime()">
+    <ion-input type="date" [(ngModel)]="externalDate" (ionChange)="updateDini()"
+      placeholder="Selecciona fecha"></ion-input>
+    <ion-select [(ngModel)]="selectedTime" (ionChange)="updateTime()" name="timeSelector">
       <ion-select-option *ngFor="let time of availableTimes" [value]="time">
         {{ time }}
       </ion-select-option>
@@ -70,18 +59,10 @@
   <div *ngIf="showDetails" class="task-actions">
     <ion-item>
       <div class="actions-left">
-        <ion-button
-          fill="clear"
-          (click)="decrementTabs()"
-          [disabled]="task.tabs === 0"
-        >
+        <ion-button fill="clear" (click)="decrementTabs()" [disabled]="task.tabs === 0">
           <ion-icon name="arrow-back"></ion-icon>
         </ion-button>
-        <ion-button
-          fill="clear"
-          (click)="incrementTabs()"
-          [disabled]="task.tabs === 4"
-        >
+        <ion-button fill="clear" (click)="incrementTabs()" [disabled]="task.tabs === 4">
           <ion-icon name="arrow-forward"></ion-icon>
         </ion-button>
 
@@ -96,12 +77,8 @@
         </ion-button>
       </div>
       <div class="actions-priority">
-        <ion-button
-          *ngFor="let p of [1, 2, 3, 4, 5]"
-          [color]="task.priority === p ? 'primary' : 'medium'"
-          (click)="setPriority(p)"
-          >{{ p }}</ion-button
-        >
+        <ion-button *ngFor="let p of [1, 2, 3, 4, 5]" [color]="task.priority === p ? 'primary' : 'medium'"
+          (click)="setPriority(p)">{{ p }}</ion-button>
       </div>
       <ion-button fill="clear" slot="end" (click)="deleteTask()">
         <ion-icon name="trash" color="danger"></ion-icon>
@@ -111,8 +88,6 @@
 
   <ion-item-options side="end">
     <ion-item-option (click)="toggleCompletion()">Completar</ion-item-option>
-    <ion-item-option color="danger" (click)="deleteTask()"
-      >Borrar</ion-item-option
-    >
+    <ion-item-option color="danger" (click)="deleteTask()">Borrar</ion-item-option>
   </ion-item-options>
 </ion-item-sliding>

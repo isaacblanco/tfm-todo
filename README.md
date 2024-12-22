@@ -27,6 +27,13 @@ cd ./api
 npm run start:dev
 ```
 
+### Pruebas unitarias
+
+```
+cd ./todo-focus
+ng test
+```
+
 ### Peticiones al API
 
 Mapped {/, GET} route
