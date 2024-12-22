@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { IonButton, IonContent, IonHeader, IonItem, IonLabel, IonListHeader, IonText, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserDTO } from '../../core/models/user-DTO';
 import { UserService } from './../../core/services/user.service';
@@ -12,7 +13,8 @@ import { UserService } from './../../core/services/user.service';
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, IonButton, IonItem, IonLabel, 
+    IonListHeader, IonText, IonTitle, IonToolbar, IonHeader, IonContent ],
 })
 export class AccountPage implements OnInit {
   user: UserDTO = this.createDefaultUser();

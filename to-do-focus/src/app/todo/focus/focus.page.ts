@@ -1,7 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, IonInput } from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader, IonIcon,
+  IonInput,
+  IonItemDivider,
+  IonLabel,
+  IonList,
+  IonMenuButton,
+  IonTitle,
+  IonToolbar
+} from '@ionic/angular/standalone';
 import { ProjectDTO } from '../../core/models/project-DTO';
 import { TaskDTO } from '../../core/models/task-DTO';
 import { ProjectService } from '../../core/services/project.service';
@@ -14,7 +26,12 @@ import { TaskItemComponent } from '../componets/task-item/task-item.component';
   templateUrl: './focus.page.html',
   styleUrls: ['./focus.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, TaskItemComponent, IonicModule],
+  imports: [CommonModule, FormsModule, TaskItemComponent, 
+    IonItemDivider, IonList, IonContent, IonButton,
+    IonButtons,
+    IonTitle,
+    IonMenuButton,
+    IonIcon, IonLabel, IonHeader, IonToolbar  ],
 })
 export class FocusPage implements OnInit {
   @ViewChildren('taskNameInput') taskNameInputs!: QueryList<IonInput>;

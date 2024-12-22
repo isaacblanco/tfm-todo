@@ -1,16 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonTitle, IonToolbar
+} from '@ionic/angular/standalone';
 import { TaskDTO } from '../../../core/models/task-DTO';
 import { TaskService } from '../../../core/services/task.service';
+
 
 @Component({
   selector: 'app-edit-description',
   templateUrl: './edit-description.component.html',
   styleUrls: ['./edit-description.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, IonButton,
+    IonButtons,
+    IonContent,
+    
+    IonHeader,
+    IonItem,
+    IonLabel,
+    IonTitle, IonToolbar],
 })
 export class EditDescriptionComponent implements OnInit {
   @Input() task!: TaskDTO; // Recibe los datos de la tarea

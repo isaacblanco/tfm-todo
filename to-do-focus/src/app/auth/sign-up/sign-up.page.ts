@@ -2,7 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import {
+  IonButton, IonCol,
+  IonContent,
+  IonGrid, IonHeader, IonItem, IonLabel,
+  IonRow, IonText, IonTitle, IonToolbar
+} from '@ionic/angular/standalone';
 import * as CryptoJS from 'crypto-js';
 import { ProjectDTO } from 'src/app/core/models/project-DTO';
 import { ProjectService } from 'src/app/core/services/project.service';
@@ -15,7 +21,8 @@ import { AuthService } from '../auth.service';
   templateUrl: './sign-up.page.html',
   styleUrls: ['./sign-up.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule],
+  imports: [ CommonModule, FormsModule, IonText, IonCol, IonRow, IonTitle,IonContent,
+    IonButton, IonLabel, IonItem, IonGrid, IonHeader, IonToolbar],
 })
 export class SignUpPage implements OnInit {
   user: UserDTO = this.createDefaultUser();

@@ -2,8 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
-import { NavController } from '@ionic/angular/standalone';
+import {
+  IonButton, IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonItem, IonLabel, IonRow,
+  IonText, IonTitle, IonToolbar, NavController
+} from '@ionic/angular/standalone';
 import * as CryptoJS from 'crypto-js'; // Importación para hashear la contraseña
 import { AuthService } from '../auth.service';
 
@@ -12,7 +18,8 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonToolbar, IonHeader, IonGrid,IonContent,
+    IonText, IonRow, IonCol, IonLabel, IonItem, IonButton, IonTitle ],
 })
 export class LoginPage implements OnInit {
   userDetails: any;

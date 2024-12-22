@@ -1,17 +1,33 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonTitle, IonToolbar
+} from '@ionic/angular/standalone';
 import { UserService } from 'src/app/core/services/user.service';
 import { ProjectDTO } from '../../../core/models/project-DTO';
 import { ProjectService } from '../../../core/services/project.service';
+
 
 @Component({
   selector: 'app-edit-project',
   templateUrl: './edit-project.component.html',
   styleUrls: ['./edit-project.component.scss'],
   standalone: true,
-  imports: [FormsModule, CommonModule, IonicModule],
+  imports: [FormsModule, CommonModule, IonButton,
+    IonButtons,
+    IonContent, IonHeader,
+    IonItem,IonFooter,
+    IonLabel,  
+    IonTitle, IonToolbar],
 })
 export class EditProjectComponent implements OnInit {
   @Input() project: ProjectDTO | null = null; // Datos del proyecto para editar o null para nuevo

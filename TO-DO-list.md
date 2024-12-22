@@ -6,6 +6,16 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## Capa de pintura
 
+--> https://ionicframework.com/docs/api/item
+Revisa:
+<ion-item>
+<ion-label>
+<h1>H1 Heading</h1>
+<p>Paragraph</p>
+</ion-label>
+</ion-item>
+Para las fechas
+
 - Poner bonito
   - Poner color corporativo
 

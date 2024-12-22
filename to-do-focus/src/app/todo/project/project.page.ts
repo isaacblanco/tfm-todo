@@ -2,7 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonContent, IonHeader,
+  IonIcon,
+  IonList,
+  IonMenuButton,
+  IonTitle, IonToolbar
+} from '@ionic/angular/standalone';
 import { TaskFilterPipe } from 'src/app/core/pipes/task-filter.pipe';
 import { TaskDTO } from '../../core/models/task-DTO';
 import { ProjectService } from '../../core/services/project.service';
@@ -17,9 +26,9 @@ import { TaskItemComponent } from '../componets/task-item/task-item.component';
   imports: [
     CommonModule,
     FormsModule,
-    TaskItemComponent,
-    IonicModule,
-    TaskFilterPipe,
+    TaskItemComponent, IonMenuButton,
+    TaskFilterPipe, IonList, IonIcon, IonButtons,
+    IonButton, IonContent, IonHeader, IonTitle, IonToolbar 
   ],
 })
 export class ProjectPage implements OnInit {

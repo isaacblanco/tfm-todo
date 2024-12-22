@@ -1,7 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader, IonIcon, IonInput, IonItem, IonLabel,
+  IonList, IonListHeader,
+  IonMenuButton,
+  IonSelectOption, IonTitle,
+  IonToolbar
+} from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserDTO } from 'src/app/core/models/user-DTO';
 import { UserService } from './../../core/services/user.service';
@@ -11,7 +21,8 @@ import { UserService } from './../../core/services/user.service';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule,  IonHeader, IonIcon, IonInput, IonTitle, IonContent, IonButtons,
+     IonLabel, IonToolbar, IonItem, IonList, IonListHeader, IonSelectOption, IonMenuButton, IonButton],
 })
 export class SettingsPage implements OnInit {
   user: UserDTO = this.createDefaultUser();

@@ -1,17 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonContent, IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonTitle, IonToolbar,
+} from '@ionic/angular/standalone';
 import { TagDTO } from '../../../core/models/tag-DTO';
 import { TagService } from '../../../core/services/tag.service';
 import { UserService } from '../../../core/services/user.service';
-
 @Component({
   selector: 'app-select-labels',
   templateUrl: './select-labels.component.html',
   styleUrls: ['./select-labels.component.scss'],
   standalone: true,
-  imports: [IonicModule, FormsModule, CommonModule],
+  imports: [ FormsModule, CommonModule, IonIcon,IonItem, IonList, IonLabel,
+    IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons],
 })
 export class SelectLabelsComponent implements OnInit {
   tags: TagDTO[] = [];

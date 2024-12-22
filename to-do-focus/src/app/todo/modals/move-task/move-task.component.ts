@@ -1,6 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import {
+  IonButton,
+  IonButtons,
+  IonContent, IonHeader,
+  IonItem,
+  IonLabel, IonList,
+  IonListHeader,
+  IonTitle, IonToolbar
+} from '@ionic/angular/standalone';
 import { ProjectDTO } from '../../../core/models/project-DTO';
 import { TaskDTO } from '../../../core/models/task-DTO';
 import { ProjectService } from '../../../core/services/project.service';
@@ -11,7 +20,9 @@ import { TaskService } from '../../../core/services/task.service';
   templateUrl: './move-task.component.html',
   styleUrls: ['./move-task.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [CommonModule, IonButton, IonList,
+    IonButtons, IonLabel, IonItem, IonListHeader,
+    IonContent, IonHeader, IonTitle, IonToolbar],
 })
 export class MoveTaskComponent implements OnInit {
   @Input() task!: TaskDTO; // Recibe la tarea desde el componente padre
