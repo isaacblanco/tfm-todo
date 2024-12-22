@@ -1,13 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
-  IonButton, IonCol,
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader, IonCardSubtitle,
+  IonCardTitle,
   IonContent,
-  IonGrid,
   IonHeader,
-  IonItem, IonLabel, IonRow,
+  IonInput,
+  IonItem, IonLabel,
   IonText, IonTitle, IonToolbar, NavController
 } from '@ionic/angular/standalone';
 import * as CryptoJS from 'crypto-js'; // Importación para hashear la contraseña
@@ -18,9 +22,10 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonToolbar, IonHeader, IonGrid,IonContent,
-    IonText, IonRow, IonCol, IonLabel, IonItem, IonButton, IonTitle ],
+  imports: [ CommonModule, FormsModule,RouterLink, IonToolbar, IonHeader, IonContent, IonCardContent,IonCardTitle,
+    IonText, IonLabel, IonItem, IonButton, IonTitle, IonInput, IonCard, IonCardHeader, IonCardSubtitle, ],
 })
+
 export class LoginPage implements OnInit {
   userDetails: any;
   responseData: any;
@@ -41,7 +46,9 @@ export class LoginPage implements OnInit {
     this.userDetails = { user_id: '0', token: '' };
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("Entra en login");
+  }
 
   /**
    * Maneja el proceso de inicio de sesión.
@@ -71,10 +78,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  /**
-   * Navega a la página de registro.
-   */
-  navigateToRegister() {
+  navigateToSignUp() {
     this.router.navigate(['/sign-up']);
   }
 }

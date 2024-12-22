@@ -6,11 +6,9 @@
     <ion-title>TO DO Focus</ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar
-      placeholder="Buscar tarea"
-      [(ngModel)]="searchTerm"
-      (ionInput)="filterTasks()"
-    ></ion-searchbar>
+    <ion-searchbar placeholder="Buscar tarea" [(ngModel)]="searchTerm" (ionInput)="filterTasks()"
+      ngDefaultControl></ion-searchbar>
+
     <ion-buttons slot="end">
       <ion-button (click)="addEmptyTask()" color="primary">
         <ion-icon name="add-circle-outline"></ion-icon>
@@ -26,34 +24,21 @@
     <ion-item-divider color="light">
       <ion-label>Focus</ion-label>
     </ion-item-divider>
-    <app-task-item
-      *ngFor="let task of focusTasks"
-      [task]="task"
-      [fk_project]="mainProject?.id_project || 0"
-      (taskUpdated)="onTaskUpdated($event)"
-      (taskDeleted)="onTaskDeleted($event)"
-      (taskMoved)="onTaskMoved($event)"
-    ></app-task-item>
+    <app-task-item *ngFor="let task of focusTasks" [task]="task" [fk_project]="mainProject?.id_project || 0"
+      (taskUpdated)="onTaskUpdated($event)" (taskDeleted)="onTaskDeleted($event)"
+      (taskMoved)="onTaskMoved($event)"></app-task-item>
 
     <!-- Lista NEXT -->
     <ion-item-divider color="light">
       <ion-label (click)="toggleNextList()">
         Next
-        <ion-icon
-          [name]="showNext ? 'caret-down-outline' : 'caret-forward-outline'"
-          slot="end"
-        ></ion-icon>
+        <ion-icon [name]="showNext ? 'caret-down-outline' : 'caret-forward-outline'" slot="end"></ion-icon>
       </ion-label>
     </ion-item-divider>
     <div *ngIf="showNext">
-      <app-task-item
-        *ngFor="let task of nextTasks"
-        [task]="task"
-        [fk_project]="mainProject?.id_project || 0"
-        (taskUpdated)="onTaskUpdated($event)"
-        (taskDeleted)="onTaskDeleted($event)"
-        (taskMoved)="onTaskMoved($event)"
-      ></app-task-item>
+      <app-task-item *ngFor="let task of nextTasks" [task]="task" [fk_project]="mainProject?.id_project || 0"
+        (taskUpdated)="onTaskUpdated($event)" (taskDeleted)="onTaskDeleted($event)"
+        (taskMoved)="onTaskMoved($event)"></app-task-item>
     </div>
   </ion-list>
 </ion-content>

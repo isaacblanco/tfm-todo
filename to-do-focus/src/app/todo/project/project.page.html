@@ -14,11 +14,9 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar
-      placeholder="Buscar tarea"
-      [(ngModel)]="searchTerm"
-      (ionInput)="filterTasks()"
-    ></ion-searchbar>
+    <ion-searchbar name="searchTerm" placeholder="Buscar tarea" [(ngModel)]="searchTerm" (ionInput)="filterTasks()"
+      ngDefaultControl></ion-searchbar>
+
     <ion-buttons slot="end">
       <ion-button (click)="addEmptyTask()" color="primary">
         <ion-icon name="add-circle-outline"></ion-icon>
@@ -30,14 +28,9 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <app-task-item
-      *ngFor="let task of tasks | taskFilter: searchTerm"
-      [task]="task"
-      [fk_project]="project.id_project || 0"
-      (taskUpdated)="onTaskUpdated($event)"
-      (taskDeleted)="onTaskDeleted($event)"
-      (taskMoved)="onTaskMoved($event)"
-    >
+    <app-task-item *ngFor="let task of tasks | taskFilter: searchTerm" [task]="task"
+      [fk_project]="project.id_project || 0" (taskUpdated)="onTaskUpdated($event)" (taskDeleted)="onTaskDeleted($event)"
+      (taskMoved)="onTaskMoved($event)">
     </app-task-item>
   </ion-list>
 </ion-content>

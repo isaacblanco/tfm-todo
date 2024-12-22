@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { TagService } from '../../core/services/tag.service';
 import { UserService } from '../../core/services/user.service';
 import { TagDTO } from './../../core/models/tag-DTO';
@@ -11,7 +12,9 @@ import { TagDTO } from './../../core/models/tag-DTO';
   templateUrl: './edit-labels.component.html',
   styleUrls: ['./edit-labels.component.scss'],
   standalone: true,
-  imports: [ FormsModule, CommonModule],
+  imports: [ FormsModule, CommonModule, 
+    IonButton, IonItem, IonList, IonIcon, IonToolbar, IonButtons,
+    IonLabel, IonHeader, IonTitle, IonContent ],
 })
 export class EditLabelsComponent implements OnInit {
   tags: TagDTO[] = [];

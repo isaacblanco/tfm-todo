@@ -25,10 +25,7 @@
       <ion-col size="12">
         <ion-item>
           <ion-label position="stacked">Usuario</ion-label>
-          <ion-input
-            [(ngModel)]="user.username"
-            placeholder="Alias"
-          ></ion-input>
+          <ion-input [(ngModel)]="user.username" placeholder="Alias"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -37,11 +34,7 @@
       <ion-col size="12">
         <ion-item>
           <ion-label position="stacked">Email</ion-label>
-          <ion-input
-            [(ngModel)]="user.email"
-            type="email"
-            placeholder="Correo electrónico"
-          ></ion-input>
+          <ion-input [(ngModel)]="user.email" type="email" placeholder="Correo electrónico"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -50,11 +43,7 @@
       <ion-col size="12">
         <ion-item>
           <ion-label position="stacked">Contraseña</ion-label>
-          <ion-input
-            [(ngModel)]="user.password"
-            type="password"
-            placeholder="Escribe la contraseña"
-          ></ion-input>
+          <ion-input [(ngModel)]="user.password" type="password" placeholder="Escribe la contraseña"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -75,13 +64,16 @@
 
     <ion-row>
       <ion-col size="12">
-        <ion-text>
-          <p>
-            Si ya tienes una cuenta
-            <a (click)="navigateToLogin()">accede aquí</a>
-          </p>
-        </ion-text>
+        <ion-item lines="none">
+          <ion-button fill="clear" color="primary" (click)="navigateToLogin()">
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            ¿Ya tiene cuenta? <strong>accede aquí</strong>
+          </ion-button>
+        </ion-item>
       </ion-col>
     </ion-row>
+
   </ion-grid>
+
+
 </ion-content>

@@ -57,6 +57,6 @@ Mapped {/users/:id, PUT} route
 Mapped {/users/:id, DELETE} route
 Nest application successfully startee
 
-### Base de datos
+### Usuario de pruebas
 
-Utilizada base de datos PostGree
+isaacblanco@uoc.edu : 123456

@@ -5,71 +5,34 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-text-center">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">TO DO Focus</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-grid class="ion-justify-content-center ion-align-items-center">
-    <ion-row>
-      <ion-col size="12">
-        <ion-text>
-          <h3>Bienvenido!</h3>
-          <p>Ingresa tus datos para acceder</p>
-        </ion-text>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="12">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>TO DO Focus</ion-card-title>
+      <ion-card-subtitle>Welcome back</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <form (submit)="login()" autocomplete="on">
         <ion-item lines="none">
           <ion-label position="stacked">Email</ion-label>
-          <ion-input
-            [(ngModel)]="userData.email"
-            type="email"
-            placeholder="Correo electrónico"
-          ></ion-input>
+          <ion-input name="email" [(ngModel)]="userData.email" type="email" placeholder="Correo electrónico" required>
+          </ion-input>
         </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="12">
         <ion-item lines="none">
           <ion-label position="stacked">Contraseña</ion-label>
-          <ion-input
-            [(ngModel)]="userData.password"
-            type="password"
-            placeholder="Contraseña"
-          ></ion-input>
+          <ion-input name="password" [(ngModel)]="userData.password" type="password" placeholder="Contraseña" required>
+          </ion-input>
         </ion-item>
-      </ion-col>
-    </ion-row>
+        <ion-button name="submit" shape="round" expand="block" type="submit" size="small">
+          Acceder
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
 
-    <ion-row>
-      <ion-col size="12">
-        <div class="error-message" *ngIf="errMessage.length > 0">
-          <ion-text color="danger">{{ errMessage }}</ion-text>
-        </div>
-      </ion-col>
-    </ion-row>
+  <ion-item lines="none" (click)="navigateToSignUp()">
+    <div class="ion-text-center">
+      <ion-label>¿No tienes cuenta? <strong class="ac">Registrate aquí</strong></ion-label>
+    </div>
+  </ion-item>
 
-    <ion-row>
-      <ion-col size="12">
-        <ion-button expand="block" (click)="login()">Acceder</ion-button>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="12">
-        <ion-text>
-          <p>
-            No tienes cuenta
-            <a (click)="navigateToRegister()">Registrate aquí</a>
-          </p>
-        </ion-text>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 </ion-content>
