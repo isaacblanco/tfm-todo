@@ -28,6 +28,8 @@ Para las fechas
 - Filtrar tareas: revisar opciones
 - Evitar que se dupliquen usuarios, confirmar que no sucede al registrarse
 - Mejorar seguridad, revisión del token en las peticiones al API
+- Opcion de mostrar completadas en la misma pagina de proyecto
+  - Que estas usen el line-trouhgt
 
 ## [--Para nota--]
 

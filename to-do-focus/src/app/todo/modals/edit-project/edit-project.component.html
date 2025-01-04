@@ -11,13 +11,8 @@
   <form #projectForm="ngForm" (ngSubmit)="saveProject()">
     <ion-item>
       <ion-label position="stacked">Nombre del Proyecto</ion-label>
-      <ion-input
-        type="text"
-        name="projectName"
-        required
-        [(ngModel)]="projectName"
-        placeholder="Introduce el nombre del proyecto"
-      ></ion-input>
+      <ion-input type="text" name="projectName" required [(ngModel)]="projectName"
+        placeholder="Introduce el nombre del proyecto"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -33,11 +28,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button
-    expand="full"
-    [disabled]="!projectForm.valid"
-    (click)="saveProject()"
-  >
+  <ion-button expand="full" [disabled]="!projectForm.valid" (click)="saveProject()">
     {{ project ? "Guardar Cambios" : "Crear Proyecto" }}
   </ion-button>
 </ion-footer>

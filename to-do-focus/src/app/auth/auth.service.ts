@@ -32,7 +32,6 @@ export class AuthService {
       .pipe(
         tap({
           next: (response: any) => {
-            console.log(response);
             if (response?.user) {
               const userData = {
                 id: response.user.id_user,

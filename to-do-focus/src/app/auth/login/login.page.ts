@@ -12,7 +12,7 @@ import {
   IonHeader,
   IonInput,
   IonItem, IonLabel,
-  IonTitle, IonToolbar, NavController
+  IonTitle, IonToolbar
 } from '@ionic/angular/standalone';
 import * as CryptoJS from 'crypto-js'; // Importación para hashear la contraseña
 import { AuthService } from '../auth.service';
@@ -39,7 +39,6 @@ export class LoginPage implements OnInit {
   userPostData = { user_id: '', token: '' };
 
   constructor(
-    private navCtrl: NavController,
     private authService: AuthService,
     private router: Router
   ) {
@@ -65,7 +64,7 @@ export class LoginPage implements OnInit {
   
     this.authService.login(this.userData.email, hashedPassword).subscribe({
       next: (response) => {
-        console.log('Login bueno, empezando...');
+        // console.log('Login bueno, empezando...');
         this.authService.setToken(response.token); // Guarda el token
         this.router.navigate(['/todo/focus'], { replaceUrl: true }); // Redirige al focus
       },

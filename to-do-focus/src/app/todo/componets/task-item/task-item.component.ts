@@ -3,8 +3,17 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AlertController, ModalController } from '@ionic/angular';
 import {
-  IonButton, IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding,
-  IonLabel, IonReorder,
+  IonButton,
+  IonCheckbox,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonItemOption,
+  IonItemOptions,
+  IonItemSliding,
+  IonLabel,
+  IonReorder,
+  IonSelect,
   IonSelectOption
 } from '@ionic/angular/standalone';
 import { UserService } from 'src/app/core/services/user.service';
@@ -18,7 +27,7 @@ import { TaskService } from '../../../core/services/task.service';
   styleUrls: ['./task-item.component.scss'],
   imports: [FormsModule, CommonModule, IonItemSliding, IonItem, IonReorder, 
     IonLabel, IonIcon, IonItemOptions, IonItemOption, IonButton, IonLabel,
-    IonSelectOption],
+    IonSelectOption, IonCheckbox, IonInput,IonSelect,],
   standalone: true,
 })
 export class TaskItemComponent implements OnInit {

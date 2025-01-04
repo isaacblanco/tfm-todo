@@ -22,7 +22,7 @@
 
 
     <!-- Nombre de la tarea -->
-    <ion-label [ngClass]="{ 'completed-task': task.completed }">
+    <ion-label [ngClass]="{ 'completed-task' : task.completed }">
       <ion-input #taskNameInput [(ngModel)]="task.task_name" (ionBlur)="updateTaskName()"
         placeholder="Nombre de la tarea" clearInput name="taskNameInput"></ion-input>
     </ion-label>

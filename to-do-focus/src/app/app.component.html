@@ -4,16 +4,16 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-header class="main-header">
         <ion-toolbar>
-
-          <ion-icon src="assets/favicon.svg" size="large"></ion-icon>
-
+          <ion-thumbnail slot="start">
+            <ion-icon src="assets/favicon.svg" size="large"></ion-icon>
+          </ion-thumbnail>
           <ion-title>TO DO Focus</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
         <ion-list *ngIf="isAuthenticated">
           <ion-item lines="full" routerDirection="root" [routerLink]="['/todo/focus']">
-            <ion-icon aria-hidden="true" slot="start" ios="checkbox" md="checkbox" color="primary"></ion-icon>
+            <ion-icon aria-hidden="true" slot="start" ios="checkbox" md="list-sharp" color="primary"></ion-icon>
             <ion-label>Focus</ion-label>
           </ion-item>
         </ion-list>

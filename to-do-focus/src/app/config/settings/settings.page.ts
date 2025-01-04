@@ -6,10 +6,18 @@ import {
   IonButton,
   IonButtons,
   IonContent,
-  IonHeader, IonIcon, IonInput, IonItem, IonLabel,
-  IonList, IonListHeader,
+  IonHeader,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
   IonMenuButton,
-  IonSelectOption, IonTitle,
+  IonSelect,
+  IonSelectOption,
+  IonTitle,
+  IonToggle,
   IonToolbar
 } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -22,7 +30,8 @@ import { UserService } from './../../core/services/user.service';
   styleUrls: ['./settings.page.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule,  IonHeader, IonIcon, IonInput, IonTitle, IonContent, IonButtons,
-     IonLabel, IonToolbar, IonItem, IonList, IonListHeader, IonSelectOption, IonMenuButton, IonButton],
+     IonLabel, IonToolbar, IonItem, IonList, IonListHeader, IonSelectOption, IonMenuButton, IonButton,
+    IonSelect, IonToggle],
 })
 export class SettingsPage implements OnInit {
   user: UserDTO = this.createDefaultUser();

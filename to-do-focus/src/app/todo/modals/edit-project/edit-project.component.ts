@@ -5,9 +5,11 @@ import { ModalController } from '@ionic/angular';
 import {
   IonButton,
   IonButtons,
+  IonCheckbox,
   IonContent,
   IonFooter,
   IonHeader,
+  IonInput,
   IonItem,
   IonLabel,
   IonTitle, IonToolbar
@@ -23,10 +25,10 @@ import { ProjectService } from '../../../core/services/project.service';
   styleUrls: ['./edit-project.component.scss'],
   standalone: true,
   imports: [FormsModule, CommonModule, IonButton,
-    IonButtons,
+    IonButtons,IonCheckbox,
     IonContent, IonHeader,
     IonItem,IonFooter,
-    IonLabel,  
+    IonLabel,  IonInput,
     IonTitle, IonToolbar],
 })
 export class EditProjectComponent implements OnInit {
