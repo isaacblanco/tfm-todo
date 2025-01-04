@@ -18,6 +18,8 @@ import { ProjectService } from '../../core/services/project.service';
 import { TaskService } from '../../core/services/task.service';
 import { TaskItemComponent } from '../componets/task-item/task-item.component';
 
+import { ProjectUtilsService } from '../shared/project-utils.service';
+
 @Component({
   selector: 'app-project',
   templateUrl: './project.page.html',
@@ -37,6 +39,7 @@ export class ProjectPage implements OnInit {
   tasks: TaskDTO[] = [];
   filteredTasks: TaskDTO[] = [];
   searchTerm: string = '';
+  projectPercent: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +47,8 @@ export class ProjectPage implements OnInit {
     private taskService: TaskService,
     private modalController: ModalController,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private projectUtilsService: ProjectUtilsService
   ) {}
 
   ngOnInit() {
@@ -78,6 +82,7 @@ export class ProjectPage implements OnInit {
         next: (data) => {
           this.tasks = data;
           this.filteredTasks = [...this.tasks]; // Inicializar lista filtrada
+          this.updatePercent();
         },
         error: (err) => {
           console.error('Error al cargar las tareas:', err);
@@ -85,6 +90,16 @@ export class ProjectPage implements OnInit {
       });
     }
   }
+
+  // Indica el porcentaje de completación de un projecto
+  updatePercent() {
+    if (this.filteredTasks) {
+      this.projectPercent = this.projectUtilsService.calculateProjectProgress(this.filteredTasks) + '%';
+    }
+  }
+
+  // Devuelve el total de las tareas completadas
+  
 
   /**
    * Filtra las tareas en función del término de búsqueda
@@ -207,35 +222,16 @@ export class ProjectPage implements OnInit {
   }
 
   showList() {
-    if (this.projectId !== null) {
-      this.router.navigate([`/todo/project/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
+    this.projectUtilsService.showList( this.projectId );
   }
 
   showKanban() {
-    if (this.projectId !== null) {
-      this.router.navigate([`todo/project-kanban/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
+    this.projectUtilsService.showKanban( this.projectId );
   }
   
   showTimeline() {
-    if (this.projectId !== null) {
-      this.router.navigate([`todo/project-timeline/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
+    this.projectUtilsService.showTimeline( this.projectId );
   }
-  
 
   onTaskDeleted(deletedTask: TaskDTO): void {
     // Filtra la tarea eliminada de la lista de tareas

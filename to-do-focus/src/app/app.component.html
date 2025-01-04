@@ -16,24 +16,23 @@
             <ion-icon aria-hidden="true" slot="start" ios="checkbox" md="list-sharp" color="primary"></ion-icon>
             <ion-label>Focus</ion-label>
           </ion-item>
-        </ion-list>
 
-        <ion-list *ngIf="isAuthenticated">
-          <ion-list-header>Projects</ion-list-header>
-          <ion-item (click)="openAddProjectModal()" lines="full">
-            <ion-icon aria-hidden="true" slot="start" ios="add-circle-outline" md="add-circle-sharp"
-              color="primary"></ion-icon>
-            <ion-label>Add New Project</ion-label>
-          </ion-item>
-
-          <ion-menu-toggle auto-hide="false" *ngFor="let project of projects">
-            <ion-item *ngIf="project.main === false" lines="full" routerDirection="root"
-              [routerLink]="['/todo/project', project.id_project]">
-              <ion-icon aria-hidden="true" slot="start" ios="folder-outline" md="folder-sharp"
+          <div *ngIf="isAuthenticated">
+            <ion-item-divider>Projects</ion-item-divider>
+            <ion-item (click)="openAddProjectModal()" lines="full" color="secundary">
+              <ion-icon aria-hidden="true" slot="start" ios="add-circle-outline" md="add-circle-sharp"
                 color="primary"></ion-icon>
-              <ion-label>{{ project.name }}</ion-label>
+              <ion-label>Add New Project</ion-label>
             </ion-item>
-          </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false" *ngFor="let project of projects">
+              <ion-item *ngIf="project.main === false" lines="full" routerDirection="root"
+                [routerLink]="['/todo/project', project.id_project]">
+                <ion-icon aria-hidden="true" slot="start" ios="folder-outline" md="folder-sharp"
+                  color="primary"></ion-icon>
+                <ion-label>{{ project.name }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </div>
         </ion-list>
 
         <ion-note color="medium" class="ion-margin-horizontal">

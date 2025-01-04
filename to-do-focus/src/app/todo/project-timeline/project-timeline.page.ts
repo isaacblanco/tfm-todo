@@ -19,6 +19,7 @@ import { TaskDTO } from '../../core/models/task-DTO';
 import { ProjectService } from '../../core/services/project.service';
 import { TaskService } from '../../core/services/task.service';
 import { TaskItemComponent } from '../componets/task-item/task-item.component';
+import { ProjectUtilsService } from '../shared/project-utils.service';
 
 @Component({
   selector: 'app-project-timeline',
@@ -40,6 +41,7 @@ export class ProjectTimelinePage implements OnInit {
   orderedTasks: TaskDTO[] = [];
   filteredTasks: TaskDTO[] = [];
   searchTerm: string = '';
+  projectPercent: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +49,8 @@ export class ProjectTimelinePage implements OnInit {
     private taskService: TaskService,
     private modalController: ModalController,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private projectUtilsService: ProjectUtilsService
   ) {}
 
   ngOnInit() {
@@ -71,6 +74,13 @@ export class ProjectTimelinePage implements OnInit {
           console.error('Error al cargar los datos del proyecto:', err);
         },
       });
+    }
+  }
+
+  // Indica el porcentaje de completación de un projecto
+  updatePercent() {
+    if (this.filteredTasks) {
+      this.projectPercent = this.projectUtilsService.calculateProjectProgress(this.filteredTasks) + '%';
     }
   }
 
@@ -148,33 +158,15 @@ export class ProjectTimelinePage implements OnInit {
   }
 
   showList() {
-    if (this.projectId !== null) {
-      this.router.navigate([`/todo/project/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
+    this.projectUtilsService.showList( this.projectId );
   }
 
   showKanban() {
-    if (this.projectId !== null) {
-      this.router.navigate([`todo/project-kanban/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
+    this.projectUtilsService.showKanban( this.projectId );
   }
   
   showTimeline() {
-    if (this.projectId !== null) {
-      this.router.navigate([`todo/project-timeline/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
+    this.projectUtilsService.showTimeline( this.projectId );
   }
 
   onTaskUpdated(updatedTask: TaskDTO): void {

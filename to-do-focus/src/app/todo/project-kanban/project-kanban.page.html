@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{ project?.name || 'Cargando...' }}</ion-title>
+    <ion-title>{{ project?.name || 'Cargando...' }} {{projectPercent || ''}}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openEditProjectModal()">
         <ion-icon name="pencil" color="primary"></ion-icon>

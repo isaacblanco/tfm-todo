@@ -22,6 +22,8 @@ import { ProjectService } from '../../core/services/project.service';
 import { TaskService } from '../../core/services/task.service';
 import { TaskItemComponent } from '../componets/task-item/task-item.component';
 
+import { ProjectUtilsService } from '../shared/project-utils.service';
+
 @Component({
   selector: 'app-project-kanban',
   templateUrl: './project-kanban.page.html',
@@ -54,6 +56,7 @@ throw new Error('Method not implemented.');
   groupedTasks: { priority: number; tasks: TaskDTO[] }[] = [];
   filteredTasks: TaskDTO[] = [];
   searchTerm: string = '';
+  projectPercent: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -62,6 +65,7 @@ throw new Error('Method not implemented.');
     private modalController: ModalController,
     private alertController: AlertController,
     private taskService: TaskService,
+    private projectUtilsService: ProjectUtilsService
   ) {}
 
   ngOnInit() {
@@ -85,6 +89,13 @@ throw new Error('Method not implemented.');
           console.error('Error al cargar los datos del proyecto:', err);
         },
       });
+    }
+  }
+
+  // Indica el porcentaje de completación de un projecto
+  updatePercent() {
+    if (this.filteredTasks) {
+      this.projectPercent = this.projectUtilsService.calculateProjectProgress(this.filteredTasks) + '%';
     }
   }
 
@@ -138,35 +149,15 @@ throw new Error('Method not implemented.');
   }
 
   showList() {
-    if (this.projectId !== null) {
-      this.router.navigate([`/todo/project/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
+    this.projectUtilsService.showList( this.projectId );
   }
 
   showKanban() {
-    if (this.projectId !== null) {
-      console.log("Ir a kanban");
-      this.router.navigate([`todo/project-kanban/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
+    this.projectUtilsService.showKanban( this.projectId );
   }
   
   showTimeline() {
-    if (this.projectId !== null) {
-      console.log("Ir a timeline");
-      this.router.navigate([`todo/project-timeline/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
+    this.projectUtilsService.showTimeline( this.projectId );
   }
 
   onTaskDeleted(deletedTask: TaskDTO): void {

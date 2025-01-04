@@ -6,14 +6,11 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
 ## PROYECTOS con tiempo
 
--  Incluir vista de TimeLine
-   -  Incluir el tiempo que queda
-   -  Poner colores ambar o rojos
--  Incluir vista de Kanban
-   -  Agrupado por dificultad
-- Cambiar a vista: kanban prioridades
-- Cambiar a vista de calendario
+- Confirmar que las tareas se quedan marcadas como completadas
+-  Calculo del progreso:
   - Incluir la opción de mostrar progreso
+- Incluir vista de TimeLine
+   -  Poner colores ambar o rojos
 
 
 - Aplicar filtros de etiquetas
