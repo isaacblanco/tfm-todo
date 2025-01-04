@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import {
   IonButton,
   IonCard,
@@ -12,7 +12,7 @@ import {
   IonHeader,
   IonInput,
   IonItem, IonLabel,
-  IonText, IonTitle, IonToolbar, NavController
+  IonTitle, IonToolbar, NavController
 } from '@ionic/angular/standalone';
 import * as CryptoJS from 'crypto-js'; // Importación para hashear la contraseña
 import { AuthService } from '../auth.service';
@@ -22,8 +22,8 @@ import { AuthService } from '../auth.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [ CommonModule, FormsModule,RouterLink, IonToolbar, IonHeader, IonContent, IonCardContent,IonCardTitle,
-    IonText, IonLabel, IonItem, IonButton, IonTitle, IonInput, IonCard, IonCardHeader, IonCardSubtitle, ],
+  imports: [ CommonModule, FormsModule,IonToolbar, IonHeader, IonContent, IonCardContent,IonCardTitle,
+     IonLabel, IonItem, IonButton, IonTitle, IonInput, IonCard, IonCardHeader, IonCardSubtitle ],
 })
 
 export class LoginPage implements OnInit {
@@ -43,7 +43,7 @@ export class LoginPage implements OnInit {
     private authService: AuthService,
     private router: Router
   ) {
-    this.userDetails = { user_id: '0', token: '' };
+    // this.userDetails = { user_id: '0', token: '' };
   }
 
   ngOnInit() {
@@ -58,25 +58,24 @@ export class LoginPage implements OnInit {
       this.errMessage = 'Email y contraseña son requeridos.';
       return;
     }
-
-    // Hashear la contraseña antes de enviarla al servidor
+  
     const hashedPassword = CryptoJS.SHA256(this.userData.password).toString(
       CryptoJS.enc.Hex
     );
-
-    // Llamar al servicio de autenticación
+  
     this.authService.login(this.userData.email, hashedPassword).subscribe({
       next: (response) => {
+        console.log('Login bueno, empezando...');
         this.authService.setToken(response.token); // Guarda el token
-        this.navCtrl.navigateRoot('/todo/focus'); // Redirige al focus
+        this.router.navigate(['/todo/focus'], { replaceUrl: true }); // Redirige al focus
       },
       error: (error) => {
-        this.errMessage =
-          'Inicio de sesión fallido. Verifica tus credenciales.';
+        this.errMessage = 'Inicio de sesión fallido. Verifica tus credenciales.';
         console.error('Error en el inicio de sesión:', error);
       },
     });
   }
+  
 
   navigateToSignUp() {
     this.router.navigate(['/sign-up']);

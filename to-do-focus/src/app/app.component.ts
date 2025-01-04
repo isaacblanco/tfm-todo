@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import {
@@ -41,28 +41,31 @@ export class AppComponent implements OnInit {
     private projectService: ProjectService,
     private modalController: ModalController,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef // referencia de detección de cambios
   ) {}
 
   ngOnInit() {
+
+    // Revisar el estado al inicializar
     this.isAuthenticated = this.authService.isAuthenticated();
 
-    // Suscribirse al estado del login
     this.authService.loginStatus$.subscribe((isLoggedIn) => {
       this.isAuthenticated = isLoggedIn;
-
       if (isLoggedIn) {
         this.loadProjects(); // Cargar proyectos al iniciar sesión
       } else {
         this.projects = []; // Limpiar proyectos al cerrar sesión
       }
+      this.cdr.detectChanges(); // Forzar la detección de cambios
     });
+    
 
     if (this.isAuthenticated) {
-      this.loadProjects();
+      this.loadProjects(); // Carga inicial si ya se esta autenticado
     }
 
-    // Escuchar cambios en la lista de proyectos
+    // Suscripción a los cambios en los proyectos
     this.projectService.projects$.subscribe((projects) => {
       this.projects = projects;
     });
@@ -73,9 +76,11 @@ export class AppComponent implements OnInit {
    */
   private loadProjects() {
     // Escuchar cambios en la lista de proyectos
+    
     this.projectService.projects$.subscribe((projects) => {
       this.projects = projects;
     });
+    
 
     // Inicializar la carga de proyectos
     this.projectService.getProjects();
@@ -106,8 +111,8 @@ export class AppComponent implements OnInit {
    */
   logout() {
     this.authService.logout();
-    this.isAuthenticated = false;
-    this.projects = []; // Limpia los proyectos en caso de logout
+    // this.isAuthenticated = false;
+    // this.projects = []; // Limpia los proyectos en caso de logout
 
     this.router.navigate(['/login'], { replaceUrl: true });
   }

@@ -30,20 +30,27 @@ export class AuthService {
     return this.http
       .post(`${this.apiUrl}/users/login`, { email, password })
       .pipe(
-        tap((response: any) => {
-          // Guarda el mensaje, datos del usuario y sus preferencias en localStorage
-          if (response?.user) {
-            const userData = {
-              id: response.user.id_user,
-              username: response.user.username,
-              email: response.user.email,
-              settings: response.user.settings,
-            };
+        tap({
+          next: (response: any) => {
+            console.log(response);
+            if (response?.user) {
+              const userData = {
+                id: response.user.id_user,
+                username: response.user.username,
+                email: response.user.email,
+                settings: response.user.settings,
+              };
 
-            localStorage.setItem('userData', JSON.stringify(userData));
-            this.loginStatus.next(true); // Estamos logados, lo emitimos
-            // //console.log('AuthService: User data saved in localStorage');
-          }
+              localStorage.setItem('userData', JSON.stringify(userData));
+              this.setToken(response.token);
+              this.loginStatus.next(true);
+            }
+          },
+          error: (err) => {
+            console.error('Error en el inicio de sesión:', err);
+            this.clearUserData();
+            this.loginStatus.next(false);
+          },
         })
       );
   }
@@ -70,11 +77,10 @@ export class AuthService {
    * Cierra sesión eliminando los datos del usuario de localStorage
    */
   logout(): void {
-    localStorage.removeItem('authToken'); // Elimina el token de autenticación
-    localStorage.removeItem('userData'); // Elimina los datos del usuario
-    this.userService.clearUserData(); // Limpia el user_id usando UserService
-    //console.log('AuthService: User logged out');
-    this.loginStatus.next(false); // Emite el estado de logout
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
+    this.userService.clearUserData();
+    this.loginStatus.next(false);
   }
 
   /**
