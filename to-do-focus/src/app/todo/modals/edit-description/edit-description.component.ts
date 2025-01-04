@@ -35,12 +35,14 @@ export class EditDescriptionComponent implements OnInit {
   @Input() task!: TaskDTO; // Recibe los datos de la tarea
   @ViewChild('descriptionInput') descriptionInput!: ElementRef; // Referencia al textarea
 
+
   constructor(
     private modalController: ModalController,
     private taskService: TaskService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ionViewDidEnter(): void {
     // Poner el foco en el textarea al cargar la página
