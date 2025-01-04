@@ -1,17 +1,15 @@
 # TO DO List
 
-Temas pendientes
-
-https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
+https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html --> lista de iconos
 
 ## PROYECTOS con tiempo
 
-- Confirmar que las tareas se quedan marcadas como completadas
--  Calculo del progreso:
-  - Incluir la opción de mostrar progreso
 - Incluir vista de TimeLine
    -  Poner colores ambar o rojos
+- Hacer que se vean bien las separaciones
 
+- Documentar las pruebas unitarias
+- Crear la presentación: basarme en TFG
 
 - Aplicar filtros de etiquetas
 - Filtrar tareas: revisar opciones

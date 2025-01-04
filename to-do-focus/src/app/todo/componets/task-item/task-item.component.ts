@@ -210,13 +210,38 @@ export class TaskItemComponent implements OnInit {
    * Marca o desmarca la tarea como completada.
    */
   toggleCompletion() {
-    // TODO: revisar si los estilos se cambian
     this.task.completed = !this.task.completed;
-    // Llama al servicio para actualizar el estado
     this.updateTask();
+    console.log('Task completion toggled:', this.task.completed);
+  }
 
-    // Opcional: Si el cambio no se refleja de inmediato en la vista
-    //console.log('Task completion toggled:', this.task.completed);
+  handleCompletionChange(event: any) {
+    this.loading = true;
+    // Si el evento viene del checkbox, usa event.detail.checked
+    // Si no, asume que es el botón de completar y usa el valor opuesto al actual
+    const newValue = event.detail?.checked !== undefined ? 
+      event.detail.checked : 
+      !this.task.completed;
+    
+    if (this.task.id_task) {
+      const updatedTask = { ...this.task, completed: newValue };
+      
+      this.taskService.updateTask(this.task.id_task, updatedTask).subscribe({
+        next: () => {
+          this.task.completed = newValue;
+          console.log(`Task completada: ${this.task.id_task}, valor: ${newValue}`);
+          this.taskUpdated.emit(this.task);
+        },
+        error: (err) => {
+          console.error('Error al actualizar el estado de la tarea:', err);
+          // Ya no necesitamos manipular directamente el target
+          this.task.completed = !newValue; // Revertimos el estado en caso de error
+        },
+        complete: () => {
+          this.loading = false;
+        }
+      });
+    }
   }
 
   /**
@@ -351,7 +376,7 @@ export class TaskItemComponent implements OnInit {
       this.loading = true;
       this.taskService.updateTask(this.task.id_task, this.task).subscribe({
         next: () => {
-          //console.log(`Task actualizada: ${this.task.id_task}, completada: ${this.task.completed}`);
+          console.log(`Task actualizada: ${this.task.id_task}, completada: ${this.task.completed}`);
           this.taskUpdated.emit(this.task);
         },
         error: (err) => {
