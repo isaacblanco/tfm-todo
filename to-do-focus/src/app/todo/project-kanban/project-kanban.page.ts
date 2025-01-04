@@ -6,52 +6,68 @@ import { AlertController, ModalController } from '@ionic/angular';
 import {
   IonButton,
   IonButtons,
-  IonContent, IonHeader,
+  IonContent,
+  IonHeader,
   IonIcon,
+  IonItem,
+  IonItemDivider,
+  IonLabel,
   IonList,
   IonMenuButton,
-  IonTitle, IonToolbar
+  IonTitle,
+  IonToolbar
 } from '@ionic/angular/standalone';
-import { TaskFilterPipe } from 'src/app/core/pipes/task-filter.pipe';
 import { TaskDTO } from '../../core/models/task-DTO';
 import { ProjectService } from '../../core/services/project.service';
 import { TaskService } from '../../core/services/task.service';
 import { TaskItemComponent } from '../componets/task-item/task-item.component';
 
 @Component({
-  selector: 'app-project',
-  templateUrl: './project.page.html',
-  styleUrls: ['./project.page.scss'],
+  selector: 'app-project-kanban',
+  templateUrl: './project-kanban.page.html',
+  styleUrls: ['./project-kanban.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonButton, 
     CommonModule,
     FormsModule,
-    TaskItemComponent, IonMenuButton,
-    TaskFilterPipe, IonList, IonIcon, IonButtons,
-    IonButton, IonContent, IonHeader, IonTitle, IonToolbar 
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonList,
+    IonLabel,
+    IonIcon,
+    IonItem,
+    IonItemDivider,
+    IonMenuButton,
+    TaskItemComponent,
   ],
 })
-export class ProjectPage implements OnInit {
+export class ProjectKanbanPage implements OnInit {
+addEmptyTask() {
+throw new Error('Method not implemented.');
+}
   projectId: number | null = null;
   project: any = null;
   tasks: TaskDTO[] = [];
+  groupedTasks: { priority: number; tasks: TaskDTO[] }[] = [];
   filteredTasks: TaskDTO[] = [];
   searchTerm: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private taskService: TaskService,
+    private router: Router,
     private modalController: ModalController,
     private alertController: AlertController,
-    private router: Router
+    private taskService: TaskService,
   ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       this.projectId = id ? +id : null;
-      //console.log('Project ID:', this.projectId);
       if (this.projectId) {
         this.loadProjectData();
       }
@@ -72,12 +88,25 @@ export class ProjectPage implements OnInit {
     }
   }
 
+  /**
+   * Filtra las tareas en función del término de búsqueda
+   */
+    filterTasks(): void {
+      const term = this.searchTerm.toLowerCase();
+      this.filteredTasks = this.tasks.filter((task) =>
+        task.task_name.toLowerCase().includes(term)
+      );
+    }
+
+  /**
+   * Carga las tareas del proyecto y las agrupa por prioridad.
+   */
   private loadTasks(): void {
     if (this.projectId) {
       this.projectService.getTasks(this.projectId).subscribe({
         next: (data) => {
           this.tasks = data;
-          this.filteredTasks = [...this.tasks]; // Inicializar lista filtrada
+          this.groupTasksByPriority();
         },
         error: (err) => {
           console.error('Error al cargar las tareas:', err);
@@ -87,49 +116,101 @@ export class ProjectPage implements OnInit {
   }
 
   /**
-   * Filtra las tareas en función del término de búsqueda
+   * Agrupa las tareas por prioridad en orden descendente.
    */
-  filterTasks(): void {
-    const term = this.searchTerm.toLowerCase();
-    this.filteredTasks = this.tasks.filter((task) =>
-      task.task_name.toLowerCase().includes(term)
-    );
+  private groupTasksByPriority(): void {
+    const priorityMap: { [priority: number]: TaskDTO[] } = {};
+
+    this.tasks.forEach((task) => {
+      if (!priorityMap[task.priority]) {
+        priorityMap[task.priority] = [];
+      }
+      priorityMap[task.priority].push(task);
+    });
+
+    // Ordenar prioridades de forma descendente y crear el array agrupado
+    this.groupedTasks = Object.keys(priorityMap)
+      .map((priority) => ({
+        priority: +priority,
+        tasks: priorityMap[+priority],
+      }))
+      .sort((a, b) => b.priority - a.priority);
   }
 
-  /**
-   * Agrega una tarea vacía a la lista de tareas
-   */
-  addEmptyTask(): void {
-    if (this.projectId) {
-      const emptyTask: TaskDTO = {
-        id_task: 0, // Generado por el backend
-        fk_project: this.projectId,
-        task_name: 'Nueva Tarea',
-        completed: false,
-        status: 'TO_DO',
-        priority: 1,
-        dini: undefined,
-        dfin: undefined,
-        description: '',
-        tabs: 0,
-      };
-
-      this.taskService.addTask(emptyTask).subscribe({
-        next: (newTask) => {
-          this.tasks.unshift(newTask); // Agrega la tarea al principio de la lista
-          this.filteredTasks = [...this.tasks]; // Actualizar la lista filtrada
-          //console.log('Tarea vacía añadida:', newTask);
-        },
-        error: (err) => {
-          console.error('Error al añadir la tarea vacía:', err);
-        },
+  showList() {
+    if (this.projectId !== null) {
+      this.router.navigate([`/todo/project/${this.projectId}`], {
+        replaceUrl: true,
       });
+    } else {
+      console.error('No se puede navegar, el ID del proyecto es nulo.');
     }
   }
 
-  /**
-   * Abre el modal para editar el proyecto
-   */
+  showKanban() {
+    if (this.projectId !== null) {
+      console.log("Ir a kanban");
+      this.router.navigate([`todo/project-kanban/${this.projectId}`], {
+        replaceUrl: true,
+      });
+    } else {
+      console.error('No se puede navegar, el ID del proyecto es nulo.');
+    }
+  }
+  
+  showTimeline() {
+    if (this.projectId !== null) {
+      console.log("Ir a timeline");
+      this.router.navigate([`todo/project-timeline/${this.projectId}`], {
+        replaceUrl: true,
+      });
+    } else {
+      console.error('No se puede navegar, el ID del proyecto es nulo.');
+    }
+  }
+
+  onTaskDeleted(deletedTask: TaskDTO): void {
+    // Filtra la tarea eliminada de la lista de tareas
+    this.tasks = this.tasks.filter(
+      (task) => task.id_task !== deletedTask.id_task
+    );
+    this.filteredTasks = [...this.tasks];
+    //console.log('Tarea eliminada:', deletedTask);
+  }
+
+  onTaskMoved(updatedTask: TaskDTO): void {
+    if (updatedTask.fk_project !== this.projectId) {
+      // Filtrar la tarea movida de la lista
+      this.tasks = this.tasks.filter(
+        (task) => task.id_task !== updatedTask.id_task
+      );
+      //console.log('Tarea movida eliminada de la lista actual:', updatedTask);
+    }
+  }
+
+  onTaskUpdated(updatedTask: TaskDTO): void {
+    const taskIndex = this.tasks.findIndex(
+      (task) => task.id_task === updatedTask.id_task
+    );
+
+    if (taskIndex !== -1) {
+      // Actualiza la tarea en la lista
+      this.tasks[taskIndex] = updatedTask;
+
+      // Si la tarea ya no pertenece al proyecto actual, la elimina
+      if (updatedTask.fk_project !== this.projectId) {
+        this.tasks = this.tasks.filter(
+          (task) => task.id_task !== updatedTask.id_task
+        );
+        //console.log('Tarea eliminada de la lista actual:', updatedTask);
+      }
+
+      // Actualiza la lista filtrada
+      this.filteredTasks = [...this.tasks];
+    } else {
+      console.warn('Tarea actualizada no encontrada en la lista:', updatedTask);
+    }
+  }
 
   async openEditProjectModal(): Promise<void> {
     if (this.project) {
@@ -172,78 +253,16 @@ export class ProjectPage implements OnInit {
     }
   }
 
-  onTaskMoved(updatedTask: TaskDTO): void {
-    if (updatedTask.fk_project !== this.projectId) {
-      // Filtrar la tarea movida de la lista
-      this.tasks = this.tasks.filter(
-        (task) => task.id_task !== updatedTask.id_task
-      );
-      //console.log('Tarea movida eliminada de la lista actual:', updatedTask);
-    }
-  }
-
-  onTaskUpdated(updatedTask: TaskDTO): void {
-    const taskIndex = this.tasks.findIndex(
-      (task) => task.id_task === updatedTask.id_task
-    );
-
-    if (taskIndex !== -1) {
-      // Actualiza la tarea en la lista
-      this.tasks[taskIndex] = updatedTask;
-
-      // Si la tarea ya no pertenece al proyecto actual, la elimina
-      if (updatedTask.fk_project !== this.projectId) {
-        this.tasks = this.tasks.filter(
-          (task) => task.id_task !== updatedTask.id_task
-        );
-        //console.log('Tarea eliminada de la lista actual:', updatedTask);
-      }
-
-      // Actualiza la lista filtrada
-      this.filteredTasks = [...this.tasks];
-    } else {
-      console.warn('Tarea actualizada no encontrada en la lista:', updatedTask);
-    }
-  }
-
-  showList() {
-    if (this.projectId !== null) {
-      this.router.navigate([`/todo/project/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
-  }
-
-  showKanban() {
-    if (this.projectId !== null) {
-      this.router.navigate([`todo/project-kanban/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
-  }
+  getPriorityLabel(priority: number): string {
+    const priorityMap: { [key: number]: string } = {
+      1: 'Baja',
+      2: 'Poca',
+      3: 'Media',
+      4: 'Alta',
+      5: 'Muy Alta',
+    };
   
-  showTimeline() {
-    if (this.projectId !== null) {
-      this.router.navigate([`todo/project-timeline/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
-  }
-  
-
-  onTaskDeleted(deletedTask: TaskDTO): void {
-    // Filtra la tarea eliminada de la lista de tareas
-    this.tasks = this.tasks.filter(
-      (task) => task.id_task !== deletedTask.id_task
-    );
-    this.filteredTasks = [...this.tasks];
-    //console.log('Tarea eliminada:', deletedTask);
+    return priorityMap[priority] || 'Desconocida';
   }
 
   /**

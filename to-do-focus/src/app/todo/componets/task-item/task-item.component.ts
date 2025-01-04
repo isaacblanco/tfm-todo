@@ -12,10 +12,10 @@ import {
   IonItemOptions,
   IonItemSliding,
   IonLabel,
+  IonNote,
   IonReorder,
   IonSelect,
-  IonSelectOption,
-  IonTextarea
+  IonSelectOption
 } from '@ionic/angular/standalone';
 import { UserService } from 'src/app/core/services/user.service';
 import { formatDateTime } from 'src/app/core/utils/date-utils';
@@ -28,7 +28,7 @@ import { TaskService } from '../../../core/services/task.service';
   styleUrls: ['./task-item.component.scss'],
   imports: [FormsModule, CommonModule, IonItemSliding, IonItem, IonReorder, 
     IonLabel, IonIcon, IonItemOptions, IonItemOption, IonButton, IonLabel,
-    IonSelectOption, IonCheckbox, IonInput,IonSelect,IonTextarea],
+    IonSelectOption, IonCheckbox, IonInput,IonSelect,IonNote],
   standalone: true,
 })
 export class TaskItemComponent implements OnInit {

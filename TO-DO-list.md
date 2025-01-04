@@ -4,32 +4,35 @@ Temas pendientes
 
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html
 
-## Capa de pintura
-
---> https://ionicframework.com/docs/api/item
-Revisa:
-<ion-item>
-<ion-label>
-<h1>H1 Heading</h1>
-<p>Paragraph</p>
-</ion-label>
-</ion-item>
-Para las fechas
-
-- Poner bonito
-  - Poner color corporativo
-
 ## PROYECTOS con tiempo
 
-- Aplicar filtros de etiquetas
-- Cambiar a vista: kanbam
+-  Incluir vista de TimeLine
+   -  Incluir el tiempo que queda
+   -  Poner colores ambar o rojos
+-  Incluir vista de Kanban
+   -  Agrupado por dificultad
+- Cambiar a vista: kanban prioridades
 - Cambiar a vista de calendario
   - Incluir la opción de mostrar progreso
+
+
+- Aplicar filtros de etiquetas
 - Filtrar tareas: revisar opciones
 - Evitar que se dupliquen usuarios, confirmar que no sucede al registrarse
 - Mejorar seguridad, revisión del token en las peticiones al API
 - Opcion de mostrar completadas en la misma pagina de proyecto
   - Que estas usen el line-trouhgt
+
+- Incluir documentación de los tests unitarios
+- Ver como incluir JWT
+	- Enviar las peticiones con tokens
+- Revisar documentación de todo
+	- Sobre todo de como hacerlo funcionar
+- Generar una marca de versión en Github
+- Hacer entrega PEC4 --> video y similar
+- Montar un NodeJS en servidor
+- Subir a servidor
+	- Podría usar supabase
 
 ## [--Para nota--]
 
@@ -54,5 +57,8 @@ Para las fechas
 - Recordatorio de contraseña
 - console.error('No se encontró un proyecto principal.'); revisar, en algunas ocasiones carga mal, ¿asincronismo?
 - Validarse con google
+- Poner bonito
+  - Poner color corporativo
+
 
 Las tareas no deberían de actualizarse si no hay cambios (al perder el foco de una seleccionada)

@@ -14,13 +14,13 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-button (click)="showList()" slot="start" color="clear" size="small" [disabled]="true">
+    <ion-button (click)="showList()" slot="start" color="clear" size="small">
       <ion-icon name="list-sharp" color="primary"></ion-icon>
     </ion-button>
     <ion-button (click)="showKanban()" slot="start" color="clear" size="small">
       <ion-icon name="apps-sharp" color="primary"></ion-icon>
     </ion-button>
-    <ion-button (click)="showTimeline()" slot="start" color="clear" size="small">
+    <ion-button (click)="showTimeline()" slot="start" color="clear" size="small" [disabled]="true">
       <ion-icon name="calendar-number-sharp" color="primary"></ion-icon>
     </ion-button>
 
@@ -36,11 +36,21 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <ion-list>
-    <app-task-item *ngFor="let task of tasks | taskFilter: searchTerm" [task]="task"
-      [fk_project]="project.id_project || 0" (taskUpdated)="onTaskUpdated($event)" (taskDeleted)="onTaskDeleted($event)"
-      (taskMoved)="onTaskMoved($event)">
-    </app-task-item>
+    <div *ngFor="let task of orderedTasks">
+      <ion-item>
+        <ion-label>
+          <p>
+            <strong>Fecha inicio:</strong> {{ task.dini ? (task.dini | date) : 'No definida' }}
+            <strong>Fecha fin:</strong> {{ task.dfin ? (task.dfin | date) : 'No definida' }}
+            <strong>Días pendientes:</strong> {{ calculatePendingDays(task.dfin || null) }}
+          </p>
+        </ion-label>
+      </ion-item>
+      <app-task-item [task]="task" (taskUpdated)="onTaskUpdated($event)" (taskDeleted)="onTaskDeleted($event)">
+      </app-task-item>
+    </div>
+
   </ion-list>
 </ion-content>

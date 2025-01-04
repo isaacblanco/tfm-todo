@@ -1,9 +1,9 @@
 <ion-item-sliding class="item-active" *ngIf="showCompleted || !task.completed">
   <!-- Indicador de carga -->
   <ion-item *ngIf="task.dini !== null" lines="none">
-    <ion-label position="stacked" *ngIf="task.dini !== null">
+    <ion-note position="stacked" *ngIf="task.dini !== null">
       {{ formatDate(task.dini) }} &nbsp;
-    </ion-label>
+    </ion-note>
   </ion-item>
   <ion-item lines="full">
     <!-- Line 1 -->
@@ -19,7 +19,6 @@
     <!-- Checkbox para completar la tarea -->
     <ion-checkbox slot="start" [(ngModel)]="task.completed" (ionChange)="toggleCompletion()" name="completedCheckbox"
       aria-labelledby="completedCheckbox"></ion-checkbox>
-
 
     <!-- Nombre de la tarea -->
     <ion-label [ngClass]="{ 'completed-task' : task.completed }">

@@ -8,9 +8,11 @@ import {
   IonButtons,
   IonContent, IonHeader,
   IonIcon,
+  IonItem,
+  IonLabel,
   IonList,
   IonMenuButton,
-  IonTitle, IonToolbar
+  IonTitle, IonToolbar,
 } from '@ionic/angular/standalone';
 import { TaskFilterPipe } from 'src/app/core/pipes/task-filter.pipe';
 import { TaskDTO } from '../../core/models/task-DTO';
@@ -19,22 +21,23 @@ import { TaskService } from '../../core/services/task.service';
 import { TaskItemComponent } from '../componets/task-item/task-item.component';
 
 @Component({
-  selector: 'app-project',
-  templateUrl: './project.page.html',
-  styleUrls: ['./project.page.scss'],
+  selector: 'app-project-timeline',
+  templateUrl: './project-timeline.page.html',
+  styleUrls: ['./project-timeline.page.scss'],
   standalone: true,
   imports: [
     CommonModule,
     FormsModule,
-    TaskItemComponent, IonMenuButton,
-    TaskFilterPipe, IonList, IonIcon, IonButtons,
+    TaskItemComponent, IonMenuButton, IonLabel,
+    TaskFilterPipe, IonList, IonIcon, IonButtons,IonItem,
     IonButton, IonContent, IonHeader, IonTitle, IonToolbar 
   ],
 })
-export class ProjectPage implements OnInit {
+export class ProjectTimelinePage implements OnInit {
   projectId: number | null = null;
   project: any = null;
   tasks: TaskDTO[] = [];
+  orderedTasks: TaskDTO[] = [];
   filteredTasks: TaskDTO[] = [];
   searchTerm: string = '';
 
@@ -51,7 +54,6 @@ export class ProjectPage implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       this.projectId = id ? +id : null;
-      //console.log('Project ID:', this.projectId);
       if (this.projectId) {
         this.loadProjectData();
       }
@@ -72,20 +74,6 @@ export class ProjectPage implements OnInit {
     }
   }
 
-  private loadTasks(): void {
-    if (this.projectId) {
-      this.projectService.getTasks(this.projectId).subscribe({
-        next: (data) => {
-          this.tasks = data;
-          this.filteredTasks = [...this.tasks]; // Inicializar lista filtrada
-        },
-        error: (err) => {
-          console.error('Error al cargar las tareas:', err);
-        },
-      });
-    }
-  }
-
   /**
    * Filtra las tareas en función del término de búsqueda
    */
@@ -94,7 +82,7 @@ export class ProjectPage implements OnInit {
     this.filteredTasks = this.tasks.filter((task) =>
       task.task_name.toLowerCase().includes(term)
     );
-  }
+  }  
 
   /**
    * Agrega una tarea vacía a la lista de tareas
@@ -128,10 +116,105 @@ export class ProjectPage implements OnInit {
   }
 
   /**
+   * Carga las tareas del proyecto y las ordena por fecha de finalización.
+   */
+  private loadTasks(): void {
+    if (this.projectId) {
+      this.projectService.getTasks(this.projectId).subscribe({
+        next: (data) => {
+          this.tasks = data;
+          this.orderTasksByCompletionDate();
+        },
+        error: (err) => {
+          console.error('Error al cargar las tareas:', err);
+        },
+      });
+    }
+  }
+
+  /**
+   * Ordena las tareas: primero las que tienen fecha de finalización (`dfin`),
+   * luego las que no tienen.
+   */
+  private orderTasksByCompletionDate(): void {
+    this.orderedTasks = [...this.tasks].sort((a, b) => {
+      if (a.dfin && b.dfin) {
+        return new Date(a.dfin).getTime() - new Date(b.dfin).getTime();
+      }
+      if (a.dfin) return -1; // `a` tiene `dfin`, `b` no
+      if (b.dfin) return 1; // `b` tiene `dfin`, `a` no
+      return 0; // Ninguno tiene `dfin`
+    });
+  }
+
+  showList() {
+    if (this.projectId !== null) {
+      this.router.navigate([`/todo/project/${this.projectId}`], {
+        replaceUrl: true,
+      });
+    } else {
+      console.error('No se puede navegar, el ID del proyecto es nulo.');
+    }
+  }
+
+  showKanban() {
+    if (this.projectId !== null) {
+      this.router.navigate([`todo/project-kanban/${this.projectId}`], {
+        replaceUrl: true,
+      });
+    } else {
+      console.error('No se puede navegar, el ID del proyecto es nulo.');
+    }
+  }
+  
+  showTimeline() {
+    if (this.projectId !== null) {
+      this.router.navigate([`todo/project-timeline/${this.projectId}`], {
+        replaceUrl: true,
+      });
+    } else {
+      console.error('No se puede navegar, el ID del proyecto es nulo.');
+    }
+  }
+
+  onTaskUpdated(updatedTask: TaskDTO): void {
+    const taskIndex = this.tasks.findIndex(
+      (task) => task.id_task === updatedTask.id_task
+    );
+
+    if (taskIndex !== -1) {
+      // Actualiza la tarea en la lista
+      this.tasks[taskIndex] = updatedTask;
+
+      // Si la tarea ya no pertenece al proyecto actual, la elimina
+      if (updatedTask.fk_project !== this.projectId) {
+        this.tasks = this.tasks.filter(
+          (task) => task.id_task !== updatedTask.id_task
+        );
+        //console.log('Tarea eliminada de la lista actual:', updatedTask);
+      }
+
+      // Actualiza la lista filtrada
+      this.filteredTasks = [...this.tasks];
+    } else {
+      console.warn('Tarea actualizada no encontrada en la lista:', updatedTask);
+    }
+  }
+
+  onTaskDeleted(deletedTask: TaskDTO): void {
+    // Filtra la tarea eliminada de la lista de tareas
+    this.tasks = this.tasks.filter(
+      (task) => task.id_task !== deletedTask.id_task
+    );
+    this.filteredTasks = [...this.tasks];
+    //console.log('Tarea eliminada:', deletedTask);
+  }
+
+   /**
    * Abre el modal para editar el proyecto
    */
 
-  async openEditProjectModal(): Promise<void> {
+   async openEditProjectModal(): Promise<void> {
     if (this.project) {
       const modal = await this.modalController.create({
         component: await import(
@@ -182,69 +265,6 @@ export class ProjectPage implements OnInit {
     }
   }
 
-  onTaskUpdated(updatedTask: TaskDTO): void {
-    const taskIndex = this.tasks.findIndex(
-      (task) => task.id_task === updatedTask.id_task
-    );
-
-    if (taskIndex !== -1) {
-      // Actualiza la tarea en la lista
-      this.tasks[taskIndex] = updatedTask;
-
-      // Si la tarea ya no pertenece al proyecto actual, la elimina
-      if (updatedTask.fk_project !== this.projectId) {
-        this.tasks = this.tasks.filter(
-          (task) => task.id_task !== updatedTask.id_task
-        );
-        //console.log('Tarea eliminada de la lista actual:', updatedTask);
-      }
-
-      // Actualiza la lista filtrada
-      this.filteredTasks = [...this.tasks];
-    } else {
-      console.warn('Tarea actualizada no encontrada en la lista:', updatedTask);
-    }
-  }
-
-  showList() {
-    if (this.projectId !== null) {
-      this.router.navigate([`/todo/project/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
-  }
-
-  showKanban() {
-    if (this.projectId !== null) {
-      this.router.navigate([`todo/project-kanban/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
-  }
-  
-  showTimeline() {
-    if (this.projectId !== null) {
-      this.router.navigate([`todo/project-timeline/${this.projectId}`], {
-        replaceUrl: true,
-      });
-    } else {
-      console.error('No se puede navegar, el ID del proyecto es nulo.');
-    }
-  }
-  
-
-  onTaskDeleted(deletedTask: TaskDTO): void {
-    // Filtra la tarea eliminada de la lista de tareas
-    this.tasks = this.tasks.filter(
-      (task) => task.id_task !== deletedTask.id_task
-    );
-    this.filteredTasks = [...this.tasks];
-    //console.log('Tarea eliminada:', deletedTask);
-  }
 
   /**
    * Elimina el proyecto tras pedir confirmación
@@ -287,4 +307,26 @@ export class ProjectPage implements OnInit {
       await alert.present();
     }
   }
+
+  calculatePendingDays(dfin: Date | null): string {
+    if (!dfin) {
+      return 'Sin fecha';
+    }
+  
+    const today = new Date();
+    const endDate = new Date(dfin);
+    
+    // Calcula la diferencia en milisegundos
+    const diffInMilliseconds = endDate.getTime() - today.getTime();
+    
+    // Convierte los milisegundos en días
+    const diffInDays = Math.ceil(diffInMilliseconds / (1000 * 60 * 60 * 24));
+  
+    if (diffInDays < 0) {
+      return 'Atrasada';
+    }
+    
+    return `${diffInDays} días`;
+  }
+  
 }

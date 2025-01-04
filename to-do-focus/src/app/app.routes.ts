@@ -54,14 +54,16 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: '**',
-    canActivate: [AuthGuard], // Protege la ruta comodín
-    children: [
-      {
-        path: '',
-        redirectTo: 'todo/focus',
-        pathMatch: 'full',
-      },
-    ],
+    path: 'todo/project-kanban/:id',
+    loadComponent: () =>
+      import('./todo/project-kanban/project-kanban.page').then((m) => m.ProjectKanbanPage),
+    canActivate: [AuthGuard],
   },
+  {
+    path: 'todo/project-timeline/:id',
+    loadComponent: () =>
+      import('./todo/project-timeline/project-timeline.page').then((m) => m.ProjectTimelinePage),
+    canActivate: [AuthGuard],
+  },
+  
 ];

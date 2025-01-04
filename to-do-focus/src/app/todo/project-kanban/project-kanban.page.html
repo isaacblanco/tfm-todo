@@ -14,10 +14,10 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-button (click)="showList()" slot="start" color="clear" size="small" [disabled]="true">
+    <ion-button (click)="showList()" slot="start" color="clear" size="small">
       <ion-icon name="list-sharp" color="primary"></ion-icon>
     </ion-button>
-    <ion-button (click)="showKanban()" slot="start" color="clear" size="small">
+    <ion-button (click)="showKanban()" slot="start" color="clear" size="small" [disabled]="true">
       <ion-icon name="apps-sharp" color="primary"></ion-icon>
     </ion-button>
     <ion-button (click)="showTimeline()" slot="start" color="clear" size="small">
@@ -36,11 +36,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-list>
-    <app-task-item *ngFor="let task of tasks | taskFilter: searchTerm" [task]="task"
-      [fk_project]="project.id_project || 0" (taskUpdated)="onTaskUpdated($event)" (taskDeleted)="onTaskDeleted($event)"
-      (taskMoved)="onTaskMoved($event)">
-    </app-task-item>
-  </ion-list>
+<ion-content>
+  <ng-container *ngFor="let group of groupedTasks">
+    <ion-list>
+      <ion-item-divider>
+        <ion-label>
+          <h2>PRIORIDAD {{ getPriorityLabel(group.priority) }}</h2>
+        </ion-label>
+      </ion-item-divider>
+      <app-task-item *ngFor="let task of group.tasks" [task]="task" (taskUpdated)="onTaskUpdated($event)"
+        (taskDeleted)="onTaskDeleted($event)" (taskMoved)="onTaskMoved($event)"></app-task-item>
+    </ion-list>
+  </ng-container>
 </ion-content>
