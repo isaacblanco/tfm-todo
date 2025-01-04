@@ -9,7 +9,9 @@ import {
   IonHeader,
   IonItem,
   IonLabel,
-  IonTitle, IonToolbar
+  IonTextarea,
+  IonTitle,
+  IonToolbar
 } from '@ionic/angular/standalone';
 import { TaskDTO } from '../../../core/models/task-DTO';
 import { TaskService } from '../../../core/services/task.service';
@@ -23,7 +25,7 @@ import { TaskService } from '../../../core/services/task.service';
   imports: [CommonModule, FormsModule, IonButton,
     IonButtons,
     IonContent,
-    
+    IonTextarea,
     IonHeader,
     IonItem,
     IonLabel,

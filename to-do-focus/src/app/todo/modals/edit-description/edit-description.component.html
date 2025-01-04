@@ -10,14 +10,8 @@
 <ion-content>
   <ion-item>
     <ion-label position="stacked">Descripción</ion-label>
-    <ion-textarea
-      id="descriptionInput"
-      [(ngModel)]="task.description"
-      rows="8"
-      inputmode="text"
-      (ionBlur)="updateDescription()"
-      #descriptionInput
-    ></ion-textarea>
+    <ion-textarea id="descriptionInput" [(ngModel)]="task.description" rows="8" inputmode="text"
+      (ionBlur)="updateDescription()" #descriptionInput></ion-textarea>
   </ion-item>
 
   <ion-item>

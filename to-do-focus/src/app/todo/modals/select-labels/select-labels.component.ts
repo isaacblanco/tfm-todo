@@ -5,12 +5,15 @@ import { ModalController } from '@ionic/angular';
 import {
   IonButton,
   IonButtons,
-  IonContent, IonHeader,
+  IonContent,
+  IonHeader,
   IonIcon,
+  IonInput,
   IonItem,
   IonLabel,
   IonList,
-  IonTitle, IonToolbar,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/angular/standalone';
 import { TagDTO } from '../../../core/models/tag-DTO';
 import { TagService } from '../../../core/services/tag.service';
@@ -20,7 +23,8 @@ import { UserService } from '../../../core/services/user.service';
   templateUrl: './select-labels.component.html',
   styleUrls: ['./select-labels.component.scss'],
   standalone: true,
-  imports: [ FormsModule, CommonModule, IonIcon,IonItem, IonList, IonLabel,
+  imports: [ FormsModule, CommonModule, IonIcon,IonItem, IonList, IonLabel, 
+    IonInput,
     IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons],
 })
 export class SelectLabelsComponent implements OnInit {

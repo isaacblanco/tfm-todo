@@ -14,7 +14,8 @@ import {
   IonLabel,
   IonReorder,
   IonSelect,
-  IonSelectOption
+  IonSelectOption,
+  IonTextarea
 } from '@ionic/angular/standalone';
 import { UserService } from 'src/app/core/services/user.service';
 import { formatDateTime } from 'src/app/core/utils/date-utils';
@@ -27,7 +28,7 @@ import { TaskService } from '../../../core/services/task.service';
   styleUrls: ['./task-item.component.scss'],
   imports: [FormsModule, CommonModule, IonItemSliding, IonItem, IonReorder, 
     IonLabel, IonIcon, IonItemOptions, IonItemOption, IonButton, IonLabel,
-    IonSelectOption, IonCheckbox, IonInput,IonSelect,],
+    IonSelectOption, IonCheckbox, IonInput,IonSelect,IonTextarea],
   standalone: true,
 })
 export class TaskItemComponent implements OnInit {
@@ -38,7 +39,7 @@ export class TaskItemComponent implements OnInit {
   @Output() taskDeleted = new EventEmitter<TaskDTO>(); // Notifica al padre sobre tareas eliminadas
 
   user: any = null; // Usuario actual
-  showCompleted = false;
+  showCompleted = false; 
   showDesctiption = false;
   showDetails = false;
   availableTimes: string[] = []; // Horas disponibles

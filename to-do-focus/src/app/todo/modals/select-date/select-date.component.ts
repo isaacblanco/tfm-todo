@@ -9,8 +9,11 @@ import {
   IonFooter,
   IonHeader,
   IonIcon,
+  IonInput,
   IonItem,
-  IonLabel, IonList,
+  IonLabel,
+  IonList,
+  IonSelect,
   IonSelectOption,
   IonTitle, IonToolbar,
 } from '@ionic/angular/standalone';
@@ -24,7 +27,8 @@ import { TaskDTO } from '../../../core/models/task-DTO';
   standalone: true,
   imports: [ FormsModule, CommonModule, IonButton,IonLabel, IonItem,
     IonButtons, IonIcon, IonFooter, IonSelectOption,IonList,
-    IonContent, IonHeader, IonTitle, IonToolbar ],
+    IonContent, IonHeader, IonTitle, IonToolbar,
+    IonInput, IonSelect ],
 })
 export class SelectDateComponent implements OnInit {
   @Input() task!: TaskDTO; // Recibe la tarea desde el componente padre
