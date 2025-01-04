@@ -1,11 +1,11 @@
-<ion-item-sliding class="item-active" *ngIf="showCompleted || !task.completed">
+<ion-item-sliding class="item-active item-block" *ngIf="showCompleted || !task.completed">
   <!-- Indicador de carga -->
   <ion-item *ngIf="task.dini !== null" lines="none">
     <ion-label position="stacked" *ngIf="task.dini !== null">
       {{ formatDate(task.dini) }} &nbsp;
     </ion-label>
   </ion-item>
-  <ion-item lines="full">
+  <ion-item lines="none">
     <!-- Line 1 -->
     <ion-reorder slot="start">
       <ion-icon name="arrow-back"></ion-icon>

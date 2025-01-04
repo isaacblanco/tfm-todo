@@ -4,10 +4,6 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html --> lista de iconos
 
 ## PROYECTOS con tiempo
 
-- Incluir vista de TimeLine
-   -  Poner colores ambar o rojos
-- Hacer que se vean bien las separaciones
-
 - Documentar las pruebas unitarias
 - Crear la presentación: basarme en TFG
 

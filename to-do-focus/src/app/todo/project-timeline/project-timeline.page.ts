@@ -320,5 +320,28 @@ export class ProjectTimelinePage implements OnInit {
     
     return `${diffInDays} días`;
   }
+
+  getTaskColor(dfin: Date | undefined | null): string {
+    if (!dfin) {
+      return '#FFFFFF'; // Blanco por defecto si no hay fecha
+    }
+  
+    const today = new Date();
+    const endDate = new Date(dfin);
+  
+    const diffInMilliseconds = endDate.getTime() - today.getTime();
+    const diffInDays = Math.ceil(diffInMilliseconds / (1000 * 60 * 60 * 24));
+  
+    if (diffInDays < 0) {
+      return '#FF6666'; // Rojo si está atrasada
+    } else if (diffInDays <= 5) {
+      return '#FFBD00'; // Amarillo si quedan 5 días o menos
+    } else if (diffInDays <= 15) {
+      return '#FF66BD'; // Naranja si quedan 15 días o menos
+    }
+  
+    return '#FFFFFF'; // Blanco para cualquier otro caso
+  }
+  
   
 }

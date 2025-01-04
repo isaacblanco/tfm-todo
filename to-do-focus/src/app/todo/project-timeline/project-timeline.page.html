@@ -38,16 +38,19 @@
 
 <ion-content>
   <ion-list>
-    <div *ngFor="let task of orderedTasks">
-      <ion-item>
+    <div *ngFor="let task of orderedTasks" class="item-block">
+      <ion-item lines="none">
         <ion-label>
+
           <p>
+            <span class="square-color" [style.backgroundColor]="getTaskColor(task.dfin)"></span>
             <strong>Fecha inicio:</strong> {{ task.dini ? (task.dini | date) : 'No definida' }}
             <strong>Fecha fin:</strong> {{ task.dfin ? (task.dfin | date) : 'No definida' }}
             <strong>Días pendientes:</strong> {{ calculatePendingDays(task.dfin || null) }}
           </p>
         </ion-label>
       </ion-item>
+
       <app-task-item [task]="task" (taskUpdated)="onTaskUpdated($event)" (taskDeleted)="onTaskDeleted($event)">
       </app-task-item>
     </div>
