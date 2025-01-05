@@ -22,10 +22,7 @@
     </ion-list-header>
 
     <!-- Lista de proyectos -->
-    <ion-item
-      *ngFor="let project of otherProjects"
-      (click)="moveTaskToProject(project.id_project)"
-    >
+    <ion-item *ngFor="let project of otherProjects" (click)="moveTaskToProject(project.id_project)" lines="none">
       <ion-label>
         <ion-button>
           {{ project.name }}

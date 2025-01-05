@@ -96,10 +96,20 @@ export class SettingsPage implements OnInit {
   async openLabelsModal(): Promise<void> {
     const modal = await this.modalController.create({
       component: await import(
-        './../../todo/modals/select-labels/select-labels.component'
-      ).then((m) => m.SelectLabelsComponent),
+        './../edit-labels/edit-labels.component'
+      ).then((m) => m.EditLabelsComponent),
       componentProps: {},
     });
+  
+    // Presentar la modal
+    await modal.present();
+  
+    // Opcional: manejar el resultado cuando se cierra la modal
+    const { data } = await modal.onDidDismiss();
+    if (data) {
+      // Manejar los datos retornados por la modal si es necesario
+      console.log('Modal cerrada con datos:', data);
+    }
   }
 
   /**

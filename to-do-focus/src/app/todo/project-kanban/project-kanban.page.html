@@ -39,7 +39,7 @@
 <ion-content>
   <ng-container *ngFor="let group of groupedTasks">
     <ion-list>
-      <ion-item-divider>
+      <ion-item-divider [color]="getColor(group.priority)" sticky="true" size="small">
         <ion-label>
           <h2>PRIORIDAD {{ getPriorityLabel(group.priority) }}</h2>
         </ion-label>

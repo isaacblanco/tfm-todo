@@ -15,3 +15,24 @@
 .item-block {
   border-bottom: 4px dashed #dadada;
 }
+
+ion-item-divider {
+  border: 0;
+}
+
+.prioridad-5 {
+  --background: red;
+}
+.prioridad-4 {
+  --background: orange;
+}
+.prioridad-3 {
+  --background: yellow;
+  color: black; /* Ejemplo de cambio de color de texto */
+}
+.prioridad-2 {
+  --background: green;
+}
+.prioridad-1 {
+  --background: blue;
+}

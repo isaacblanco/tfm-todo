@@ -1,10 +1,10 @@
 <ion-item-sliding class="item-active item-block" *ngIf="showCompleted || !task.completed">
   <!-- Indicador de carga -->
-  <ion-item *ngIf="task.dini !== null" lines="none">
+  <ion-item-divider *ngIf="task.dini !== null" lines="none">
     <ion-label position="stacked" *ngIf="task.dini !== null">
       {{ formatDate(task.dini) }} &nbsp;
     </ion-label>
-  </ion-item>
+  </ion-item-divider>
   <ion-item lines="none">
     <!-- Line 1 -->
     <ion-reorder slot="start">
@@ -34,7 +34,7 @@
 
   <ion-item *ngIf="this.showDesctiption && task.description" lines="full">
     <ion-icon slot="start" name="reader-outline"></ion-icon>
-    <ion-label>{{ task.description }}</ion-label>
+    <ion-label [innerHTML]="task.description"></ion-label>
   </ion-item>
 
   <!-- Line 2 (conditionally displayed) -->
@@ -77,7 +77,7 @@
         </ion-button>
       </div>
       <div class="actions-priority">
-        <ion-button *ngFor="let p of [1, 2, 3, 4, 5]" [color]="task.priority === p ? 'primary' : 'medium'"
+        <ion-button *ngFor="let p of [1, 2, 3, 4, 5]" [color]="task.priority === p ? getColor(p) : 'medium'"
           (click)="setPriority(p)">{{ p }}</ion-button>
       </div>
       <ion-button fill="clear" slot="end" (click)="deleteTask()">

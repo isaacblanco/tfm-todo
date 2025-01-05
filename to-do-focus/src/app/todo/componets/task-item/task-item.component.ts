@@ -8,11 +8,11 @@ import {
   IonIcon,
   IonInput,
   IonItem,
+  IonItemDivider,
   IonItemOption,
   IonItemOptions,
   IonItemSliding,
   IonLabel,
-  IonNote,
   IonReorder,
   IonSelect,
   IonSelectOption
@@ -28,10 +28,11 @@ import { TaskService } from '../../../core/services/task.service';
   styleUrls: ['./task-item.component.scss'],
   imports: [FormsModule, CommonModule, IonItemSliding, IonItem, IonReorder, 
     IonLabel, IonIcon, IonItemOptions, IonItemOption, IonButton, IonLabel,
-    IonSelectOption, IonCheckbox, IonInput,IonSelect,IonNote],
+    IonSelectOption, IonCheckbox, IonInput,IonSelect, IonItemDivider],
   standalone: true,
 })
 export class TaskItemComponent implements OnInit {
+
   @Input() task!: TaskDTO; // Objeto de tarea
   @Input() fk_project!: number; // ID del proyecto (opcional)
   @Output() taskMoved = new EventEmitter<TaskDTO>(); // Emisor para notificar al padre
@@ -90,14 +91,24 @@ export class TaskItemComponent implements OnInit {
         this.showCompleted = this.user.settings.showCompleted;
       }
     }
-
-    //console.log('Mostrar o no la descripción', this.showDesctiption);
-    // console.log('Mostrar completadas', this.showCompleted);
-    //console.log('TaskItemComponent initialized', this.task);
   }
 
   formatDate(date: Date | undefined): string {
     return date ? formatDateTime(date) : 'Fecha no disponible';
+  }
+
+  getColor(priority: number) {
+    if ( priority == 1 ) {
+      return 'primary';
+    } else if ( priority == 2 ) {
+      return 'success';
+    } else if ( priority == 3 ) {
+      return 'tertiary';
+    } else if ( priority == 4 ) {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
   }
 
   /**

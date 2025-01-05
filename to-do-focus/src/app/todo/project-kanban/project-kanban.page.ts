@@ -256,6 +256,20 @@ throw new Error('Method not implemented.');
     return priorityMap[priority] || 'Desconocida';
   }
 
+  getColor(priority: number) {
+    if ( priority == 1 ) {
+      return 'primary';
+    } else if ( priority == 2 ) {
+      return 'success';
+    } else if ( priority == 3 ) {
+      return 'tertiary';
+    } else if ( priority == 4 ) {
+      return 'warning';
+    } else {
+      return 'danger';
+    }
+  }
+
   /**
    * Elimina el proyecto tras pedir confirmación
    */
