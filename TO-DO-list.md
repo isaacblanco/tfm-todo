@@ -20,7 +20,7 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html --> lista de iconos
 	- Enviar las peticiones con tokens
 - Revisar documentación de todo
 	- Sobre todo de como hacerlo funcionar en internet
-- Generar una marca de versión en Github
+- Generar una marca de versión en Github --> versión
 - Hacer entrega PEC4 --> video y similar
 - Montar un NodeJS en servidor: vercel (o mercel)
   - La base de datos debe apuntar a interserver
