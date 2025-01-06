@@ -2,12 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
 import {
   IonButton, IonCol,
   IonContent,
   IonGrid, IonHeader,
-  IonIcon,
+  IonIcon, IonInput,
   IonItem, IonLabel,
   IonRow, IonText, IonTitle, IonToolbar
 } from '@ionic/angular/standalone';
@@ -24,7 +23,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./sign-up.page.scss'],
   standalone: true,
   imports: [ CommonModule, FormsModule, IonText, IonCol, IonRow, IonTitle,IonContent,IonIcon,
-    IonButton, IonLabel, IonItem, IonGrid, IonHeader, IonToolbar],
+    IonButton, IonLabel, IonItem, IonGrid, IonHeader, IonToolbar, IonInput,],
 })
 export class SignUpPage implements OnInit {
   user: UserDTO = this.createDefaultUser();
@@ -34,8 +33,7 @@ export class SignUpPage implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private projectService: ProjectService,
-    private router: Router,
-    private modalController: ModalController
+    private router: Router
   ) {}
 
   ngOnInit() {

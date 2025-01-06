@@ -3,11 +3,6 @@
 https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html --> lista de iconos
 
 
-- Video 
-- Informe de auto-evaluación
-- Incluir capturas en la presentación del proyecto
-
-
 ## PROYECTOS con tiempo
 
 - Revisar que todo funcione
@@ -27,6 +22,7 @@ https://unpkg.com/ionicons@5.5.2/dist/cheatsheet.html --> lista de iconos
 
 ## [--Para nota--]
 
+- Agregar un efecto de hover sobre el menu lateral derecho proyectos
 - Incluir datos de las fechas en la parte superior
 - Incluir colores en la tarea indicativos del tiempo que queda
   - Poder configurar los colores en los settings
