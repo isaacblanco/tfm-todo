@@ -15,6 +15,7 @@ import {
   IonTitle, IonToolbar
 } from '@ionic/angular/standalone';
 import * as CryptoJS from 'crypto-js'; // Importación para hashear la contraseña
+import { ProjectService } from 'src/app/core/services/project.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -37,10 +38,12 @@ export class LoginPage implements OnInit {
   };
 
   userPostData = { user_id: '', token: '' };
+  mainProject : any = null;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private projectService: ProjectService
   ) {
     // this.userDetails = { user_id: '0', token: '' };
   }
@@ -66,7 +69,9 @@ export class LoginPage implements OnInit {
       next: (response) => {
         // console.log('Login bueno, empezando...');
         this.authService.setToken(response.token); // Guarda el token
-        this.router.navigate(['/todo/focus'], { replaceUrl: true }); // Redirige al focus
+        // TODO: this need to be fixed
+        let mainProjectId = this.projectService.getMainProjectId();
+        this.router.navigate(['/todo/project/' + mainProjectId], { replaceUrl: true }); // Redirige al focus
       },
       error: (error) => {
         this.errMessage = 'Inicio de sesión fallido. Verifica tus credenciales.';

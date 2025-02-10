@@ -10,7 +10,6 @@ import {
   IonItemDivider,
   IonLabel,
   IonList,
-  IonListHeader,
   IonMenu,
   IonMenuToggle,
   IonNote,
@@ -31,13 +30,14 @@ import { ProjectService } from './core/services/project.service';
   standalone: true,
   imports: [RouterLink, CommonModule, IonToolbar, IonHeader, IonNote,
     IonThumbnail, IonMenu,IonSplitPane, IonMenuToggle, IonItemDivider,
-    IonContent,IonIcon,IonList,IonFooter,IonListHeader,IonApp,
+    IonContent,IonIcon,IonList,IonFooter,IonApp,
     IonLabel, IonItem, IonTitle, IonRouterOutlet],
 })
 export class AppComponent implements OnInit {
-  public projects: ProjectDTO[] = []; // Lista de proyectos del usuario
-  public labels = []; // Etiquetas, puedes cargar dinámicamente si es necesario
-  public isAuthenticated = false; // Controla si el usuario está logado
+  projects: ProjectDTO[] = []; // Lista de proyectos del usuario
+  labels = []; // Etiquetas, puedes cargar dinámicamente si es necesario
+  isAuthenticated = false; // Controla si el usuario está logado
+  mainProject : any = null;
 
   constructor(
     private projectService: ProjectService,
@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
 
     // Suscripción a los cambios en los proyectos
     this.projectService.projects$.subscribe((projects) => {
+      this.mainProject = projects.find((project: ProjectDTO) => project.main);
       this.projects = projects;
     });
   }
@@ -78,7 +79,6 @@ export class AppComponent implements OnInit {
    */
   private loadProjects() {
     // Escuchar cambios en la lista de proyectos
-    
     this.projectService.projects$.subscribe((projects) => {
       this.projects = projects;
     });

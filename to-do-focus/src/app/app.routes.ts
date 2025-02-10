@@ -36,12 +36,6 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'todo/focus',
-    loadComponent: () =>
-      import('./todo/focus/focus.page').then((m) => m.FocusPage), // Página de "Focus"
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'todo/project/:id', // Define el parámetro dinámico :id
     loadComponent: () =>
       import('./todo/project/project.page').then((m) => m.ProjectPage),

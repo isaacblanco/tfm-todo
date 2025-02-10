@@ -13,6 +13,7 @@ export class ProjectService {
   // BehaviorSubject para manejar actualizaciones de la lista de proyectos
   private projectsSubject = new BehaviorSubject<ProjectDTO[]>([]);
   public projects$ = this.projectsSubject.asObservable(); // Observable público
+  public mainProject: ProjectDTO | null = null; // Proyecto principal
 
   constructor(private http: HttpClient) {}
 
@@ -42,6 +43,7 @@ export class ProjectService {
     return this.http.get<ProjectDTO>(`${this.apiUrl}${projectId}`);
   }
 
+  /*
   getProjectsByUserId(userId: number): Observable<ProjectDTO[]> {
     // Llama a la API y actualiza el BehaviorSubject
     this.http.get<ProjectDTO[]>(`${this.apiUrl}user/${userId}`).subscribe({
@@ -53,11 +55,24 @@ export class ProjectService {
 
     return this.projects$; // Devuelve el Observable del BehaviorSubject
   }
+    */
+  getProjectsByUserId(userId: number): Observable<ProjectDTO[]> {
+    this.http.get<ProjectDTO[]>(`${this.apiUrl}user/${userId}`).subscribe({
+      next: (projects) => {
+        this.projectsSubject.next(projects);
+        this.mainProject = projects.find((project) => project.main) || null;
+      },
+      error: (err) => console.error('Error al obtener proyectos:', err),
+    });
+
+    return this.projects$;
+  }
 
   /**
    * Obtiene todos los proyectos del usuario almacenado en localStorage
    * @returns Observable con la lista de proyectos
    */
+  /*
   getProjects(): Observable<ProjectDTO[]> {
     const userId = this.getUserId();
     if (!userId) {
@@ -75,6 +90,25 @@ export class ProjectService {
 
     return this.projects$; // Devuelve el Observable del BehaviorSubject
   }
+    */
+  getProjects(): Observable<ProjectDTO[]> {
+    const userId = this.getUserId();
+    if (!userId) {
+      console.error('User ID not found in localStorage');
+      return new BehaviorSubject<ProjectDTO[]>([]).asObservable();
+    }
+
+    this.http.get<ProjectDTO[]>(`${this.apiUrl}user/${userId}`).subscribe({
+      next: (projects) => {
+        this.projectsSubject.next(projects);
+        this.mainProject = projects.find((project) => project.main) || null;
+      },
+      error: (err) => console.error('Error al obtener proyectos:', err),
+    });
+
+    return this.projects$;
+  }
+
 
   /**
    * Crea un nuevo proyecto para el usuario almacenado en localStorage
@@ -133,5 +167,11 @@ export class ProjectService {
     );
   }
 
+    /**
+   * Devuelve el ID del proyecto principal si existe, de lo contrario, devuelve null.
+   */
+    getMainProjectId(): number | null {
+      return this.mainProject ? this.mainProject.id_project : null;
+    }
   
 }

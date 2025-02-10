@@ -12,29 +12,29 @@
       </ion-header>
       <ion-content>
         <ion-list *ngIf="isAuthenticated">
-          <ion-item lines="full" routerDirection="root" [routerLink]="['/todo/focus']">
-            <ion-icon aria-hidden="true" slot="start" ios="checkbox" md="list-sharp" color="primary"></ion-icon>
-            <ion-label>TODO</ion-label>
-          </ion-item>
-
-          <div *ngIf="isAuthenticated">
-            <ion-item-divider>Projects</ion-item-divider>
-            <ion-item (click)="openAddProjectModal()" lines="full" color="secundary">
-              <ion-icon aria-hidden="true" slot="start" ios="add-circle-outline" md="add-circle-sharp"
-                color="primary"></ion-icon>
-              <ion-label>Add New Project</ion-label>
+          <ion-menu-toggle auto-hide="false" *ngFor="let project of projects">
+            <ion-item *ngIf="project.main === true" lines="full" routerDirection="root"
+              [routerLink]="['/todo/project', project.id_project]">
+              <ion-icon aria-hidden="true" slot="start" ios="home-outline" md="home-sharp" color="primary"></ion-icon>
+              <ion-label>{{ project.name }}</ion-label>
             </ion-item>
-            <ion-menu-toggle auto-hide="false" *ngFor="let project of projects">
-              <ion-item *ngIf="project.main === false" lines="full" routerDirection="root"
-                [routerLink]="['/todo/project', project.id_project]">
-                <ion-icon aria-hidden="true" slot="start" ios="folder-outline" md="folder-sharp"
-                  color="primary"></ion-icon>
-                <ion-label>{{ project.name }}</ion-label>
-                <ion-icon aria-hidden="true" slot="end" name="pin-sharp" *ngIf="project.pinned" size="small">
-                </ion-icon>
-              </ion-item>
-            </ion-menu-toggle>
-          </div>
+          </ion-menu-toggle>
+          <ion-item (click)="openAddProjectModal()" lines="full" color="secundary">
+            <ion-icon aria-hidden="true" slot="start" ios="add-circle-outline" md="add-circle-sharp"
+              color="primary"></ion-icon>
+            <ion-label>Add New Project</ion-label>
+          </ion-item>
+          <ion-item-divider>Projects</ion-item-divider>
+          <ion-menu-toggle auto-hide="false" *ngFor="let project of projects">
+            <ion-item *ngIf="project.main === false" lines="full" routerDirection="root"
+              [routerLink]="['/todo/project', project.id_project]">
+              <ion-icon aria-hidden="true" slot="start" ios="folder-outline" md="folder-sharp"
+                color="primary"></ion-icon>
+              <ion-label>{{ project.name }}</ion-label>
+              <ion-icon aria-hidden="true" slot="end" name="pin-sharp" *ngIf="project.pinned" size="small">
+              </ion-icon>
+            </ion-item>
+          </ion-menu-toggle>
         </ion-list>
 
         <ion-note color="medium" class="ion-margin-horizontal">
